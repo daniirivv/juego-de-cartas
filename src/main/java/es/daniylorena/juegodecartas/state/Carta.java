@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Carta {
 
-    private int numero;
-    private Palo palo;
+    private final int numero;
+    private final Palo palo;
 
     public Carta(int numero, Palo palo) {
         this.numero = numero;
@@ -16,16 +16,8 @@ public class Carta {
         return numero;
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
-
     public Palo getPalo() {
         return palo;
-    }
-
-    public void setPalo(Palo palo) {
-        this.palo = palo;
     }
 
     @Override
