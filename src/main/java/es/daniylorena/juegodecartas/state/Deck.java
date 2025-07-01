@@ -8,7 +8,7 @@ public class Deck {
     private List<Card> cards;
 
     public Deck(int oros, int copas, int espadas, int bastos) {
-        cards = new ArrayList<>();
+        this.cards = new ArrayList<>();
 
         addCards(Suit.OROS, oros);
         addCards(Suit.COPAS, copas);
@@ -18,20 +18,20 @@ public class Deck {
 
     private void addCards(Suit suit, int number) {
         for (int i=1; i<=number; i++) {
-            cards.add(new Card(i, suit));
+            this.cards.add(new Card(i, suit));
         }
     }
 
     public List<Card> getCards() {
-        return cards;
+        return this.cards;
     }
 
     public int getNumCards() {
-        return cards.size();
+        return this.cards.size();
     }
 
     public void shuffle() {
-        java.util.Collections.shuffle(cards);
+        java.util.Collections.shuffle(this.cards);
     }
 
 }
