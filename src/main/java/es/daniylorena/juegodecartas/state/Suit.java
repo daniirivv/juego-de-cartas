@@ -1,6 +1,6 @@
 package es.daniylorena.juegodecartas.state;
 
-public enum Palo {
+public enum Suit {
     OROS,
     COPAS,
     ESPADAS,
