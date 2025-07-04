@@ -6,4 +6,6 @@ public class Move {
 
     private Set<Card> playedCards;
 
+    private Player moveOwner;
+
 }
