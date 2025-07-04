@@ -176,6 +176,22 @@
         <mxCell id="qayJ_170r3CIXhXciCO9-51" value="+ BASTOS" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="qayJ_170r3CIXhXciCO9-47">
           <mxGeometry y="118" width="140" height="26" as="geometry" />
         </mxCell>
+        <mxCell id="qayJ_170r3CIXhXciCO9-52" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="qayJ_170r3CIXhXciCO9-9" target="qayJ_170r3CIXhXciCO9-16">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="740" y="180" as="sourcePoint" />
+            <mxPoint x="900" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qayJ_170r3CIXhXciCO9-53" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="qayJ_170r3CIXhXciCO9-52">
+          <mxGeometry x="-0.6284" y="2" relative="1" as="geometry">
+            <mxPoint x="-45" y="49" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qayJ_170r3CIXhXciCO9-54" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="qayJ_170r3CIXhXciCO9-52">
+          <mxGeometry x="0.6853" y="1" relative="1" as="geometry">
+            <mxPoint x="110" y="-49" as="offset" />
+          </mxGeometry>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
