@@ -5,6 +5,7 @@ import es.daniylorena.juegodecartas.state.Game;
 import es.daniylorena.juegodecartas.state.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameController implements GameControllerInterface{
 
@@ -24,27 +25,33 @@ public class GameController implements GameControllerInterface{
 
     @Override
     public void createAndStartNewGame(ArrayList<String> playersNames) {
-        ArrayList<Player> players = new ArrayList<>();
-        for(String name : playersNames){
-            Player player = createPlayer(name);
-            players.add(player);
-        }
-        Game game = new Game(players);
-        setCurrentGame(game);
+        Game currentGame = new Game(initializePlayers(playersNames), new Deck());
         startCurrentGame();
     }
 
-    private Player createPlayer(String name){
-        return new Player(name);
+    private ArrayList<Player> initializePlayers(ArrayList<String> playersNames) {
+        ArrayList<Player> players = new ArrayList<>();
+        for(String name : playersNames){
+            Player player = new Player(name);
+            players.add(player);
+        }
+        return players;
     }
 
     private void startCurrentGame() {
-        Game currentGame = this.currentGame;
-
+        this.currentGame.getDeck().shuffle();
+        distributeCardsAmongPlayers();
+        playGame();
     }
 
-    private void assignDeckForCurrentGame(){
-        Deck deck = new Deck();
+    private void distributeCardsAmongPlayers() {
+        List<Player> players = this.currentGame.getPlayers();
+        Deck deck = this.currentGame.getDeck();
+        // Estructura de datos circular en jugadores para repartir constantemente.
+    }
+
+    private void playGame() {
+
     }
 
 }
