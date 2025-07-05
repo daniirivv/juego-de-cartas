@@ -1,5 +1,6 @@
 package es.daniylorena.juegodecartas.display;
 
+import es.daniylorena.juegodecartas.logic.GameControllerInterface;
 import es.daniylorena.juegodecartas.logic.exceptions.IllegalPlayerNameException;
 
 import java.util.ArrayList;
@@ -12,9 +13,12 @@ public class GameDisplay implements GameDisplayInterface{
 
     private final static Scanner keyboardInput = new Scanner (System.in);
 
+    private GameControllerInterface gameController;
+
     @Override
     public void createNewGame() {
         ArrayList<String> playersNames = askForPlayerNames();
+        this.gameController.createAndStartNewGame(playersNames);
     }
 
     private ArrayList<String> askForPlayerNames(){
