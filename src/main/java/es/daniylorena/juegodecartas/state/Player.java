@@ -4,12 +4,16 @@ import java.util.List;
 
 public class Player {
 
+    private final String name;
     private List<Card> hand;
     private Role role;
 
-    public Player(List<Card> hand, Role role) {
-        this.hand = hand;
-        this.role = role;
+    public Player(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public List<Card> getHand() {
