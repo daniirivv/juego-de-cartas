@@ -1,11 +1,10 @@
 package es.daniylorena.juegodecartas.logic;
 
-import es.daniylorena.juegodecartas.state.Deck;
-import es.daniylorena.juegodecartas.state.Game;
-import es.daniylorena.juegodecartas.state.Player;
+import es.daniylorena.juegodecartas.state.*;
+import es.daniylorena.juegodecartas.utilities.CircularList;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 public class GameController implements GameControllerInterface{
 
@@ -45,9 +44,13 @@ public class GameController implements GameControllerInterface{
     }
 
     private void distributeCardsAmongPlayers() {
-        List<Player> players = this.currentGame.getPlayers();
+        CircularList<Player> players = new CircularList<>(this.currentGame.getPlayers());
+        Iterator<Player> circularIterator = players.iterator();
         Deck deck = this.currentGame.getDeck();
-        // Estructura de datos circular en jugadores para repartir constantemente.
+        do{
+            Player player = circularIterator.next();
+            player.addCardToHand(deck.getFirstCard());
+        }while(!deck.isEmpty());
     }
 
     private void playGame() {

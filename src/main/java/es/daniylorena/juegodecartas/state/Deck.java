@@ -36,7 +36,7 @@ public class Deck {
         return this.cards;
     }
 
-    public int getNumCards() {
+    public int size() {
         return this.cards.size();
     }
 
@@ -44,4 +44,11 @@ public class Deck {
         java.util.Collections.shuffle(this.cards);
     }
 
+    public boolean isEmpty() {
+        return this.getCards().isEmpty();
+    }
+
+    public Card getFirstCard() {
+        return this.cards.getFirst();
+    }
 }
