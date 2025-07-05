@@ -32,7 +32,20 @@ public class Move {
 
     public boolean validMove(Set<Card> playedCards) {
         boolean valid = true;
+        int referenceNumber = -1;
+
+        for (Card card : playedCards) {
+            if (card.getNumber() != 2) {
+                if (referenceNumber == -1) {
+                    referenceNumber = card.getNumber();
+                } else if (card.getNumber() != referenceNumber) {
+                    valid = false;
+                }
+            }
+        }
+
         return valid;
     }
+
 
 }
