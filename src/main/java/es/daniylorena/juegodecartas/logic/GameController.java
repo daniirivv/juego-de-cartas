@@ -65,15 +65,22 @@ public class GameController implements GameControllerInterface{
             do {
                 Round currentRound = new Round();
                 this.currentGame.addRound(currentRound);
-                executeTurn(this.currentGame.getPlayerWithTurn());
-                endOfRound = this.currentGame.checkEndRound;
+                Move move = executeTurn();
+                endOfRound = this.currentGame.checkEndRound();
             }while(!endOfRound);
         }while(!exitGame);
-
+        gameDisplay.exit();
     }
 
     private void applyRolesIfDefined(List<Player> players) {
 
+    }
+
+    private Move executeTurn(){
+        Move move = gameDisplay.askForAMove();
+        if(move.isValid()){
+
+        }
     }
 
 }
