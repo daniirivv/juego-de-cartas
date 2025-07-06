@@ -85,7 +85,10 @@ public class Move implements Comparable<Move> {
         Iterator<Card> iterator = this.playedCards.iterator();
         while(iterator.hasNext() && result){
             int cardValue = iterator.next().getNumber();
-            if(cardValue != JOKER || )
+            if(cardValue != JOKER && cardValue != CLOSE_CARD){
+                result = false;
+            }
         }
+        return result;
     }
 }
