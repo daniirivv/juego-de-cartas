@@ -20,6 +20,7 @@ public class Card {
         return suit;
     }
 
+    // TODO: Cambiar por atributo Map<Integer, Integer> (1 -> nº carta; 2 -> Poder)
     public int getPower() { // Para comprobar en la lógica si la carta hechada es mayor que la anterior
         if (this.number == 1 && this.suit == Suit.OROS) return 16; // La carta más poderosa
         if (number == 2) return 15; // Comodín - sustituye a todo menos al as de oros

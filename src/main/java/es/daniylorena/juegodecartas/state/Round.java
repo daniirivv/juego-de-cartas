@@ -45,7 +45,7 @@ public class Round {
         }
 
         if (playedCards.size() != expectedNumberOfCards) return false; // Jugada inválida
-        if (!move.validMove(playedCards)) return false;
+        if (!move.isValid(playedCards)) return false;
         if (move.compareTo(moves.peek()) <= 0) return false;
 
         moves.push(move);

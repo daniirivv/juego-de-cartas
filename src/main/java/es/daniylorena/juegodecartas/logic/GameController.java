@@ -7,6 +7,7 @@ import es.daniylorena.juegodecartas.utilities.CircularList;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 public class GameController implements GameControllerInterface{
 
@@ -65,8 +66,8 @@ public class GameController implements GameControllerInterface{
             do {
                 Round currentRound = new Round();
                 this.currentGame.addRound(currentRound);
-                Move move = executeTurn();
-                endOfRound = this.currentGame.checkEndRound();
+                Move move = executeTurn(currentRound);
+                endOfRound = this.currentGame.checkEndRound(move);
             }while(!endOfRound);
         }while(!exitGame);
         gameDisplay.exit();
@@ -76,11 +77,10 @@ public class GameController implements GameControllerInterface{
 
     }
 
-    private Move executeTurn(){
-        Move move = gameDisplay.askForAMove();
-        if(move.isValid()){
-
-        }
+    private Optional<Move> executeTurn(Round round){
+        Move move = gameDisplay.askForAMove(round.getTurnOwner());
+        if(round.playMove(move)) return Optional.of(move);
+        else return Optional.empty();
     }
 
 }

@@ -3,6 +3,7 @@ package es.daniylorena.juegodecartas.display;
 import es.daniylorena.juegodecartas.logic.GameControllerInterface;
 import es.daniylorena.juegodecartas.logic.exceptions.IllegalPlayerNameException;
 import es.daniylorena.juegodecartas.state.Move;
+import es.daniylorena.juegodecartas.state.Player;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -40,7 +41,7 @@ public class GameDisplay implements GameDisplayInterface{
     }
 
     @Override
-    public Move askForAMove() {
+    public Move askForAMove(Player turnOwner) {
         return null;
     }
 

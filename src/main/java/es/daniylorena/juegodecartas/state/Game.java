@@ -32,4 +32,8 @@ public class Game {
     public boolean addRound(Round round) {
         return this.rounds.add(round);
     }
+
+    public boolean checkEndRound(Move move) {
+        return move.isCloseMove();
+    }
 }

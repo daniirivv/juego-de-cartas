@@ -1,11 +1,13 @@
 package es.daniylorena.juegodecartas.state;
 
-import javax.swing.text.html.HTMLDocument;
 import java.lang.Comparable;
 import java.util.Iterator;
 import java.util.Set;
 
 public class Move implements Comparable<Move> {
+
+    private static final int JOKER = 2;
+    private static final int CLOSE_CARD = 1;
 
     private Set<Card> playedCards;
     private Player moveOwner;
@@ -31,7 +33,7 @@ public class Move implements Comparable<Move> {
         this.moveOwner = moveOwner;
     }
 
-    public boolean validMove(Set<Card> playedCards) {
+    public boolean isValid(Set<Card> playedCards) {
         boolean valid = true;
         int referenceNumber = -1;
 
@@ -49,7 +51,7 @@ public class Move implements Comparable<Move> {
     }
 
     public int getMovePower() {
-        if (!validMove(this.playedCards)) {
+        if (!isValid(this.playedCards)) {
             return 0;
         }
 
@@ -78,4 +80,12 @@ public class Move implements Comparable<Move> {
         }
     }
 
+    public boolean isCloseMove() {
+        boolean result = true;
+        Iterator<Card> iterator = this.playedCards.iterator();
+        while(iterator.hasNext() && result){
+            int cardValue = iterator.next().getNumber();
+            if(cardValue != JOKER)
+        }
+    }
 }
