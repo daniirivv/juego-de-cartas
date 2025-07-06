@@ -48,8 +48,9 @@ public class Move implements Comparable<Move> {
         return valid;
     }
 
+    // @TODO: Acabar método
     public int getMovePower() {
-        return -1; // Terminar
+        return -1;
     }
 
     @Override
@@ -57,21 +58,11 @@ public class Move implements Comparable<Move> {
         int thisSize = this.playedCards.size();
         int otherSize = other.playedCards.size();
 
-        if (thisSize < otherSize) {
-            return -1;
-        } else if (thisSize > otherSize) {
-            return 1;
-        } else { // mismo número de cartas --> válido
-            int thisPower = getMovePower();
+        if(thisSize!=otherSize) return Integer.compareUnsigned(thisSize, otherSize);
+        else{
+            int thisPower = this.getMovePower();
             int otherPower = other.getMovePower();
-
-            if (thisPower < otherPower) {
-                return -1;
-            } else if (thisPower > otherPower) {
-                return 1;
-            } else {
-                return 0;
-            }
+            return Integer.compareUnsigned(thisPower, otherPower);
         }
     }
 
