@@ -7,7 +7,7 @@ import es.daniylorena.juegodecartas.utilities.CircularList;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
+
 
 public class GameController implements GameControllerInterface{
 
@@ -25,6 +25,14 @@ public class GameController implements GameControllerInterface{
 
     public void setCurrentGame(Game currentGame) {
         this.currentGame = currentGame;
+    }
+
+    public GameDisplayInterface getGameDisplay() {
+        return gameDisplay;
+    }
+
+    public void setGameDisplay(GameDisplayInterface gameDisplay) {
+        this.gameDisplay = gameDisplay;
     }
 
     @Override
@@ -70,7 +78,6 @@ public class GameController implements GameControllerInterface{
                 endOfRound = this.currentGame.checkEndRound(move);
             }while(!endOfRound);
         }while(!exitGame);
-        gameDisplay.exit();
     }
 
     private void applyRolesIfDefined(List<Player> players) {

@@ -6,13 +6,13 @@ import es.daniylorena.juegodecartas.display.UI;
 
 public class App {
 
-    UI gameDisplay;
+    private UI gameDisplay;
 
-    public UI getGameDisplay() {
+    public UI getUI() {
         return gameDisplay;
     }
 
-    public void setGameDisplay(UI gameDisplay) {
+    public void setUI(UI gameDisplay) {
         this.gameDisplay = gameDisplay;
     }
 
@@ -23,5 +23,10 @@ public class App {
     public static void main(String[] args){
         App app = new App();
         DependencyInyection.inyect(app);
+        boolean exit = false;
+        do{
+            app.run();
+            exit = app.getUI().askForLeave();
+        }while(!exit);
     }
 }

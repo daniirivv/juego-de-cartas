@@ -12,7 +12,7 @@ public class DependencyInyection {
         gameDisplay.setGameController(gameController);
         gameController.setGameDisplay(gameDisplay);
 
-        app.setGameDisplay(gameDisplay);
+        app.setUI(gameDisplay);
     }
 
 }
