@@ -17,12 +17,12 @@ public class App {
     }
 
     public void run(){
-        gameDisplay.createNewGame();
+        gameDisplay.play();
     }
 
     public static void main(String[] args){
         App app = new App();
-        DependencyInyection.inyect(app);
+        DependencyInyector.inyect(app);
         boolean exit = false;
         do{
             app.run();

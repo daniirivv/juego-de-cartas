@@ -3,7 +3,7 @@ package es.daniylorena.juegodecartas;
 import es.daniylorena.juegodecartas.display.*;
 import es.daniylorena.juegodecartas.logic.*;
 
-public class DependencyInyection {
+public class DependencyInyector {
 
     public static void inyect(App app){
         GameDisplay gameDisplay = new GameDisplay();

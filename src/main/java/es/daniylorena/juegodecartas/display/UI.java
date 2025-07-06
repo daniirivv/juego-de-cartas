@@ -4,6 +4,6 @@ public interface UI {
 
     boolean askForLeave();
 
-    void createNewGame();
+    void play();
 
 }

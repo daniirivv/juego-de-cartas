@@ -36,9 +36,13 @@ public class GameController implements GameControllerInterface{
     }
 
     @Override
-    public void createAndStartNewGame(ArrayList<String> playersNames) {
-        Game currentGame = new Game(initializePlayers(playersNames), new Deck());
-        startCurrentGame();
+    public void launchGame(ArrayList<String> playersNames) {
+        ArrayList<Player> players = initializePlayers(playersNames);
+        Deck deck = new Deck();
+        this.currentGame = new Game(players, deck);
+        this.currentGame.getDeck().shuffle();
+        distributeCardsAmongPlayers();
+        playGame();
     }
 
     private ArrayList<Player> initializePlayers(ArrayList<String> playersNames) {
@@ -48,12 +52,6 @@ public class GameController implements GameControllerInterface{
             players.add(player);
         }
         return players;
-    }
-
-    private void startCurrentGame() {
-        this.currentGame.getDeck().shuffle();
-        distributeCardsAmongPlayers();
-        playGame();
     }
 
     private void distributeCardsAmongPlayers() {
@@ -67,24 +65,33 @@ public class GameController implements GameControllerInterface{
     }
 
     private void playGame() {
-        boolean exitGame = false;
+        boolean rematch = false;
         do{
-            applyRolesIfDefined(this.currentGame.getPlayers());
-            boolean endOfRound = false;
-            do {
-                Round currentRound = new Round();
-                this.currentGame.addRound(currentRound);
-                Move move = executeTurn(currentRound);
-                endOfRound = this.currentGame.checkEndRound(move);
+            singleMatch();
+        }while(rematch);
+    }
+
+    private void singleMatch() {
+        applyRolesIfDefined();
+        boolean endOfGame = false;
+        do {
+            Round currentRound = new Round();
+            this.currentGame.addRound(currentRound);
+            boolean endOfRound;
+            do{
+                Move move = executeTurn();
+                endOfRound = this.currentGame.checkEndRound();
             }while(!endOfRound);
-        }while(!exitGame);
+            endOfGame = this.getCurrentGame().checkEndGame();
+        }while(!endOfGame);
     }
 
-    private void applyRolesIfDefined(List<Player> players) {
+    private void applyRolesIfDefined() {
 
     }
 
-    private Move executeTurn(Round round){
+    private Move executeTurn(){
+        Round round = this.currentGame.getCurrentRound();
         boolean invalidMove = true;
         Move move;
         do{

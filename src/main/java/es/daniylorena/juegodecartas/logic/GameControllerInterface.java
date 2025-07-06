@@ -4,6 +4,6 @@ import java.util.ArrayList;
 
 public interface GameControllerInterface {
 
-    void createAndStartNewGame(ArrayList<String> playersNames);
+    void launchGame(ArrayList<String> playersNames);
 
 }

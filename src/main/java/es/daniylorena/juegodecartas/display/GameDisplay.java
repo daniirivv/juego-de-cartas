@@ -26,9 +26,9 @@ public class GameDisplay implements UI, GameDisplayInterface{
     }
 
     @Override
-    public void createNewGame() {
+    public void play() {
         ArrayList<String> playersNames = askForPlayerNames();
-        this.gameController.createAndStartNewGame(playersNames);
+        this.gameController.launchGame(playersNames);
     }
 
     private ArrayList<String> askForPlayerNames(){
