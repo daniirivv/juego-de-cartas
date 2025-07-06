@@ -77,10 +77,17 @@ public class GameController implements GameControllerInterface{
 
     }
 
-    private Optional<Move> executeTurn(Round round){
-        Move move = gameDisplay.askForAMove(round.getTurnOwner());
-        if(round.playMove(move)) return Optional.of(move);
-        else return Optional.empty();
+    private Move executeTurn(Round round){
+        boolean invalidMove = true;
+        Move move;
+        do{
+            move = gameDisplay.askForAMove(round.getTurnOwner());
+            if (round.playMove(move)) {
+                invalidMove = false;
+                gameDisplay.notifyInvalidMove();
+            }
+        }while(invalidMove);
+        return move;
     }
 
 }

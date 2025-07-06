@@ -8,7 +8,7 @@ import es.daniylorena.juegodecartas.state.Player;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class GameDisplay implements GameDisplayInterface{
+public class GameDisplay implements UI, GameDisplayInterface{
 
     public final String DONE_COMMAND = "DONE";
     public final String EXIT_COMMAND = "EXIT";
@@ -45,6 +45,10 @@ public class GameDisplay implements GameDisplayInterface{
         return null;
     }
 
+    @Override
+    public void notifyInvalidMove() {
+        System.out.println("Ese movimiento no se puede realizar. Elija otro movimiento.");
+    }
 
 
 }

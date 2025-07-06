@@ -5,7 +5,7 @@ import es.daniylorena.juegodecartas.state.Player;
 
 public interface GameDisplayInterface {
 
-    void createNewGame();
-
     Move askForAMove(Player turnOwner);
+
+    void notifyInvalidMove();
 }
