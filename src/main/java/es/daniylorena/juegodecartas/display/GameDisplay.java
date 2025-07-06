@@ -69,7 +69,7 @@ public class GameDisplay implements UI, GameDisplayInterface{
                         String suitInput = individualCard[1];
 
                         if (isValidCardNumber(cardNumber) && isValidSuit(suitInput)) {
-                            Suit suit = parseSuit(suitInput);
+                            Suit suit = Suit.valueOf(suitInput);
                             Card cardToPlay = new Card(cardNumber, suit);
                             setOfCards.add(cardToPlay);
                         } else {
@@ -94,16 +94,6 @@ public class GameDisplay implements UI, GameDisplayInterface{
 
     private boolean isValidSuit(String inputSuit) {
         return inputSuit.equals("oros") || inputSuit.equals("bastos") || inputSuit.equals("copas") || inputSuit.equals("espadas");
-    }
-
-    private Suit parseSuit(String inputSuit) {
-        switch (inputSuit) {
-            case "oros": return Suit.OROS;
-            case "copas": return Suit.COPAS;
-            case "espadas": return Suit.ESPADAS;
-            case "bastos": return Suit.BASTOS;
-        }
-        return null; // Nunca va a llegar aquí porque hay una validación antes
     }
 
     @Override
