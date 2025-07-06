@@ -6,14 +6,22 @@ import es.daniylorena.juegodecartas.state.*;
 
 import java.util.*;
 
-public class GameDisplay implements GameDisplayInterface{
+public class GameDisplay implements UI, GameDisplayInterface{
 
-    public final String DONE_COMMAND = "DONE";
-    public final String EXIT_COMMAND = "EXIT";
+    public static final String DONE_COMMAND = "DONE";
+    public static final String EXIT_COMMAND = "EXIT";
 
     private final static Scanner keyboardInput = new Scanner (System.in);
 
     private GameControllerInterface gameController;
+
+    public GameControllerInterface getGameController() {
+        return gameController;
+    }
+
+    public void setGameController(GameControllerInterface gameController) {
+        this.gameController = gameController;
+    }
 
     @Override
     public void createNewGame() {
@@ -98,6 +106,15 @@ public class GameDisplay implements GameDisplayInterface{
         return null; // Nunca va a llegar aquí porque hay una validación antes
     }
 
+    @Override
+    public void notifyInvalidMove() {
+        System.out.println("Ese movimiento no se puede realizar. Elija otro movimiento.");
+    }
+
+    @Override
+    public boolean askForLeave() {
+        return keyboardInput.nextLine().equalsIgnoreCase(EXIT_COMMAND);
+    }
 
 
 
