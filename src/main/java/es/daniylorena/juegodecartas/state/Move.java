@@ -48,10 +48,22 @@ public class Move implements Comparable<Move> {
         return valid;
     }
 
-    // @TODO: Acabar método
     public int getMovePower() {
-        return -1;
+        if (!validMove(this.playedCards)) {
+            return 0;
+        }
+
+        // Buscar la primera carta que no sea un 2
+        for (Card card : this.playedCards) {
+            if (card.getNumber() != 2) {
+                return card.getPower();
+            }
+        }
+
+        // Si solo había comodines
+        return new Card(2, Suit.OROS).getPower();
     }
+
 
     @Override
     public int compareTo(Move other) {
