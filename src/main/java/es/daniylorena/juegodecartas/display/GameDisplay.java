@@ -2,11 +2,9 @@ package es.daniylorena.juegodecartas.display;
 
 import es.daniylorena.juegodecartas.logic.GameControllerInterface;
 import es.daniylorena.juegodecartas.logic.exceptions.IllegalPlayerNameException;
-import es.daniylorena.juegodecartas.state.Move;
-import es.daniylorena.juegodecartas.state.Player;
+import es.daniylorena.juegodecartas.state.*;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class GameDisplay implements GameDisplayInterface{
 
@@ -27,6 +25,7 @@ public class GameDisplay implements GameDisplayInterface{
         ArrayList<String> result = new ArrayList<>(10);
         boolean done = false;
         do {
+            System.out.println("Introduce los nombres de los jugadores:");
             String name = GameDisplay.keyboardInput.nextLine();
             if (!name.equalsIgnoreCase(DONE_COMMAND)) {
                 if (!name.isEmpty()) {
@@ -42,8 +41,63 @@ public class GameDisplay implements GameDisplayInterface{
 
     @Override
     public Move askForAMove(Player turnOwner) {
-        return null;
+        System.out.println("¿Qué cartas quieres echar?");
+        System.out.println("Formato: <Número> de <Palo>, <Número> de <Palo>... Ej: 4 de oros, 4 de bastos, 4 de copas");
+
+        String inputCards = GameDisplay.keyboardInput.nextLine().toLowerCase().trim();
+        String[] cards = inputCards.split(",");
+
+        Set<Card> setOfCards = new HashSet<>();
+
+        for (String card : cards) {
+            card = card.trim();
+
+            if (!card.isEmpty()) {
+                String[] individualCard = card.split("\\s+de+\\s+"); // Expresión regular que permite 1/+ espacios
+
+                if (individualCard.length == 2) {
+                    try {
+                        int cardNumber = Integer.parseInt(individualCard[0].trim());
+                        String suitInput = individualCard[1];
+
+                        if (isValidCardNumber(cardNumber) && isValidSuit(suitInput)) {
+                            Suit suit = parseSuit(suitInput);
+                            Card cardToPlay = new Card(cardNumber, suit);
+                            setOfCards.add(cardToPlay);
+                        } else {
+                            System.out.println("Carta inválida: " + card);
+                        }
+                    }
+                    catch (NumberFormatException e) {
+                        System.out.println("Número inválido en: " + card);
+                    }
+                } else {
+                    System.out.println("Formato incorrecto en: " + card);
+                }
+            }
+        }
+
+        return new Move(setOfCards, turnOwner);
     }
+
+    private boolean isValidCardNumber(int number) {
+        return number > 0 && number <= 12;
+    }
+
+    private boolean isValidSuit(String inputSuit) {
+        return inputSuit.equals("oros") || inputSuit.equals("bastos") || inputSuit.equals("copas") || inputSuit.equals("espadas");
+    }
+
+    private Suit parseSuit(String inputSuit) {
+        switch (inputSuit) {
+            case "oros": return Suit.OROS;
+            case "copas": return Suit.COPAS;
+            case "espadas": return Suit.ESPADAS;
+            case "bastos": return Suit.BASTOS;
+        }
+        return null; // Nunca va a llegar aquí porque hay una validación antes
+    }
+
 
 
 
