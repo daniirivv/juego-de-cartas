@@ -6,6 +6,8 @@ import java.util.Set;
 public class Round {
 
     private Stack<Move> moves;
+
+    private Player turnOwner;
     private int expectedNumberOfCards;
 
     public Round(Stack<Move> moves, int expectedNumberOfCards) {
@@ -13,12 +15,24 @@ public class Round {
         this.expectedNumberOfCards = expectedNumberOfCards;
     }
 
-    public int getExpectedNumberOfCards() {
-        return expectedNumberOfCards;
+    public Round() {
+
     }
 
     public Stack<Move> getMoves() {
         return moves;
+    }
+
+    public Player getTurnOwner() {
+        return turnOwner;
+    }
+
+    public void setTurnOwner(Player turnOwner) {
+        this.turnOwner = turnOwner;
+    }
+
+    public int getExpectedNumberOfCards() {
+        return expectedNumberOfCards;
     }
 
     public boolean playMove(Move move) {

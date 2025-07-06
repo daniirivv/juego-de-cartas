@@ -1,14 +1,18 @@
 package es.daniylorena.juegodecartas.logic;
 
+import es.daniylorena.juegodecartas.display.GameDisplayInterface;
 import es.daniylorena.juegodecartas.state.*;
 import es.daniylorena.juegodecartas.utilities.CircularList;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class GameController implements GameControllerInterface{
 
     private Game currentGame;
+
+    private GameDisplayInterface gameDisplay;
 
     public GameController() {
 
@@ -54,7 +58,22 @@ public class GameController implements GameControllerInterface{
     }
 
     private void playGame() {
-        
+        boolean exitGame = false;
+        do{
+            applyRolesIfDefined(this.currentGame.getPlayers());
+            boolean endOfRound = false;
+            do {
+                Round currentRound = new Round();
+                this.currentGame.addRound(currentRound);
+                executeTurn(this.currentGame.getPlayerWithTurn());
+                endOfRound = this.currentGame.checkEndRound;
+            }while(!endOfRound);
+        }while(!exitGame);
+
+    }
+
+    private void applyRolesIfDefined(List<Player> players) {
+
     }
 
 }

@@ -28,4 +28,8 @@ public class Game {
     public Deck getDeck() {
         return deck;
     }
+
+    public boolean addRound(Round round) {
+        return this.rounds.add(round);
+    }
 }
