@@ -40,4 +40,11 @@ public class Player {
 
     public void removeCardFromHand(Card card) {
         this.hand.remove(card); }
+
+    public Card getBestCard(Player player) {
+        this.hand.sort((a,b) -> b.getPower() - a.getPower()); // Ordena la mano de mayor a menor peso
+
+        return hand.getFirst();
+    }
+
 }

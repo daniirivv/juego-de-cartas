@@ -87,6 +87,24 @@ public class GameController implements GameControllerInterface{
     }
 
     private void applyRolesIfDefined() {
+        Player presi = null;
+        Player vice = null;
+        Player viceculo = null;
+        Player culo = null;
+
+        for (Player p : this.currentGame.getPlayers()) {
+            switch (p.getRole()) {
+                case PRESI -> presi = p;
+                case VICEPRESI -> vice = p;
+                case VICECULO -> viceculo = p;
+                case CULO -> culo = p;
+            }
+        }
+
+        // Presidente <--> Culo
+        if (presi != null && culo != null) {
+            presi.removeCardFromHand();
+        }
 
     }
 
