@@ -87,8 +87,27 @@ public class GameController implements GameControllerInterface{
     }
 
     private void applyRolesIfDefined() {
-        // Revisar los roles de los jugadores de la partida e intercambiar las cartas correspondientes
-    }
+        Player presi = null;
+        Player vice = null;
+        Player viceculo = null;
+        Player culo = null;
+
+        for (Player p : this.currentGame.getPlayers()) {
+            switch (p.getRole()) {
+                case PRESI -> presi = p;
+                case VICEPRESI -> vice = p;
+                case VICECULO -> viceculo = p;
+                case CULO -> culo = p;
+            }
+        }
+
+        // Presidente <--> Culo
+        if (presi != null && culo != null) {
+            culo.removeCardFromHand(culo.getBestCard());
+            culo.removeCardFromHand(culo.getBestCard());
+
+
+        }
 
     private CircularList<Player> generateRoundPlayers(int i) {
         CircularList<Player> roundPlayers;

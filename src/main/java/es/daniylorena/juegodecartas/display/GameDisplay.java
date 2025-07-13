@@ -112,6 +112,4 @@ public class GameDisplay implements UI, GameDisplayInterface{
         return keyboardInput.nextLine().equalsIgnoreCase(EXIT_COMMAND);
     }
 
-
-
 }
