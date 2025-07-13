@@ -10,6 +10,7 @@ public class GameDisplay implements UI, GameDisplayInterface{
 
     public static final String DONE_COMMAND = "DONE";
     public static final String EXIT_COMMAND = "EXIT";
+    public static final String POSITIVE_ANSWER = "Y";
 
     private final static Scanner keyboardInput = new Scanner (System.in);
 
@@ -99,6 +100,11 @@ public class GameDisplay implements UI, GameDisplayInterface{
     @Override
     public void notifyInvalidMove() {
         System.out.println("Ese movimiento no se puede realizar. Elija otro movimiento.");
+    }
+
+    @Override
+    public boolean askForRematch() {
+        return keyboardInput.nextLine().equalsIgnoreCase(POSITIVE_ANSWER);
     }
 
     @Override

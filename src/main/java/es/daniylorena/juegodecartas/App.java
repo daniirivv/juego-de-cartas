@@ -23,7 +23,7 @@ public class App {
     public static void main(String[] args){
         App app = new App();
         DependencyInyector.inyect(app);
-        boolean exit = false;
+        boolean exit;
         do{
             app.run();
             exit = app.getUI().askForLeave();

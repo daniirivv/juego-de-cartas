@@ -40,9 +40,13 @@ public class GameController implements GameControllerInterface{
         ArrayList<Player> players = initializePlayers(playersNames);
         Deck deck = new Deck();
         this.currentGame = new Game(players, deck);
-        this.currentGame.getDeck().shuffle();
+        shuffleDeck();
         distributeCardsAmongPlayers();
         playGame();
+    }
+
+    private void shuffleDeck(){
+        this.currentGame.getDeck().shuffle();
     }
 
     private ArrayList<Player> initializePlayers(ArrayList<String> playersNames) {
@@ -68,6 +72,7 @@ public class GameController implements GameControllerInterface{
         boolean rematch = false;
         do{
             singleMatch();
+            rematch = this.gameDisplay.askForRematch();
         }while(rematch);
     }
 
@@ -80,9 +85,12 @@ public class GameController implements GameControllerInterface{
             boolean endOfRound;
             do{
                 Move move = executeTurn();
-                endOfRound = this.currentGame.checkEndRound();
+                endOfRound = move.isCloseMove();
             }while(!endOfRound);
-            endOfGame = this.getCurrentGame().checkEndGame();
+            /* @TODO:
+                    * Comprobar si algún jugador se ha quedado sin cartas -> asignar rol
+                    * Si solamente queda un jugador con cartas -> fin del juego (es culo)
+            */
         }while(!endOfGame);
     }
 
