@@ -86,8 +86,6 @@ public class GameController implements GameControllerInterface{
 
     }
 
-
-    // TODO: terminarrr
     private void applyRolesIfDefined() {
         Player presi = null;
         Player vicepresi = null;
@@ -123,6 +121,20 @@ public class GameController implements GameControllerInterface{
 
             culo.addCardToHand(worst1);
             culo.addCardToHand(worst2);
+        }
+
+        // Vicepresidente <--> Viceculo
+        if (vicepresi != null && viceculo != null) {
+
+            Card bestCard = viceculo.getBestCard();
+            viceculo.removeCardFromHand(bestCard);
+
+            vicepresi.addCardToHand(bestCard);
+
+            Card worstCard = vicepresi.getWorstNonRepeatedCard();
+            vicepresi.removeCardFromHand(worstCard);
+
+            viceculo.addCardToHand(worstCard);
         }
 
     }
