@@ -103,7 +103,10 @@ public class GameController implements GameControllerInterface{
 
         // Presidente <--> Culo
         if (presi != null && culo != null) {
-            presi.removeCardFromHand();
+            culo.removeCardFromHand(culo.getBestCard());
+            culo.removeCardFromHand(culo.getBestCard());
+
+
         }
 
     }
