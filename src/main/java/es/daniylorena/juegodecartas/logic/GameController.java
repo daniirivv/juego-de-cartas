@@ -108,6 +108,7 @@ public class GameController implements GameControllerInterface{
 
 
         }
+    }
 
     private CircularList<Player> generateRoundPlayers(int i) {
         CircularList<Player> roundPlayers;
