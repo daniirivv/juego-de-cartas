@@ -47,7 +47,7 @@ public class Player {
         return hand.getFirst();
     }
 
-    private Card getWorstNonRepeatedCard() {
+    public Card getWorstNonRepeatedCard() {
         this.hand.sort((a, b) -> a.getPower() - b.getPower());
 
         Card candidate = null;

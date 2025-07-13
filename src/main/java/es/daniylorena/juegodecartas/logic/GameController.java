@@ -86,16 +86,18 @@ public class GameController implements GameControllerInterface{
 
     }
 
+
+    // TODO: terminarrr
     private void applyRolesIfDefined() {
         Player presi = null;
-        Player vice = null;
+        Player vicepresi = null;
         Player viceculo = null;
         Player culo = null;
 
         for (Player p : this.currentGame.getPlayers()) {
             switch (p.getRole()) {
                 case PRESI -> presi = p;
-                case VICEPRESI -> vice = p;
+                case VICEPRESI -> vicepresi = p;
                 case VICECULO -> viceculo = p;
                 case CULO -> culo = p;
             }
@@ -103,9 +105,17 @@ public class GameController implements GameControllerInterface{
 
         // Presidente <--> Culo
         if (presi != null && culo != null) {
+
+            // Intercambio
+            presi.addCardToHand(culo.getBestCard());
             culo.removeCardFromHand(culo.getBestCard());
+            presi.addCardToHand(culo.getBestCard());
             culo.removeCardFromHand(culo.getBestCard());
 
+            culo.addCardToHand(presi.getWorstNonRepeatedCard());
+            presi.removeCardFromHand(presi.getWorstNonRepeatedCard());
+            culo.addCardToHand(presi.getWorstNonRepeatedCard());
+            presi.removeCardFromHand(presi.getWorstNonRepeatedCard());
 
         }
     }
