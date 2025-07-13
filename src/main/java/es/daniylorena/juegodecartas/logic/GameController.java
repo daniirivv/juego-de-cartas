@@ -106,18 +106,25 @@ public class GameController implements GameControllerInterface{
         // Presidente <--> Culo
         if (presi != null && culo != null) {
 
-            // Intercambio
-            presi.addCardToHand(culo.getBestCard());
-            culo.removeCardFromHand(culo.getBestCard());
-            presi.addCardToHand(culo.getBestCard());
-            culo.removeCardFromHand(culo.getBestCard());
+            Card best1 = culo.getBestCard();
+            culo.removeCardFromHand(best1);
 
-            culo.addCardToHand(presi.getWorstNonRepeatedCard());
-            presi.removeCardFromHand(presi.getWorstNonRepeatedCard());
-            culo.addCardToHand(presi.getWorstNonRepeatedCard());
-            presi.removeCardFromHand(presi.getWorstNonRepeatedCard());
+            Card best2 = culo.getBestCard();
+            culo.removeCardFromHand(best2);
 
+            presi.addCardToHand(best1);
+            presi.addCardToHand(best2);
+
+            Card worst1 = presi.getWorstNonRepeatedCard();
+            presi.removeCardFromHand(worst1);
+
+            Card worst2 = presi.getWorstNonRepeatedCard();
+            presi.removeCardFromHand(worst2);
+
+            culo.addCardToHand(worst1);
+            culo.addCardToHand(worst2);
         }
+
     }
 
     private CircularList<Player> generateRoundPlayers(int i) {
