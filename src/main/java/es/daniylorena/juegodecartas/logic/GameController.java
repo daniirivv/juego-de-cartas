@@ -80,22 +80,26 @@ public class GameController implements GameControllerInterface{
         applyRolesIfDefined();
         boolean endOfGame = false;
         do {
-            Round currentRound = new Round();
-            this.currentGame.addRound(currentRound);
-            boolean endOfRound;
-            do{
-                Move move = executeTurn();
-                endOfRound = move.isCloseMove();
-            }while(!endOfRound);
-            /* @TODO:
-                    * Comprobar si algún jugador se ha quedado sin cartas -> asignar rol
-                    * Si solamente queda un jugador con cartas -> fin del juego (es culo)
-            */
+            Player closer = singleRound();
+            giveRole(closer);
+            endOfGame = checkEndGame();
         }while(!endOfGame);
     }
 
     private void applyRolesIfDefined() {
 
+    }
+
+    private Player singleRound(){
+        return null;
+    }
+
+    private void giveRole(Player closer) {
+
+    }
+
+    private boolean checkEndGame() {
+        return false;
     }
 
     private Move executeTurn(){
