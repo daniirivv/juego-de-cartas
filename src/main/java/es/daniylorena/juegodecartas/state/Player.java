@@ -36,7 +36,8 @@ public class Player {
         return hand.size();
     }
 
-    public void addCardToHand(Card card) {
-        this.hand.add(card);
-    }
+    public void addCardToHand(Card card) { this.hand.add(card); }
+
+    public void removeCardFromHand(Card card) {
+        this.hand.remove(card); }
 }
