@@ -104,23 +104,23 @@ public class GameController implements GameControllerInterface{
         // Presidente <--> Culo
         if (presi != null && culo != null) {
 
-            Card best1 = culo.getBestCard();
-            culo.removeCardFromHand(best1);
+            Card bestCard1 = culo.getBestCard();
+            culo.removeCardFromHand(bestCard1);
 
-            Card best2 = culo.getBestCard();
-            culo.removeCardFromHand(best2);
+            Card bestCard2 = culo.getBestCard();
+            culo.removeCardFromHand(bestCard2);
 
-            presi.addCardToHand(best1);
-            presi.addCardToHand(best2);
+            presi.addCardToHand(bestCard1);
+            presi.addCardToHand(bestCard2);
 
-            Card worst1 = presi.getWorstNonRepeatedCard();
-            presi.removeCardFromHand(worst1);
+            Card worstCard1 = presi.getWorstNonRepeatedCard();
+            presi.removeCardFromHand(worstCard1);
 
-            Card worst2 = presi.getWorstNonRepeatedCard();
-            presi.removeCardFromHand(worst2);
+            Card worstCard2 = presi.getWorstNonRepeatedCard();
+            presi.removeCardFromHand(worstCard2);
 
-            culo.addCardToHand(worst1);
-            culo.addCardToHand(worst2);
+            culo.addCardToHand(worstCard1);
+            culo.addCardToHand(worstCard2);
         }
 
         // Vicepresidente <--> Viceculo
