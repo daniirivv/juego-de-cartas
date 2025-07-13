@@ -4,9 +4,7 @@ import es.daniylorena.juegodecartas.display.GameDisplayInterface;
 import es.daniylorena.juegodecartas.state.*;
 import es.daniylorena.juegodecartas.utilities.CircularList;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 public class GameController implements GameControllerInterface{
@@ -45,10 +43,6 @@ public class GameController implements GameControllerInterface{
         playGame();
     }
 
-    private void shuffleDeck(){
-        this.currentGame.getDeck().shuffle();
-    }
-
     private ArrayList<Player> initializePlayers(ArrayList<String> playersNames) {
         ArrayList<Player> players = new ArrayList<>();
         for(String name : playersNames){
@@ -56,6 +50,10 @@ public class GameController implements GameControllerInterface{
             players.add(player);
         }
         return players;
+    }
+
+    private void shuffleDeck(){
+        this.currentGame.getDeck().shuffle();
     }
 
     private void distributeCardsAmongPlayers() {
@@ -69,7 +67,7 @@ public class GameController implements GameControllerInterface{
     }
 
     private void playGame() {
-        boolean rematch = false;
+        boolean rematch;
         do{
             singleMatch();
             rematch = this.gameDisplay.askForRematch();
@@ -78,40 +76,62 @@ public class GameController implements GameControllerInterface{
 
     private void singleMatch() {
         applyRolesIfDefined();
-        boolean endOfGame = false;
-        do {
-            Player closer = singleRound();
-            giveRole(closer);
-            endOfGame = checkEndGame();
-        }while(!endOfGame);
+        int numberOfRounds = this.currentGame.getPlayers().size()-1;
+        for(int i = 0; i < numberOfRounds; i++) {
+            Round round = new Round(generateRoundPlayers(i));
+            this.currentGame.addRound(round);
+            singleRound();
+            // PATRÓN OBSERVER PARA ASIGNAR ROL A UN JUGADOR CUANDO SE QUEDA SIN CARTAS
+        }
+
     }
 
     private void applyRolesIfDefined() {
-
+        // Revisar los roles de los jugadores de la partida e intercambiar las cartas correspondientes
     }
 
-    private Player singleRound(){
-        return null;
+    private CircularList<Player> generateRoundPlayers(int i) {
+        CircularList<Player> roundPlayers;
+        if(i == 0){
+            roundPlayers = new CircularList<>(this.currentGame.getPlayers());
+        }
+        else {
+            Player roundWinner = this.currentGame.getLastRound().getWinner();
+            List<Player> previousRoundPlayers = this.currentGame.getLastRound().getSimpleListOfSubplayers();
+            List<Player> actualRoundPlayers = new ArrayList<>(previousRoundPlayers);
+            actualRoundPlayers.remove(roundWinner);
+            roundPlayers = new CircularList<>(actualRoundPlayers);
+        }
+        return roundPlayers;
+    }
+
+    private void singleRound(){
+        Move move;
+        boolean endOfRound;
+        do{
+            move = executeTurn();
+            endOfRound = move.isCloseMove() || checkEndGame();
+        }while(!endOfRound);
     }
 
     private void giveRole(Player closer) {
-
+        // PATRÓN OBSERVER
     }
 
     private boolean checkEndGame() {
+        // PATRÓN OBSERVER
         return false;
     }
 
     private Move executeTurn(){
-        Round round = this.currentGame.getCurrentRound();
+        Round round = this.currentGame.getLastRound();
         boolean invalidMove = true;
         Move move;
         do{
             move = gameDisplay.askForAMove(round.getTurnOwner());
             if (round.playMove(move)) {
                 invalidMove = false;
-                gameDisplay.notifyInvalidMove();
-            }
+            } else gameDisplay.notifyInvalidMove();
         }while(invalidMove);
         return move;
     }

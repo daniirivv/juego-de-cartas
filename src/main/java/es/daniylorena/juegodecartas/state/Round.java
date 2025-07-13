@@ -1,26 +1,34 @@
 package es.daniylorena.juegodecartas.state;
 
+import es.daniylorena.juegodecartas.utilities.CircularList;
+
+import java.util.List;
 import java.util.Stack;
 import java.util.Set;
 
 public class Round {
 
-    private Stack<Move> moves;
+    private final Stack<Move> moves;
+    private final CircularList<Player> actualRoundPlayers;
 
     private Player turnOwner;
+    private Player winner;
     private int expectedNumberOfCards;
 
-    public Round(Stack<Move> moves, int expectedNumberOfCards) {
-        this.moves = moves;
-        this.expectedNumberOfCards = expectedNumberOfCards;
-    }
+    public Round(CircularList<Player> actualRoundPlayers) {
+        this.actualRoundPlayers = actualRoundPlayers;
 
-    public Round() {
-
+        this.moves = new Stack<>();
+        this.turnOwner = actualRoundPlayers.next();
+        this.winner = null;
     }
 
     public Stack<Move> getMoves() {
         return moves;
+    }
+
+    public CircularList<Player> getActualRoundPlayers() {
+        return actualRoundPlayers;
     }
 
     public Player getTurnOwner() {
@@ -31,11 +39,24 @@ public class Round {
         this.turnOwner = turnOwner;
     }
 
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
     public int getExpectedNumberOfCards() {
         return expectedNumberOfCards;
     }
 
+    public void setExpectedNumberOfCards(int expectedNumberOfCards) {
+        this.expectedNumberOfCards = expectedNumberOfCards;
+    }
+
     public boolean playMove(Move move) {
+        // @TODO: Implementar "paso" como movimiento válido
         Set<Card> playedCards = move.getPlayedCards();
 
         if (moves.isEmpty()) {
@@ -52,4 +73,7 @@ public class Round {
         return true;
     }
 
+    public List<Player> getSimpleListOfSubplayers() {
+        return this.actualRoundPlayers.getElements();
+    }
 }
