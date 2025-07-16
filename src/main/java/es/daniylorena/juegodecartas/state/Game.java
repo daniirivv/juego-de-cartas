@@ -37,7 +37,7 @@ public class Game {
         return getLastMove().isCloseMove();
     }
 
-    private Move getLastMove() {
+    public Move getLastMove() {
         return getLastRound().getMoves().getLast();
     }
 
