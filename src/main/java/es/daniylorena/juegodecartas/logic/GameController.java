@@ -181,6 +181,10 @@ public class GameController implements GameControllerInterface{
             move = gameDisplay.askForAMove(round.getTurnOwner());
             if (round.playMove(move)) {
                 invalidMove = false;
+                if (isPlin()) {
+                    round.getActualRoundPlayers().next();
+                    System.out.println("¡PLIN! Se salta el turno de " + round.getTurnOwner().getName());
+                }
             } else gameDisplay.notifyInvalidMove(move);
         }while(invalidMove);
         return move;
