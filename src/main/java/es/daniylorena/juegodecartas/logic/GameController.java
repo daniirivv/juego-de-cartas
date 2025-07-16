@@ -8,7 +8,7 @@ import es.daniylorena.juegodecartas.utilities.CircularList;
 import java.util.*;
 
 
-public class GameController implements GameControllerInterface, Suscriber {
+public class GameController implements GameControllerInterface, Subscriber {
 
     private Game currentGame;
 
