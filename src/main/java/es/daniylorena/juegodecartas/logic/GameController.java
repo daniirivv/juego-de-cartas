@@ -87,8 +87,6 @@ public class GameController implements GameControllerInterface{
 
     }
 
-
-    // TODO: terminarrr
     private void applyRolesIfDefined() {
         Player presi = null;
         Player vicepresi = null;
@@ -107,18 +105,39 @@ public class GameController implements GameControllerInterface{
         // Presidente <--> Culo
         if (presi != null && culo != null) {
 
-            // Intercambio
-            presi.addCardToHand(culo.getBestCard());
-            culo.removeCardFromHand(culo.getBestCard());
-            presi.addCardToHand(culo.getBestCard());
-            culo.removeCardFromHand(culo.getBestCard());
+            Card bestCard1 = culo.getBestCard();
+            culo.removeCardFromHand(bestCard1);
 
-            culo.addCardToHand(presi.getWorstNonRepeatedCard());
-            presi.removeCardFromHand(presi.getWorstNonRepeatedCard());
-            culo.addCardToHand(presi.getWorstNonRepeatedCard());
-            presi.removeCardFromHand(presi.getWorstNonRepeatedCard());
+            Card bestCard2 = culo.getBestCard();
+            culo.removeCardFromHand(bestCard2);
 
+            presi.addCardToHand(bestCard1);
+            presi.addCardToHand(bestCard2);
+
+            Card worstCard1 = presi.getWorstNonRepeatedCard();
+            presi.removeCardFromHand(worstCard1);
+
+            Card worstCard2 = presi.getWorstNonRepeatedCard();
+            presi.removeCardFromHand(worstCard2);
+
+            culo.addCardToHand(worstCard1);
+            culo.addCardToHand(worstCard2);
         }
+
+        // Vicepresidente <--> Viceculo
+        if (vicepresi != null && viceculo != null) {
+
+            Card bestCard = viceculo.getBestCard();
+            viceculo.removeCardFromHand(bestCard);
+
+            vicepresi.addCardToHand(bestCard);
+
+            Card worstCard = vicepresi.getWorstNonRepeatedCard();
+            vicepresi.removeCardFromHand(worstCard);
+
+            viceculo.addCardToHand(worstCard);
+        }
+
     }
 
     private CircularList<Player> generateRoundPlayers(int i) {
