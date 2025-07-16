@@ -1,13 +1,14 @@
 package es.daniylorena.juegodecartas.logic;
 
 import es.daniylorena.juegodecartas.display.GameDisplayInterface;
+import es.daniylorena.juegodecartas.logic.events.Subscriber;
 import es.daniylorena.juegodecartas.state.*;
 import es.daniylorena.juegodecartas.utilities.CircularList;
 
 import java.util.*;
 
 
-public class GameController implements GameControllerInterface{
+public class GameController implements GameControllerInterface, Subscriber {
 
     private Game currentGame;
 
@@ -186,4 +187,8 @@ public class GameController implements GameControllerInterface{
         return move;
     }
 
+    @Override
+    public void update(T context) {
+
+    }
 }
