@@ -11,7 +11,6 @@ public class Deck {
 
     public Deck(int oros, int copas, int espadas, int bastos) {
         this.cards = new LinkedList<>();
-
         addCards(Suit.OROS, oros);
         addCards(Suit.COPAS, copas);
         addCards(Suit.ESPADAS, espadas);
@@ -20,7 +19,6 @@ public class Deck {
 
     public Deck() {
         this.cards = new LinkedList<>();
-
         for(Suit suit : Suit.values()){
             addCards(suit, DEFAULT_CARDS_PER_SUIT);
         }

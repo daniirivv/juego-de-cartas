@@ -43,16 +43,13 @@ public class Player {
 
     public Card getBestCard() {
         this.hand.sort((a,b) -> b.getPower() - a.getPower()); // Ordena la mano de mayor a menor peso
-
         return hand.getFirst();
     }
 
     public Card getWorstNonRepeatedCard() {
         this.hand.sort((a, b) -> a.getPower() - b.getPower());
-
         Card candidate = null;
         int minFrequency = Integer.MAX_VALUE;
-
         for (Card card : this.hand) {
             int count = 0;
             for (Card c : this.hand) {
@@ -60,7 +57,6 @@ public class Player {
                     count++;
                 }
             }
-
             if (count == 1) {
                 return card;
             } else if (count < minFrequency) {
@@ -69,10 +65,8 @@ public class Player {
                 candidate = card;
             }
         }
-
         // Si no hay cartas no repetidas, devolvemos la carta con menor frecuencia
         return candidate;
     }
-
 
 }

@@ -182,13 +182,31 @@ public class GameController implements GameControllerInterface, Subscriber {
             move = gameDisplay.askForAMove(round.getTurnOwner());
             if (round.playMove(move)) {
                 invalidMove = false;
+                if (isPlin()) {
+                    round.getActualRoundPlayers().next();
+                    System.out.println("¡PLIN! Se salta el turno de " + round.getTurnOwner().getName());
+                }
             } else gameDisplay.notifyInvalidMove(move);
         }while(invalidMove);
         return move;
     }
 
+    private boolean isPlin() {
+        boolean plin = false;
+        Round round = this.currentGame.getLastRound();
+        Stack<Move> moves = round.getMoves();
+        if (moves.size() >= 2) {
+            Move lastMove = moves.get(moves.size() - 1);
+            Move previousMove = moves.get(moves.size() - 2);
+            if (lastMove.compareTo(previousMove) == 0) {
+                plin = true;
+            }
+        }
+        return plin;
+    }
+
     @Override
-    public void update(T context) {
+    public <T> void update(T context) {
 
     }
 }

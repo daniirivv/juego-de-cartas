@@ -57,19 +57,15 @@ public class Round {
 
     public boolean playMove(Move move) {
         Set<Card> playedCards = move.getPlayedCards();
-
         if (moves.isEmpty()) {
             expectedNumberOfCards = playedCards.size(); // Determina el número de cartas a jugar quien empieza la ronda
             moves.push(move);
             return true;
         }
-
         if (playedCards.size() != expectedNumberOfCards && !playedCards.isEmpty()) return false; // Jugada inválida
         if (!move.isValid(playedCards)) return false;
         if (move.compareTo(moves.peek()) <= 0) return false;
-
         if (playedCards.isEmpty()) return true; // Pasar = válido
-
         moves.push(move);
         return true;
     }
