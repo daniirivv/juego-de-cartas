@@ -53,23 +53,17 @@ public class GameDisplay implements UI, GameDisplayInterface{
     public Move askForAMove(Player turnOwner) {
         System.out.println("¿Qué cartas quieres echar?");
         System.out.println("Formato: <Número> de <Palo>, <Número> de <Palo>... Ej: 4 de oros, 4 de bastos, 4 de copas");
-
         String inputCards = GameDisplay.keyboardInput.nextLine().toLowerCase().trim();
         String[] cards = inputCards.split(",");
-
         Set<Card> setOfCards = new HashSet<>();
-
         for (String card : cards) {
             card = card.trim();
-
             if (!card.isEmpty()) {
                 String[] individualCard = card.split("\\s+de+\\s+"); // Expresión regular que permite 1/+ espacios
-
                 if (individualCard.length == 2) {
                     try {
                         int cardNumber = Integer.parseInt(individualCard[0].trim());
                         String suitInput = individualCard[1];
-
                         if (isValidCardNumber(cardNumber) && isValidSuit(suitInput)) {
                             Suit suit = Suit.valueOf(suitInput);
                             Card cardToPlay = new Card(cardNumber, suit);
@@ -86,7 +80,6 @@ public class GameDisplay implements UI, GameDisplayInterface{
                 }
             }
         }
-
         return new Move(setOfCards, turnOwner);
     }
 

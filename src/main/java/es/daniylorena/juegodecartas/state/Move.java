@@ -36,7 +36,6 @@ public class Move implements Comparable<Move> {
     public boolean isValid(Set<Card> playedCards) {
         boolean valid = true;
         int referenceNumber = -1;
-
         for (Card card : playedCards) {
             if (card.getNumber() != 2) {
                 if (referenceNumber == -1) {
@@ -46,7 +45,6 @@ public class Move implements Comparable<Move> {
                 }
             }
         }
-
         return valid;
     }
 
@@ -54,14 +52,12 @@ public class Move implements Comparable<Move> {
         if (!isValid(this.playedCards)) {
             return 0;
         }
-
         // Buscar la primera carta que no sea un 2
         for (Card card : this.playedCards) {
             if (card.getNumber() != 2) {
                 return card.getPower();
             }
         }
-
         // Si solo había comodines
         return new Card(2, Suit.OROS).getPower();
     }
@@ -71,7 +67,6 @@ public class Move implements Comparable<Move> {
     public int compareTo(Move other) {
         int thisSize = this.playedCards.size();
         int otherSize = other.playedCards.size();
-
         if(thisSize!=otherSize) return Integer.compareUnsigned(thisSize, otherSize);
         else{
             int thisPower = this.getMovePower();
