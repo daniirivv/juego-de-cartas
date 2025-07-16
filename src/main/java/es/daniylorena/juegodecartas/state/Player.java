@@ -5,8 +5,8 @@ import java.util.List;
 public class Player {
 
     private final String name;
-    private List<Card> hand;
     private Role role;
+    private List<Card> hand;
 
     public Player(String name) {
         this.name = name;

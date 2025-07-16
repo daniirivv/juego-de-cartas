@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class PublisherController {
+public abstract class AbstractPublisherController {
 
     private final Map<EventType, List<Subscriber>> subscribers = new HashMap<>();
 
