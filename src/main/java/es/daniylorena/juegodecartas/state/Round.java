@@ -56,7 +56,6 @@ public class Round {
     }
 
     public boolean playMove(Move move) {
-        // @TODO: Implementar "paso" como movimiento válido
         Set<Card> playedCards = move.getPlayedCards();
 
         if (moves.isEmpty()) {
@@ -65,9 +64,11 @@ public class Round {
             return true;
         }
 
-        if (playedCards.size() != expectedNumberOfCards) return false; // Jugada inválida
+        if (playedCards.size() != expectedNumberOfCards && !playedCards.isEmpty()) return false; // Jugada inválida
         if (!move.isValid(playedCards)) return false;
         if (move.compareTo(moves.peek()) <= 0) return false;
+
+        if (playedCards.isEmpty()) return true; // Pasar = válido
 
         moves.push(move);
         return true;
