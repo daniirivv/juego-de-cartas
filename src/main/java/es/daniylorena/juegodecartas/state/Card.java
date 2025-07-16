@@ -1,6 +1,8 @@
 package es.daniylorena.juegodecartas.state;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 
 public class Card {
 
@@ -20,15 +22,13 @@ public class Card {
         return suit;
     }
 
-    // TODO: Cambiar por atributo Map<Integer, Integer> (1 -> nº carta; 2 -> Poder)
-    public int getPower() { // Para comprobar en la lógica si la carta hechada es mayor que la anterior
+    public int getPower() { // Para comprobar en la lógica si la carta echada es mayor que la anterior
         if (this.number == 1 && this.suit == Suit.OROS) return 16; // La carta más poderosa
         if (number == 2) return 15; // Comodín - sustituye a todo menos al as de oros
         if (number == 1) return 14;
         if (number == 3) return 13; // 3 = 13
         return number; // 4–12 normales
     }
-
 
     @Override
     public boolean equals(Object o) {

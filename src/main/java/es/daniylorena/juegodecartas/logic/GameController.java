@@ -7,7 +7,7 @@ import es.daniylorena.juegodecartas.utilities.CircularList;
 import java.util.*;
 
 
-public class GameController implements GameControllerInterface{
+public class GameController implements GameControllerInterface {
 
     private Game currentGame;
 
@@ -45,14 +45,14 @@ public class GameController implements GameControllerInterface{
 
     private ArrayList<Player> initializePlayers(ArrayList<String> playersNames) {
         ArrayList<Player> players = new ArrayList<>();
-        for(String name : playersNames){
+        for (String name : playersNames) {
             Player player = new Player(name);
             players.add(player);
         }
         return players;
     }
 
-    private void shuffleDeck(){
+    private void shuffleDeck() {
         this.currentGame.getDeck().shuffle();
     }
 
@@ -60,25 +60,25 @@ public class GameController implements GameControllerInterface{
         CircularList<Player> players = new CircularList<>(this.currentGame.getPlayers());
         Iterator<Player> circularIterator = players.iterator();
         Deck deck = this.currentGame.getDeck();
-        do{
+        do {
             Player player = circularIterator.next();
             player.addCardToHand(deck.getFirstCard());
-        }while(!deck.isEmpty());
+        } while (!deck.isEmpty());
     }
 
     private void playGame() {
         boolean rematch;
-        do{
+        do {
             singleMatch();
             rematch = this.gameDisplay.askForRematch();
-        }while(rematch);
+        } while (rematch);
     }
 
     private void singleMatch() {
         applyRolesIfDefined();
-        int numberOfRounds = this.currentGame.getPlayers().size()-1;
+        int numberOfRounds = this.currentGame.getPlayers().size() - 1;
         // @TODO: CAMBIAR FOR POR WHILE; FIN DE RONDA NO IMPLICA UN JUGADOR MENOS
-        for(int i = 0; i < numberOfRounds; i++) {
+        for (int i = 0; i < numberOfRounds; i++) {
             Round round = new Round(generateRoundPlayers(i));
             this.currentGame.addRound(round);
             singleRound();
@@ -142,10 +142,9 @@ public class GameController implements GameControllerInterface{
 
     private CircularList<Player> generateRoundPlayers(int i) {
         CircularList<Player> roundPlayers;
-        if(i == 0){
+        if (i == 0) {
             roundPlayers = new CircularList<>(this.currentGame.getPlayers());
-        }
-        else {
+        } else {
             Player roundWinner = this.currentGame.getLastRound().getWinner();
             List<Player> previousRoundPlayers = this.currentGame.getLastRound().getSimpleListOfSubplayers();
             List<Player> actualRoundPlayers = new ArrayList<>(previousRoundPlayers);
@@ -155,13 +154,13 @@ public class GameController implements GameControllerInterface{
         return roundPlayers;
     }
 
-    private void singleRound(){
+    private void singleRound() {
         Move move;
         boolean endOfRound;
-        do{
+        do {
             move = executeTurn();
             endOfRound = move.isCloseMove() || checkEndGame();
-        }while(!endOfRound);
+        } while (!endOfRound);
     }
 
     private void giveRole(Player closer) {
@@ -173,11 +172,11 @@ public class GameController implements GameControllerInterface{
         return false;
     }
 
-    private Move executeTurn(){
+    private Move executeTurn() {
         Round round = this.currentGame.getLastRound();
         boolean invalidMove = true;
         Move move;
-        do{
+        do {
             move = gameDisplay.askForAMove(round.getTurnOwner());
             if (round.playMove(move)) {
                 invalidMove = false;
@@ -186,7 +185,7 @@ public class GameController implements GameControllerInterface{
                     System.out.println("¡PLIN! Se salta el turno de " + round.getTurnOwner().getName());
                 }
             } else gameDisplay.notifyInvalidMove(move);
-        }while(invalidMove);
+        } while (invalidMove);
         return move;
     }
 

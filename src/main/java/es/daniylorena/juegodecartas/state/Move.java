@@ -75,6 +75,7 @@ public class Move implements Comparable<Move> {
         }
     }
 
+    // TODO: Implementar: si te vuelve a tocar y nadie ha echado encima de tu última jugada --> cierras
     public boolean isCloseMove() {
         boolean result = true;
         Iterator<Card> iterator = this.playedCards.iterator();
