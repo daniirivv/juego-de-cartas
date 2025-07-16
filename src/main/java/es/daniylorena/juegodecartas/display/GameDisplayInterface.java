@@ -7,7 +7,7 @@ public interface GameDisplayInterface {
 
     Move askForAMove(Player turnOwner);
 
-    void notifyInvalidMove();
+    void notifyInvalidMove(Move move);
 
     boolean askForRematch();
 }

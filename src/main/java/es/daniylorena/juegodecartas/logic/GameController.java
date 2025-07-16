@@ -77,6 +77,7 @@ public class GameController implements GameControllerInterface{
     private void singleMatch() {
         applyRolesIfDefined();
         int numberOfRounds = this.currentGame.getPlayers().size()-1;
+        // @TODO: CAMBIAR FOR POR WHILE; FIN DE RONDA NO IMPLICA UN JUGADOR MENOS
         for(int i = 0; i < numberOfRounds; i++) {
             Round round = new Round(generateRoundPlayers(i));
             this.currentGame.addRound(round);
@@ -161,7 +162,7 @@ public class GameController implements GameControllerInterface{
             move = gameDisplay.askForAMove(round.getTurnOwner());
             if (round.playMove(move)) {
                 invalidMove = false;
-            } else gameDisplay.notifyInvalidMove();
+            } else gameDisplay.notifyInvalidMove(move);
         }while(invalidMove);
         return move;
     }

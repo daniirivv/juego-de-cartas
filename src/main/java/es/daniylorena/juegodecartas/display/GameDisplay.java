@@ -8,6 +8,7 @@ import java.util.*;
 
 public class GameDisplay implements UI, GameDisplayInterface{
 
+    public static final int MAX_PLAYERS = 10;
     public static final String DONE_COMMAND = "DONE";
     public static final String EXIT_COMMAND = "EXIT";
     public static final String POSITIVE_ANSWER = "Y";
@@ -31,7 +32,7 @@ public class GameDisplay implements UI, GameDisplayInterface{
     }
 
     private ArrayList<String> askForPlayerNames(){
-        ArrayList<String> result = new ArrayList<>(10);
+        ArrayList<String> result = new ArrayList<>(MAX_PLAYERS);
         boolean done = false;
         do {
             System.out.println("Introduce los nombres de los jugadores:");
@@ -89,17 +90,17 @@ public class GameDisplay implements UI, GameDisplayInterface{
         return new Move(setOfCards, turnOwner);
     }
 
+    @Override
+    public void notifyInvalidMove(Move move) {
+        System.out.println("No puedes jugar el movimiento " + move + "ahora mismo.");
+    }
+
     private boolean isValidCardNumber(int number) {
         return number > 0 && number <= 12;
     }
 
     private boolean isValidSuit(String inputSuit) {
         return inputSuit.equals("oros") || inputSuit.equals("bastos") || inputSuit.equals("copas") || inputSuit.equals("espadas");
-    }
-
-    @Override
-    public void notifyInvalidMove() {
-        System.out.println("Ese movimiento no se puede realizar. Elija otro movimiento.");
     }
 
     @Override
