@@ -5,5 +5,4 @@ import java.util.ArrayList;
 public interface GameControllerInterface {
 
     void launchGame(ArrayList<String> playersNames);
-
 }
