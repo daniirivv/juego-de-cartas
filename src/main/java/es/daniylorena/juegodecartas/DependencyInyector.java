@@ -7,7 +7,7 @@ public class DependencyInyector {
 
     public static void inyect(App app){
         GameDisplay gameDisplay = new GameDisplay();
-        GameController gameController = new GameController();
+        GameController gameController = GameController.getInstance();
 
         gameDisplay.setGameController(gameController);
         gameController.setGameDisplay(gameDisplay);

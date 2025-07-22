@@ -38,10 +38,10 @@ public class Game {
     }
 
     public Move getLastMove() {
-        return getLastRound().getMoves().getLast();
+        return getCurrentRound().getMoves().getLast();
     }
 
-    public Round getLastRound() {
+    public Round getCurrentRound() {
         return this.getRounds().getLast();
     }
 }

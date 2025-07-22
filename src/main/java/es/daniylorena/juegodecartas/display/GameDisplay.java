@@ -2,6 +2,7 @@ package es.daniylorena.juegodecartas.display;
 
 import es.daniylorena.juegodecartas.logic.GameControllerInterface;
 import es.daniylorena.juegodecartas.logic.exceptions.IllegalPlayerNameException;
+import es.daniylorena.juegodecartas.logic.exceptions.InsufficientPlayersException;
 import es.daniylorena.juegodecartas.state.*;
 
 import java.util.*;
@@ -9,6 +10,7 @@ import java.util.*;
 public class GameDisplay implements UI, GameDisplayInterface{
 
     public static final int MAX_PLAYERS = 10;
+    public static final int MIN_PLAYERS = 10;
     public static final String DONE_COMMAND = "DONE";
     public static final String EXIT_COMMAND = "EXIT";
     public static final String POSITIVE_ANSWER = "Y";
@@ -44,6 +46,8 @@ public class GameDisplay implements UI, GameDisplayInterface{
                     } else throw new IllegalPlayerNameException("Dos jugadores no pueden llamarse igual.");
                 } else throw new IllegalPlayerNameException(
                         "El nombre tiene que estar compuesto por, como mínimo, un caracter.");
+            } else if(result.size() < MIN_PLAYERS){
+                throw new InsufficientPlayersException("Falta/n " + (MIN_PLAYERS - result.size()) + " jugadores.");
             } else done = true;
         }while (!done);
         return result;

@@ -1,21 +1,34 @@
 package es.daniylorena.juegodecartas.logic;
 
 import es.daniylorena.juegodecartas.display.GameDisplayInterface;
-import es.daniylorena.juegodecartas.logic.events.Subscriber;
 import es.daniylorena.juegodecartas.state.*;
 import es.daniylorena.juegodecartas.utilities.CircularList;
 
 import java.util.*;
 
 
-public class GameController implements GameControllerInterface, Subscriber {
+public class GameController implements GameControllerInterface {
 
-    private Game currentGame;
+    private static final GameController instance = new GameController();
 
     private GameDisplayInterface gameDisplay;
+    private Game currentGame;
+    private RoleAssigner roleAssigner;
 
-    public GameController() {
+    private GameController() {
 
+    }
+
+    public static GameController getInstance(){
+        return instance;
+    }
+
+    public GameDisplayInterface getGameDisplay() {
+        return gameDisplay;
+    }
+
+    public void setGameDisplay(GameDisplayInterface gameDisplay) {
+        this.gameDisplay = gameDisplay;
     }
 
     public Game getCurrentGame() {
@@ -26,12 +39,12 @@ public class GameController implements GameControllerInterface, Subscriber {
         this.currentGame = currentGame;
     }
 
-    public GameDisplayInterface getGameDisplay() {
-        return gameDisplay;
+    public RoleAssigner getRoleAssigner() {
+        return roleAssigner;
     }
 
-    public void setGameDisplay(GameDisplayInterface gameDisplay) {
-        this.gameDisplay = gameDisplay;
+    public void setRoleAssigner(RoleAssigner roleAssigner) {
+        this.roleAssigner = roleAssigner;
     }
 
     @Override
@@ -46,14 +59,14 @@ public class GameController implements GameControllerInterface, Subscriber {
 
     private ArrayList<Player> initializePlayers(ArrayList<String> playersNames) {
         ArrayList<Player> players = new ArrayList<>();
-        for (String name : playersNames) {
+        for(String name : playersNames){
             Player player = new Player(name);
             players.add(player);
         }
         return players;
     }
 
-    private void shuffleDeck() {
+    private void shuffleDeck(){
         this.currentGame.getDeck().shuffle();
     }
 
@@ -61,35 +74,31 @@ public class GameController implements GameControllerInterface, Subscriber {
         CircularList<Player> players = new CircularList<>(this.currentGame.getPlayers());
         Iterator<Player> circularIterator = players.iterator();
         Deck deck = this.currentGame.getDeck();
-        do {
+        do{
             Player player = circularIterator.next();
             player.addCardToHand(deck.getFirstCard());
-        } while (!deck.isEmpty());
+        }while(!deck.isEmpty());
     }
 
     private void playGame() {
         boolean rematch;
-        do {
+        do{
             singleMatch();
             rematch = this.gameDisplay.askForRematch();
-        } while (rematch);
+        }while(rematch);
     }
 
     private void singleMatch() {
         applyRolesIfDefined();
-        int totalPlayers = this.currentGame.getPlayers().size();
-        int playersWithoutCards = 0;
-        do {
-            Round round = new Round(generateRoundPlayers(this.currentGame.getRounds().size()));
+        int numberOfRounds = this.currentGame.getPlayers().size()-1;
+        // @TODO: CAMBIAR FOR POR WHILE; FIN DE RONDA NO IMPLICA UN JUGADOR MENOS
+        for(int i = 0; i < numberOfRounds; i++) {
+            Round round = new Round(generateRoundPlayers(i));
             this.currentGame.addRound(round);
             singleRound();
-            for (Player player : this.currentGame.getPlayers()) {
-                if (player.getHand().isEmpty()) {
-                    playersWithoutCards++;
-                }
-            }
             // PATRÓN OBSERVER PARA ASIGNAR ROL A UN JUGADOR CUANDO SE QUEDA SIN CARTAS
-        } while (playersWithoutCards < totalPlayers -1);
+        }
+
     }
 
     private void applyRolesIfDefined() {
@@ -147,11 +156,12 @@ public class GameController implements GameControllerInterface, Subscriber {
 
     private CircularList<Player> generateRoundPlayers(int i) {
         CircularList<Player> roundPlayers;
-        if (i == 0) {
+        if(i == 0){
             roundPlayers = new CircularList<>(this.currentGame.getPlayers());
-        } else {
-            Player roundWinner = this.currentGame.getLastRound().getWinner();
-            List<Player> previousRoundPlayers = this.currentGame.getLastRound().getSimpleListOfSubplayers();
+        }
+        else {
+            Player roundWinner = this.currentGame.getCurrentRound().getWinner();
+            List<Player> previousRoundPlayers = this.currentGame.getCurrentRound().getSimpleListOfSubplayers();
             List<Player> actualRoundPlayers = new ArrayList<>(previousRoundPlayers);
             actualRoundPlayers.remove(roundWinner);
             roundPlayers = new CircularList<>(actualRoundPlayers);
@@ -159,16 +169,26 @@ public class GameController implements GameControllerInterface, Subscriber {
         return roundPlayers;
     }
 
-    private void singleRound() {
+    private void singleRound(){
+        Round round = this.currentGame.getCurrentRound();
+
+        Player player;
         Move move;
-        boolean endOfRound;
-        do {
-            move = executeTurn();
-            endOfRound = move.isCloseMove() || checkEndGame() || isCloseByPassing();
-        } while (!endOfRound);
+        boolean endOfRound = false;
+        do{
+            player = round.getActualRoundPlayers().next();
+            move = executeTurn(player);
+            if(move.isCloseMove()) endOfRound = true;
+            if(player.getHand().isEmpty()){
+                Role assignedRole = this.roleAssigner.assignRole(player);
+                if(assignedRole.equals(Role.VICECULO)){
+
+                }
+            }
+        }while(!endOfRound);
     }
 
-    private void giveRole(Player closer) {
+    private void giveRole(Player player) {
         // PATRÓN OBSERVER
     }
 
@@ -177,26 +197,27 @@ public class GameController implements GameControllerInterface, Subscriber {
         return false;
     }
 
-    private Move executeTurn() {
-        Round round = this.currentGame.getLastRound();
+    private Move executeTurn(Player player){
+        Round round = this.currentGame.getCurrentRound();
         boolean invalidMove = true;
         Move move;
-        do {
-            move = gameDisplay.askForAMove(round.getTurnOwner());
+        do{
+            move = gameDisplay.askForAMove(player);
             if (round.playMove(move)) {
                 invalidMove = false;
                 if (isPlin()) {
-                    round.getActualRoundPlayers().next();
-                    System.out.println("¡PLIN! Se salta el turno de " + round.getTurnOwner().getName());
+                    Player skipped = round.getActualRoundPlayers().next();
+                    // TODO: Los print van al display (gameDisplay.notifyPlin())
+                    System.out.println("¡PLIN! Se salta el turno de " + skipped.getName());
                 }
             } else gameDisplay.notifyInvalidMove(move);
-        } while (invalidMove);
+        }while(invalidMove);
         return move;
     }
 
     private boolean isPlin() {
         boolean plin = false;
-        Round round = this.currentGame.getLastRound();
+        Round round = this.currentGame.getCurrentRound();
         Stack<Move> moves = round.getMoves();
         if (moves.size() >= 2) {
             Move lastMove = moves.get(moves.size() - 1);
@@ -208,13 +229,8 @@ public class GameController implements GameControllerInterface, Subscriber {
         return plin;
     }
 
-    @Override
-    public <T> void update(T context) {
-
-    }
-
-    private boolean isCloseByPassing() {
-        Round round = this.currentGame.getLastRound();
+    private boolean isCloseByPassing(Player closer) {
+        Round round = this.currentGame.getCurrentRound();
         Stack<Move> moves = round.getMoves();
 
         Move lastPlayedMove = null;
@@ -240,7 +256,7 @@ public class GameController implements GameControllerInterface, Subscriber {
             }
         }
 
-        boolean samePlayerTurn = round.getTurnOwner().equals(lastPlayedMove.getMoveOwner());
+        boolean samePlayerTurn = closer.equals(lastPlayedMove.getMoveOwner());
 
         return allPassed && samePlayerTurn;
     }

@@ -2,6 +2,7 @@ package es.daniylorena.juegodecartas.state;
 
 import es.daniylorena.juegodecartas.utilities.CircularList;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 import java.util.Set;
@@ -11,7 +12,6 @@ public class Round {
     private final Stack<Move> moves;
     private final CircularList<Player> actualRoundPlayers;
 
-    private Player turnOwner;
     private Player winner;
     private int expectedNumberOfCards;
 
@@ -19,7 +19,6 @@ public class Round {
         this.actualRoundPlayers = actualRoundPlayers;
 
         this.moves = new Stack<>();
-        this.turnOwner = actualRoundPlayers.next();
         this.winner = null;
     }
 
@@ -29,14 +28,6 @@ public class Round {
 
     public CircularList<Player> getActualRoundPlayers() {
         return actualRoundPlayers;
-    }
-
-    public Player getTurnOwner() {
-        return turnOwner;
-    }
-
-    public void setTurnOwner(Player turnOwner) {
-        this.turnOwner = turnOwner;
     }
 
     public Player getWinner() {
@@ -73,4 +64,9 @@ public class Round {
     public List<Player> getSimpleListOfSubplayers() {
         return this.actualRoundPlayers.getElements();
     }
+
+    public Iterator<Player> getCircularIterator(){
+        return this.actualRoundPlayers.iterator();
+    }
+
 }

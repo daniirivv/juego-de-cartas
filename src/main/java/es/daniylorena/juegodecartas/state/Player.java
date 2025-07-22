@@ -2,7 +2,7 @@ package es.daniylorena.juegodecartas.state;
 
 import java.util.List;
 
-public class Player {
+public class Player{
 
     private final String name;
     private Role role;
