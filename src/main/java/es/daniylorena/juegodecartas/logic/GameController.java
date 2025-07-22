@@ -208,4 +208,37 @@ public class GameController implements GameControllerInterface, Subscriber {
     public <T> void update(T context) {
 
     }
+
+    private boolean isCloseByPassing() {
+        Round round = this.currentGame.getLastRound();
+        Stack<Move> moves = round.getMoves();
+
+        Move lastPlayedMove = null;
+        int lastPlayedIndex = -1;
+
+        // Encontrar el último movimiento con cartas
+        for (int i = 0; i < moves.size(); i++) {
+            Move move = moves.get(i);
+            if (!move.getPlayedCards().isEmpty()) {
+                lastPlayedMove = move;
+                lastPlayedIndex = i;
+            }
+        }
+
+        if (lastPlayedMove == null) return false;
+
+        // Comprobar si todos los siguientes movimientos fueron pases
+        boolean allPassed = true;
+        for (int i = lastPlayedIndex + 1; i < moves.size(); i++) {
+            Move move = moves.get(i);
+            if (!move.getPlayedCards().isEmpty()) {
+                allPassed = false;
+            }
+        }
+
+        boolean samePlayerTurn = round.getTurnOwner().equals(lastPlayedMove.getMoveOwner());
+
+        return allPassed && samePlayerTurn;
+    }
+
 }
