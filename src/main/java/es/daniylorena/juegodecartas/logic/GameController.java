@@ -77,15 +77,19 @@ public class GameController implements GameControllerInterface, Subscriber {
 
     private void singleMatch() {
         applyRolesIfDefined();
-        int numberOfRounds = this.currentGame.getPlayers().size() - 1;
-        // @TODO: CAMBIAR FOR POR WHILE; FIN DE RONDA NO IMPLICA UN JUGADOR MENOS
-        for (int i = 0; i < numberOfRounds; i++) {
-            Round round = new Round(generateRoundPlayers(i));
+        int totalPlayers = this.currentGame.getPlayers().size();
+        int playersWithoutCards = 0;
+        do {
+            Round round = new Round(generateRoundPlayers(this.currentGame.getRounds().size()));
             this.currentGame.addRound(round);
             singleRound();
+            for (Player player : this.currentGame.getPlayers()) {
+                if (player.getHand().isEmpty()) {
+                    playersWithoutCards++;
+                }
+            }
             // PATRÓN OBSERVER PARA ASIGNAR ROL A UN JUGADOR CUANDO SE QUEDA SIN CARTAS
-        }
-
+        } while (playersWithoutCards < totalPlayers -1);
     }
 
     private void applyRolesIfDefined() {
