@@ -90,15 +90,14 @@ public class GameController implements GameControllerInterface {
 
     private void singleMatch() {
         applyRolesIfDefined();
-        int numberOfRounds = this.currentGame.getPlayers().size()-1;
-        // @TODO: CAMBIAR FOR POR WHILE; FIN DE RONDA NO IMPLICA UN JUGADOR MENOS
-        for(int i = 0; i < numberOfRounds; i++) {
-            Round round = new Round(generateRoundPlayers(i));
+        boolean endGame = false;
+        do {
+            Round round = new Round(generateRoundPlayers(this.currentGame.getRounds().size()));
             this.currentGame.addRound(round);
             singleRound();
+            endGame = checkEndGame();
             // PATRÓN OBSERVER PARA ASIGNAR ROL A UN JUGADOR CUANDO SE QUEDA SIN CARTAS
-        }
-
+        } while (!endGame);
     }
 
     private void applyRolesIfDefined() {
@@ -178,23 +177,25 @@ public class GameController implements GameControllerInterface {
         do{
             player = round.getActualRoundPlayers().next();
             move = executeTurn(player);
-            if(move.isCloseMove()) endOfRound = true;
-            if(player.getHand().isEmpty()){
-                Role assignedRole = this.roleAssigner.assignRole(player);
-                if(assignedRole.equals(Role.VICECULO)){
-
-                }
+            if(move.isCloseMove()){
+                round.setWinner(player);
+                endOfRound = true;
             }
-        }while(!endOfRound);
+            if(player.getHand().isEmpty()){
+                this.roleAssigner.assignRole(player);
+            }
+        }while(!endOfRound && checkEndGame());
     }
 
-    private void giveRole(Player player) {
-        // PATRÓN OBSERVER
-    }
-
-    private boolean checkEndGame() {
-        // PATRÓN OBSERVER
-        return false;
+    private boolean checkEndGame(){
+        int totalPlayers = this.currentGame.getPlayers().size();
+        int playersWithoutCards = 0;
+        for (Player player : this.currentGame.getPlayers()) {
+            if (player.getHand().isEmpty()) {
+                playersWithoutCards++;
+            }
+        }
+        return playersWithoutCards < totalPlayers -1;
     }
 
     private Move executeTurn(Player player){
