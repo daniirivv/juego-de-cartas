@@ -160,7 +160,7 @@ public class GameController implements GameControllerInterface, Subscriber {
         boolean endOfRound;
         do {
             move = executeTurn();
-            endOfRound = move.isCloseMove() || checkEndGame();
+            endOfRound = move.isCloseMove() || checkEndGame() || isCloseByPassing();
         } while (!endOfRound);
     }
 
