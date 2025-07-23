@@ -178,6 +178,7 @@ public class GameController implements GameControllerInterface {
         }while(!endOfRound && checkEndGame());
     }
 
+    // TODO: A Game.java
     private boolean checkEndGame(){
         int totalPlayers = this.currentGame.getPlayers().size();
         int playersWithoutCards = 0;
@@ -207,6 +208,7 @@ public class GameController implements GameControllerInterface {
         return move;
     }
 
+    // TODO: A Move.java
     private boolean isPlin() {
         boolean plin = false;
         Round round = this.currentGame.getCurrentRound();
@@ -221,6 +223,7 @@ public class GameController implements GameControllerInterface {
         return plin;
     }
 
+    // TODO: A Move.java
     private boolean isCloseByPassing(Player closer) {
         Round round = this.currentGame.getCurrentRound();
         Stack<Move> moves = round.getMoves();
