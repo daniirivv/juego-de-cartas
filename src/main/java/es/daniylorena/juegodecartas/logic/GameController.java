@@ -48,7 +48,7 @@ public class GameController implements GameControllerInterface {
         ArrayList<Player> players = initializePlayers(playersNames);
         Deck deck = new Deck();
         this.currentGame = new Game(players, deck);
-        shuffleDeck();
+        this.currentGame.shuffleDeck();
         distributeCardsAmongPlayers();
         playGame();
     }
@@ -60,10 +60,6 @@ public class GameController implements GameControllerInterface {
             players.add(player);
         }
         return players;
-    }
-
-    private void shuffleDeck(){
-        this.currentGame.getDeck().shuffle();
     }
 
     private void distributeCardsAmongPlayers() {
@@ -96,6 +92,7 @@ public class GameController implements GameControllerInterface {
         } while (!endGame);
     }
 
+    // OPTIMIZE: Revisar
     private void applyRolesIfDefined() {
         Player presi = null;
         Player vicepresi = null;

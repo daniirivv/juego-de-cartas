@@ -29,6 +29,10 @@ public class Game {
         return deck;
     }
 
+    public void shuffleDeck(){
+        this.deck.shuffle();
+    }
+
     public boolean addRound(Round round) {
         return this.rounds.add(round);
     }
