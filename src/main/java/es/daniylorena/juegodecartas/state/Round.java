@@ -69,4 +69,47 @@ public class Round {
         return this.actualRoundPlayers.iterator();
     }
 
+    public boolean isPlin() {
+        Stack<Move> moves = this.moves;
+        if (moves.size() >= 2) {
+            Move lastMove = moves.get(moves.size() - 1);
+            Move previousMove = moves.get(moves.size() - 2);
+
+            return lastMove.compareTo(previousMove) == 0;
+        }
+
+        return false;
+    }
+
+
+    private boolean isCloseByPassing(Player closer) {
+        Stack<Move> moves = this.moves;
+
+        Move lastPlayedMove = null;
+        int lastPlayedIndex = -1;
+
+        // Encontrar el último movimiento con cartas
+        for (int i = 0; i < moves.size(); i++) {
+            Move move = moves.get(i);
+            if (!move.getPlayedCards().isEmpty()) {
+                lastPlayedMove = move;
+                lastPlayedIndex = i;
+            }
+        }
+
+        if (lastPlayedMove == null) return false;
+
+        // Comprobar si todos los siguientes movimientos fueron pases
+        boolean allPassed = true;
+        for (int i = lastPlayedIndex + 1; i < moves.size(); i++) {
+            Move move = moves.get(i);
+            if (!move.getPlayedCards().isEmpty()) {
+                allPassed = false;
+            }
+        }
+
+        boolean samePlayerTurn = closer.equals(lastPlayedMove.getMoveOwner());
+
+        return allPassed && samePlayerTurn;
+    }
 }

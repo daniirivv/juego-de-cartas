@@ -3,6 +3,7 @@ package es.daniylorena.juegodecartas.state;
 import java.lang.Comparable;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Stack;
 
 public class Move implements Comparable<Move> {
 
