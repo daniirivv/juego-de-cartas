@@ -45,12 +45,17 @@ public class GameController implements GameControllerInterface {
 
     @Override
     public void launchGame(ArrayList<String> playersNames) {
-        ArrayList<Player> players = initializePlayers(playersNames);
-        Deck deck = new Deck();
-        this.currentGame = new Game(players, deck);
-        this.currentGame.shuffleDeck();
-        distributeCardsAmongPlayers();
-        playGame();
+        boolean rematch;
+        do {
+            ArrayList<Player> players = initializePlayers(playersNames);
+            Deck deck = new Deck();
+            this.currentGame = new Game(players, deck);
+            this.roleAssigner.initializeRoles(players.size());
+            this.currentGame.shuffleDeck();
+            distributeCardsAmongPlayers();
+            singleMatch();
+            rematch = this.gameDisplay.askForRematch();
+        } while(rematch);
     }
 
     private ArrayList<Player> initializePlayers(ArrayList<String> playersNames) {
@@ -72,23 +77,14 @@ public class GameController implements GameControllerInterface {
         }while(!deck.isEmpty());
     }
 
-    private void playGame() {
-        boolean rematch;
-        do{
-            singleMatch();
-            rematch = this.gameDisplay.askForRematch();
-        }while(rematch);
-    }
-
     private void singleMatch() {
         applyRolesIfDefined();
-        boolean endGame = false;
+        boolean endGame;
         do {
             Round round = new Round(generateRoundPlayers(this.currentGame.getRounds().size()));
             this.currentGame.addRound(round);
             singleRound();
             endGame = checkEndGame();
-            // PATRÓN OBSERVER PARA ASIGNAR ROL A UN JUGADOR CUANDO SE QUEDA SIN CARTAS
         } while (!endGame);
     }
 
