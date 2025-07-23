@@ -86,7 +86,7 @@ public class GameController implements GameControllerInterface {
             Round round = new Round(generateRoundPlayers(this.currentGame.getRounds().size()));
             this.currentGame.addRound(round);
             roundLoop();
-            endGame = checkEndGame();
+            endGame = this.currentGame.checkEndGame();
         } while (!endGame);
     }
 
@@ -175,19 +175,7 @@ public class GameController implements GameControllerInterface {
             if(player.getHand().isEmpty()){
                 this.roleAssigner.assignRole(player);
             }
-        }while(!endOfRound && checkEndGame());
-    }
-
-    // TODO: A Game.java
-    private boolean checkEndGame(){
-        int totalPlayers = this.currentGame.getPlayers().size();
-        int playersWithoutCards = 0;
-        for (Player player : this.currentGame.getPlayers()) {
-            if (player.getHand().isEmpty()) {
-                playersWithoutCards++;
-            }
-        }
-        return playersWithoutCards < totalPlayers -1;
+        }while(!endOfRound && this.currentGame.checkEndGame());
     }
 
     private Move executeTurn(Player player){

@@ -44,4 +44,15 @@ public class Game {
     public Round getCurrentRound() {
         return this.getRounds().getLast();
     }
+
+    public boolean checkEndGame(){
+        int totalPlayers = this.players.size();
+        int playersWithoutCards = 0;
+        for (Player player : this.players) {
+            if (player.getHand().isEmpty()) {
+                playersWithoutCards++;
+            }
+        }
+        return playersWithoutCards < totalPlayers -1;
+    }
 }
