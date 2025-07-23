@@ -13,10 +13,10 @@ public class GameController implements GameControllerInterface {
 
     private GameDisplayInterface gameDisplay;
     private Game currentGame;
-    private RoleAssigner roleAssigner;
+    private final RoleAssigner roleAssigner;
 
     private GameController() {
-
+        this.roleAssigner = new RoleAssigner();
     }
 
     public static GameController getInstance(){
@@ -41,10 +41,6 @@ public class GameController implements GameControllerInterface {
 
     public RoleAssigner getRoleAssigner() {
         return roleAssigner;
-    }
-
-    public void setRoleAssigner(RoleAssigner roleAssigner) {
-        this.roleAssigner = roleAssigner;
     }
 
     @Override

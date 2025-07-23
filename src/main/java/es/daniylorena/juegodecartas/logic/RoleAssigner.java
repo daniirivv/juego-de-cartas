@@ -12,10 +12,10 @@ import java.util.List;
 
 public class RoleAssigner {
 
-    private Game game;
     private List<Role> roles;
 
-    public RoleAssigner(int players) {
+
+    public void initializeRoles(int players){
         if(players == GameDisplay.MIN_PLAYERS){
             this.roles = Arrays.asList(Role.PRESI, Role.NEUTRO, Role.CULO);
         } else {
@@ -26,14 +26,6 @@ public class RoleAssigner {
             this.roles.add(Role.VICECULO);
             this.roles.add(Role.CULO);
         }
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
     }
 
     public Role assignRole(Player player) {
