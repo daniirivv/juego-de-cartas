@@ -1,13 +1,9 @@
-package es.daniylorena.juegodecartas.logic;
+package es.daniylorena.juegodecartas.state;
 
 import es.daniylorena.juegodecartas.display.GameDisplay;
-import es.daniylorena.juegodecartas.state.Game;
-import es.daniylorena.juegodecartas.state.Player;
-import es.daniylorena.juegodecartas.state.Role;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class RoleAssigner {

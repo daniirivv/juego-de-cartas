@@ -14,9 +14,11 @@ public class GameController implements GameControllerInterface {
     private GameDisplayInterface gameDisplay;
     private Game currentGame;
     private final RoleAssigner roleAssigner;
+    private final Dealer dealer;
 
     private GameController() {
         this.roleAssigner = new RoleAssigner();
+        this.dealer = new Dealer();
     }
 
     public static GameController getInstance(){
@@ -52,8 +54,7 @@ public class GameController implements GameControllerInterface {
             this.currentGame = new Game(players, deck);
             this.roleAssigner.initializeRoles(players.size());
             this.currentGame.shuffleDeck();
-            // OPTIMIZE: Crear una clase Dealer que encapsule la lógica de reparto de cartas
-            distributeCardsAmongPlayers();
+            this.dealer.divideCards(players, deck);
             matchLoop();
             rematch = this.gameDisplay.askForRematch();
         } while(rematch);
@@ -66,16 +67,6 @@ public class GameController implements GameControllerInterface {
             players.add(player);
         }
         return players;
-    }
-
-    private void distributeCardsAmongPlayers() {
-        CircularList<Player> players = new CircularList<>(this.currentGame.getPlayers());
-        Iterator<Player> circularIterator = players.iterator();
-        Deck deck = this.currentGame.getDeck();
-        do{
-            Player player = circularIterator.next();
-            player.addCardToHand(deck.getFirstCard());
-        }while(!deck.isEmpty());
     }
 
     private void matchLoop() {
