@@ -1,6 +1,5 @@
 package es.daniylorena.juegodecartas.logic;
 
-import es.daniylorena.juegodecartas.display.GameDisplay;
 import es.daniylorena.juegodecartas.display.GameDisplayInterface;
 import es.daniylorena.juegodecartas.state.*;
 import es.daniylorena.juegodecartas.utilities.CircularList;
@@ -91,7 +90,6 @@ public class GameController implements GameControllerInterface {
         } while (!endGame);
     }
 
-    // OPTIMIZE: Revisar
     private void applyRolesIfDefined() {
         Player presi = null;
         Player vicepresi = null;
@@ -107,42 +105,38 @@ public class GameController implements GameControllerInterface {
             }
         }
 
-        // Presidente <--> Culo
         if (presi != null && culo != null) {
-
-            Card bestCard1 = culo.getBestCard();
-            culo.removeCardFromHand(bestCard1);
-
-            Card bestCard2 = culo.getBestCard();
-            culo.removeCardFromHand(bestCard2);
-
-            presi.addCardToHand(bestCard1);
-            presi.addCardToHand(bestCard2);
-
-            Card worstCard1 = presi.getWorstNonRepeatedCard();
-            presi.removeCardFromHand(worstCard1);
-
-            Card worstCard2 = presi.getWorstNonRepeatedCard();
-            presi.removeCardFromHand(worstCard2);
-
-            culo.addCardToHand(worstCard1);
-            culo.addCardToHand(worstCard2);
+            cardExchange(presi, culo, 2);
         }
 
-        // Vicepresidente <--> Viceculo
         if (vicepresi != null && viceculo != null) {
+            cardExchange(vicepresi, viceculo, 1);
+        }
+    }
 
-            Card bestCard = viceculo.getBestCard();
-            viceculo.removeCardFromHand(bestCard);
+    private void cardExchange(Player highestRankingPlayer, Player lowestRankingPlayer, int numberOfCardsToExchange) {
+        List<Card> bestCardsFromLowerRankingPlayer = new ArrayList<>();
+        List<Card> worstCardsFromHigherRankingPlayer = new ArrayList<>();
 
-            vicepresi.addCardToHand(bestCard);
-
-            Card worstCard = vicepresi.getWorstNonRepeatedCard();
-            vicepresi.removeCardFromHand(worstCard);
-
-            viceculo.addCardToHand(worstCard);
+        for (int i = 1; i <= numberOfCardsToExchange; i++) {
+            Card best = lowestRankingPlayer.getBestCard();
+            bestCardsFromLowerRankingPlayer.add(best);
+            lowestRankingPlayer.removeCardFromHand(best);
         }
 
+        for (int i = 1; i <= numberOfCardsToExchange; i++) {
+            Card worst = highestRankingPlayer.getWorstNonRepeatedCard();
+            worstCardsFromHigherRankingPlayer.add(worst);
+            highestRankingPlayer.removeCardFromHand(worst);
+        }
+
+        for (Card card : bestCardsFromLowerRankingPlayer) {
+            highestRankingPlayer.addCardToHand(card);
+        }
+
+        for (Card card : worstCardsFromHigherRankingPlayer) {
+            lowestRankingPlayer.addCardToHand(card);
+        }
     }
 
     private CircularList<Player> generateRoundPlayers(int i) {
