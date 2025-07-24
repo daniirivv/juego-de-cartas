@@ -56,7 +56,7 @@ public class GameController implements GameControllerInterface {
             this.roleAssigner.initializeRoles(players.size());
             this.currentGame.shuffleDeck();
             this.dealer.divideCards(players, deck);
-            applyRolesIfDefined();
+            this.dealer.applyRolesIfDefined(players);
             singleGameLoop();
             rematch = this.gameDisplay.askForRematch();
         } while (rematch);
@@ -79,45 +79,6 @@ public class GameController implements GameControllerInterface {
             roundLoop();
             endGame = this.currentGame.checkEndGame();
         } while (!endGame);
-    }
-
-    // OPTIMIZE: Revisar y agregar esta responsabilidad al Dealer
-    private void applyRolesIfDefined() {
-        Player presi = null;
-        Player vicepresi = null;
-        Player viceculo = null;
-        Player culo = null;
-
-        for (Player p : this.currentGame.getPlayers()) {
-            switch (p.getRole()) {
-                case PRESI -> presi = p;
-                case VICEPRESI -> vicepresi = p;
-                case VICECULO -> viceculo = p;
-                case CULO -> culo = p;
-            }
-        }
-
-        if (presi != null && culo != null) {
-            cardExchange(presi, culo, 2);
-        }
-
-        if (vicepresi != null && viceculo != null) {
-            cardExchange(vicepresi, viceculo, 1);
-        }
-    }
-
-    // TODO: Mover a Dealer
-    private void cardExchange(Player winner, Player loser, int exchangedCards) {
-        for (int i = 1; i <= exchangedCards; i++) {
-            Card best = loser.getBestCard();
-            loser.removeCardFromHand(best);
-
-            Card worst = winner.getWorstNonRepeatedCard();
-            winner.removeCardFromHand(worst);
-
-            loser.addCardToHand(worst);
-            winner.addCardToHand(best);
-        }
     }
 
     private CircularList<Player> generateRoundPlayers(int i) {

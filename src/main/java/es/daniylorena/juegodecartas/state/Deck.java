@@ -46,7 +46,7 @@ public class Deck {
         return this.getCards().isEmpty();
     }
 
-    public Card getFirstCard() {
-        return this.cards.getFirst();
+    public Card takeCard() {
+        return this.cards.removeFirst();
     }
 }
