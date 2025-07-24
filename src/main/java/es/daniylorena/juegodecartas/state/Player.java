@@ -50,9 +50,11 @@ public class Player {
     }
 
     public Card getWorstNonRepeatedCard() {
-        this.hand.sort((a, b) -> a.getPower() - b.getPower());
+        this.hand.sort((a, b) -> b.getPower() - a.getPower());
         Card candidate = null;
         int minFrequency = Integer.MAX_VALUE;
+        // OPTIMIZE: Se puede hacer en una sola iteración con un iterador, ya que la baraja está ordenada.
+        // OPTIMIZE: No hace falta recorrerse toda la baraja
         for (Card card : this.hand) {
             int count = 0;
             for (Card c : this.hand) {

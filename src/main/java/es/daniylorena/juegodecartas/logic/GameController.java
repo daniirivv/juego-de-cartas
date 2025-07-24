@@ -1,5 +1,6 @@
 package es.daniylorena.juegodecartas.logic;
 
+import es.daniylorena.juegodecartas.display.GameDisplay;
 import es.daniylorena.juegodecartas.display.GameDisplayInterface;
 import es.daniylorena.juegodecartas.state.*;
 import es.daniylorena.juegodecartas.utilities.CircularList;
@@ -55,7 +56,8 @@ public class GameController implements GameControllerInterface {
             this.roleAssigner.initializeRoles(players.size());
             this.currentGame.shuffleDeck();
             this.dealer.divideCards(players, deck);
-            matchLoop();
+            applyRolesIfDefined();
+            singleGameLoop();
             rematch = this.gameDisplay.askForRematch();
         } while (rematch);
     }
@@ -69,9 +71,7 @@ public class GameController implements GameControllerInterface {
         return players;
     }
 
-    private void matchLoop() {
-        // OPTIMIZE: Agregar esta responsabilidad al Dealer
-        applyRolesIfDefined();
+    private void singleGameLoop() {
         boolean endGame;
         do {
             Round round = new Round(generateRoundPlayers(this.currentGame.getRounds().size()));
@@ -81,6 +81,7 @@ public class GameController implements GameControllerInterface {
         } while (!endGame);
     }
 
+    // OPTIMIZE: Revisar y agregar esta responsabilidad al Dealer
     private void applyRolesIfDefined() {
         Player presi = null;
         Player vicepresi = null;
@@ -105,28 +106,17 @@ public class GameController implements GameControllerInterface {
         }
     }
 
-    private void cardExchange(Player highestRankingPlayer, Player lowestRankingPlayer, int numberOfCardsToExchange) {
-        List<Card> bestCardsFromLowerRankingPlayer = new ArrayList<>();
-        List<Card> worstCardsFromHigherRankingPlayer = new ArrayList<>();
+    // TODO: Mover a Dealer
+    private void cardExchange(Player winner, Player loser, int exchangedCards) {
+        for (int i = 1; i <= exchangedCards; i++) {
+            Card best = loser.getBestCard();
+            loser.removeCardFromHand(best);
 
-        for (int i = 1; i <= numberOfCardsToExchange; i++) {
-            Card best = lowestRankingPlayer.getBestCard();
-            bestCardsFromLowerRankingPlayer.add(best);
-            lowestRankingPlayer.removeCardFromHand(best);
-        }
+            Card worst = winner.getWorstNonRepeatedCard();
+            winner.removeCardFromHand(worst);
 
-        for (int i = 1; i <= numberOfCardsToExchange; i++) {
-            Card worst = highestRankingPlayer.getWorstNonRepeatedCard();
-            worstCardsFromHigherRankingPlayer.add(worst);
-            highestRankingPlayer.removeCardFromHand(worst);
-        }
-
-        for (Card card : bestCardsFromLowerRankingPlayer) {
-            highestRankingPlayer.addCardToHand(card);
-        }
-
-        for (Card card : worstCardsFromHigherRankingPlayer) {
-            lowestRankingPlayer.addCardToHand(card);
+            loser.addCardToHand(worst);
+            winner.addCardToHand(best);
         }
     }
 
