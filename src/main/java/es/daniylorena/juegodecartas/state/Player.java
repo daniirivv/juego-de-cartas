@@ -46,6 +46,7 @@ public class Player {
 
     public Card getBestCard() {
         this.hand.sort((a, b) -> b.getPower() - a.getPower()); // Ordena la mano de mayor a menor peso
+        this.hand.remove(this.hand.getFirst());
         return hand.getFirst();
     }
 
@@ -63,6 +64,7 @@ public class Player {
                 }
             }
             if (count == 1) {
+                this.hand.remove(card);
                 return card;
             } else if (count < minFrequency) {
                 // Guardamos la carta con la menor frecuencia (aunque repetida)
@@ -71,6 +73,7 @@ public class Player {
             }
         }
         // Si no hay cartas no repetidas, devolvemos la carta con menor frecuencia
+        this.hand.remove(candidate);
         return candidate;
     }
 

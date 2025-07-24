@@ -40,14 +40,11 @@ public class Dealer {
         }
     }
 
-    // TODO: Mover a Dealer
     private void cardExchange(Player winner, Player loser, int exchangedCards) {
         for (int i = 1; i <= exchangedCards; i++) {
             Card best = loser.getBestCard();
-            loser.removeCardFromHand(best);
 
             Card worst = winner.getWorstNonRepeatedCard();
-            winner.removeCardFromHand(worst);
 
             loser.addCardToHand(worst);
             winner.addCardToHand(best);
