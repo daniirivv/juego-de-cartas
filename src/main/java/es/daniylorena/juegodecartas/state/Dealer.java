@@ -2,7 +2,6 @@ package es.daniylorena.juegodecartas.state;
 
 import es.daniylorena.juegodecartas.utilities.CircularList;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class Dealer {
@@ -42,9 +41,10 @@ public class Dealer {
 
     private void cardExchange(Player winner, Player loser, int exchangedCards) {
         for (int i = 1; i <= exchangedCards; i++) {
-            Card best = loser.getBestCard();
+            Card best = loser.takeBestCard();
 
-            Card worst = winner.getWorstNonRepeatedCard();
+            Card worst = winner.takeWorstNonRepeatedCard();
+            winner.removeCardFromHand(worst);
 
             loser.addCardToHand(worst);
             winner.addCardToHand(best);

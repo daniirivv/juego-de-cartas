@@ -44,18 +44,40 @@ public class Player {
         this.hand.remove(card);
     }
 
-    public Card getBestCard() {
+    public Card takeBestCard() {
         this.hand.sort((a, b) -> b.getPower() - a.getPower()); // Ordena la mano de mayor a menor peso
         this.hand.remove(this.hand.getFirst());
-        return hand.getFirst();
+        return hand.removeFirst();
     }
 
-    public Card getWorstNonRepeatedCard() {
-        this.hand.sort((a, b) -> b.getPower() - a.getPower());
-        Card candidate = null;
+    public Card takeWorstNonRepeatedCard() {
+        int resultIndex = -1;
+        int n = this.hand.size();
+        int minFrecuencia = n;
+        int inicio = 0;
+
+        for (int i = 0; i < n; i++) {
+            /*
+             Cortamos la cadena cuando:
+             - i == n (fin de lista)
+             - elemento actual ≠ anterior
+            */
+            if (i == n-1 || !this.hand.get(i).equals(hand.get(i + 1))) { // Lazy Evaluation
+                int frecuencia = i - inicio + 1;
+                if (frecuencia == 1) {
+                    return this.hand.remove(inicio);  // Frecuencia 1 → devolver inmediatamente
+                } else if (frecuencia < minFrecuencia) {
+                    minFrecuencia = frecuencia;
+                    resultIndex = inicio; // Guardamos como posible mejor opción
+                }
+                // Preparamos inicio para siguiente cadena
+                inicio = i;
+            }
+        }
+        return (resultIndex == -1) ? null : this.hand.remove(resultIndex);
+
+        /* VERSION LORENA
         int minFrequency = Integer.MAX_VALUE;
-        // OPTIMIZE: Se puede hacer en una sola iteración con un iterador, ya que la baraja está ordenada.
-        // OPTIMIZE: No hace falta recorrerse toda la baraja
         for (Card card : this.hand) {
             int count = 0;
             for (Card c : this.hand) {
@@ -74,7 +96,8 @@ public class Player {
         }
         // Si no hay cartas no repetidas, devolvemos la carta con menor frecuencia
         this.hand.remove(candidate);
-        return candidate;
+        return result;
+        */
     }
 
 }

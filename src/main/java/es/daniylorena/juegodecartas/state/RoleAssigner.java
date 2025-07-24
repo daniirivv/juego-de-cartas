@@ -24,9 +24,8 @@ public class RoleAssigner {
         }
     }
 
-    public Role assignRole(Player player) {
+    public void assignRole(Player player) {
         Role role = this.roles.removeFirst();
         player.setRole(role);
-        return role;
     }
 }
