@@ -1,5 +1,6 @@
 package es.daniylorena.juegodecartas.logic;
 
+import es.daniylorena.juegodecartas.display.GameDisplay;
 import es.daniylorena.juegodecartas.display.GameDisplayInterface;
 import es.daniylorena.juegodecartas.state.*;
 import es.daniylorena.juegodecartas.utilities.CircularList;
@@ -174,13 +175,12 @@ public class GameController implements GameControllerInterface {
         boolean invalidMove = true;
         Move move;
         do{
-            move = gameDisplay.askForAMove(player);
+            move = this.gameDisplay.askForAMove(player);
             if (round.playMove(move)) {
                 invalidMove = false;
                 if (round.isPlin()) {
                     Player skipped = round.getActualRoundPlayers().next();
-                    // TODO: Los print van al display (gameDisplay.notifyPlin())
-                    System.out.println("¡PLIN! Se salta el turno de " + skipped.getName());
+                    this.gameDisplay.notifyPlin(skipped.getName());
                 }
             } else gameDisplay.notifyInvalidMove(move);
         }while(invalidMove);

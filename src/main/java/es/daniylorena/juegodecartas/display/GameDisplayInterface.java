@@ -10,4 +10,8 @@ public interface GameDisplayInterface {
     void notifyInvalidMove(Move move);
 
     boolean askForRematch();
+
+    default void notifyPlin(String skippedPlayer) {
+        System.out.println("¡PLIN! Se salta el turno de " + skippedPlayer);
+    }
 }
