@@ -5,7 +5,7 @@ import es.daniylorena.juegodecartas.logic.*;
 
 public class DependencyInyector {
 
-    public static void inyect(App app){
+    public static void inyect(App app) {
         GameDisplay gameDisplay = new GameDisplay();
         GameController gameController = GameController.getInstance();
 

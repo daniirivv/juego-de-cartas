@@ -7,7 +7,7 @@ import es.daniylorena.juegodecartas.state.*;
 
 import java.util.*;
 
-public class GameDisplay implements UI, GameDisplayInterface{
+public class GameDisplay implements UI, GameDisplayInterface {
 
     public static final int MAX_PLAYERS = 10;
     public static final int MIN_PLAYERS = 10;
@@ -15,7 +15,7 @@ public class GameDisplay implements UI, GameDisplayInterface{
     public static final String EXIT_COMMAND = "EXIT";
     public static final String POSITIVE_ANSWER = "Y";
 
-    private final static Scanner keyboardInput = new Scanner (System.in);
+    private final static Scanner keyboardInput = new Scanner(System.in);
 
     private GameControllerInterface gameController;
 
@@ -33,7 +33,7 @@ public class GameDisplay implements UI, GameDisplayInterface{
         this.gameController.launchGame(playersNames);
     }
 
-    private ArrayList<String> askForPlayerNames(){
+    private ArrayList<String> askForPlayerNames() {
         ArrayList<String> result = new ArrayList<>(MAX_PLAYERS);
         boolean done = false;
         do {
@@ -41,15 +41,15 @@ public class GameDisplay implements UI, GameDisplayInterface{
             String name = GameDisplay.keyboardInput.nextLine();
             if (!name.equalsIgnoreCase(DONE_COMMAND)) {
                 if (!name.isEmpty()) {
-                    if(!result.contains(name)){
+                    if (!result.contains(name)) {
                         result.add(name);
                     } else throw new IllegalPlayerNameException("Dos jugadores no pueden llamarse igual.");
                 } else throw new IllegalPlayerNameException(
                         "El nombre tiene que estar compuesto por, como mínimo, un caracter.");
-            } else if(result.size() < MIN_PLAYERS){
+            } else if (result.size() < MIN_PLAYERS) {
                 throw new InsufficientPlayersException("Falta/n " + (MIN_PLAYERS - result.size()) + " jugadores.");
             } else done = true;
-        }while (!done);
+        } while (!done);
         return result;
     }
 
@@ -75,8 +75,7 @@ public class GameDisplay implements UI, GameDisplayInterface{
                         } else {
                             System.out.println("Carta inválida: " + card);
                         }
-                    }
-                    catch (NumberFormatException e) {
+                    } catch (NumberFormatException e) {
                         System.out.println("Número inválido en: " + card);
                     }
                 } else {

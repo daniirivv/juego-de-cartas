@@ -2,7 +2,7 @@ package es.daniylorena.juegodecartas.state;
 
 import java.util.List;
 
-public class Player{
+public class Player {
 
     private final String name;
     private Role role;
@@ -36,13 +36,16 @@ public class Player{
         return hand.size();
     }
 
-    public void addCardToHand(Card card) { this.hand.add(card); }
+    public void addCardToHand(Card card) {
+        this.hand.add(card);
+    }
 
     public void removeCardFromHand(Card card) {
-        this.hand.remove(card); }
+        this.hand.remove(card);
+    }
 
     public Card getBestCard() {
-        this.hand.sort((a,b) -> b.getPower() - a.getPower()); // Ordena la mano de mayor a menor peso
+        this.hand.sort((a, b) -> b.getPower() - a.getPower()); // Ordena la mano de mayor a menor peso
         return hand.getFirst();
     }
 

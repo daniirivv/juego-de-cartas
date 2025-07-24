@@ -10,10 +10,10 @@ public class Dealer {
     public void divideCards(ArrayList<Player> playerList, Deck deck) {
         CircularList<Player> players = new CircularList<>(playerList);
         Iterator<Player> circularIterator = players.iterator();
-        do{
+        do {
             Player player = circularIterator.next();
             player.addCardToHand(deck.getFirstCard());
-        }while(!deck.isEmpty());
+        } while (!deck.isEmpty());
     }
 
 }

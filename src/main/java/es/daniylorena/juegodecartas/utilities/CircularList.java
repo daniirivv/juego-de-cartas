@@ -20,21 +20,21 @@ public class CircularList<T> implements Iterable<T> {
         return position;
     }
 
-    public T next(){
+    public T next() {
         T item = this.elements.get(this.position);
         position = (position + 1) % this.elements.size();
         return item;
     }
 
-    public void reset(){
+    public void reset() {
         this.position = 0;
     }
 
-    public boolean add(T item){
+    public boolean add(T item) {
         return this.elements.add(item);
     }
 
-    public boolean remove(T item){
+    public boolean remove(T item) {
         return this.elements.remove(item);
     }
 
@@ -43,7 +43,7 @@ public class CircularList<T> implements Iterable<T> {
         return new CircularIterator();
     }
 
-    private class CircularIterator implements Iterator<T>{
+    private class CircularIterator implements Iterator<T> {
 
         private int cursor;
 

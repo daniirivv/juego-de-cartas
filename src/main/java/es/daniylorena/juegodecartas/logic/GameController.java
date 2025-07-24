@@ -21,7 +21,7 @@ public class GameController implements GameControllerInterface {
         this.dealer = new Dealer();
     }
 
-    public static GameController getInstance(){
+    public static GameController getInstance() {
         return instance;
     }
 
@@ -57,12 +57,12 @@ public class GameController implements GameControllerInterface {
             this.dealer.divideCards(players, deck);
             matchLoop();
             rematch = this.gameDisplay.askForRematch();
-        } while(rematch);
+        } while (rematch);
     }
 
     private ArrayList<Player> initializePlayers(ArrayList<String> playersNames) {
         ArrayList<Player> players = new ArrayList<>();
-        for(String name : playersNames){
+        for (String name : playersNames) {
             Player player = new Player(name);
             players.add(player);
         }
@@ -132,10 +132,9 @@ public class GameController implements GameControllerInterface {
 
     private CircularList<Player> generateRoundPlayers(int i) {
         CircularList<Player> roundPlayers;
-        if(i == 0){
+        if (i == 0) {
             roundPlayers = new CircularList<>(this.currentGame.getPlayers());
-        }
-        else {
+        } else {
             Player roundWinner = this.currentGame.getCurrentRound().getWinner();
             List<Player> previousRoundPlayers = this.currentGame.getCurrentRound().getSimpleListOfSubplayers();
             List<Player> actualRoundPlayers = new ArrayList<>(previousRoundPlayers);
@@ -145,30 +144,30 @@ public class GameController implements GameControllerInterface {
         return roundPlayers;
     }
 
-    private void roundLoop(){
+    private void roundLoop() {
         Round round = this.currentGame.getCurrentRound();
 
         Player player;
         Move move;
         boolean endOfRound = false;
-        do{
+        do {
             player = round.getActualRoundPlayers().next();
             move = executeTurn(player);
-            if(move.isCloseMove()){
+            if (move.isCloseMove()) {
                 round.setWinner(player);
                 endOfRound = true;
             }
-            if(player.getHand().isEmpty()){
+            if (player.getHand().isEmpty()) {
                 this.roleAssigner.assignRole(player);
             }
-        }while(!endOfRound && this.currentGame.checkEndGame());
+        } while (!endOfRound && this.currentGame.checkEndGame());
     }
 
-    private Move executeTurn(Player player){
+    private Move executeTurn(Player player) {
         Round round = this.currentGame.getCurrentRound();
         boolean invalidMove = true;
         Move move;
-        do{
+        do {
             move = this.gameDisplay.askForAMove(player);
             if (round.playMove(move)) {
                 invalidMove = false;
@@ -177,7 +176,7 @@ public class GameController implements GameControllerInterface {
                     this.gameDisplay.notifyPlin(skipped.getName());
                 }
             } else gameDisplay.notifyInvalidMove(move);
-        }while(invalidMove);
+        } while (invalidMove);
         return move;
     }
 }

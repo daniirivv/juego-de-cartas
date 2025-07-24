@@ -19,13 +19,13 @@ public class Deck {
 
     public Deck() {
         this.cards = new LinkedList<>();
-        for(Suit suit : Suit.values()){
+        for (Suit suit : Suit.values()) {
             addCards(suit, DEFAULT_CARDS_PER_SUIT);
         }
     }
 
     private void addCards(Suit suit, int number) {
-        for (int i=1; i<=number; i++) {
+        for (int i = 1; i <= number; i++) {
             this.cards.add(new Card(i, suit));
         }
     }

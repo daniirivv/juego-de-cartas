@@ -67,8 +67,8 @@ public class Move implements Comparable<Move> {
     public int compareTo(Move other) {
         int thisSize = this.playedCards.size();
         int otherSize = other.playedCards.size();
-        if(thisSize!=otherSize) return Integer.compareUnsigned(thisSize, otherSize);
-        else{
+        if (thisSize != otherSize) return Integer.compareUnsigned(thisSize, otherSize);
+        else {
             int thisPower = this.getMovePower();
             int otherPower = other.getMovePower();
             return Integer.compareUnsigned(thisPower, otherPower);
@@ -78,9 +78,9 @@ public class Move implements Comparable<Move> {
     public boolean isCloseMove() {
         boolean result = true;
         Iterator<Card> iterator = this.playedCards.iterator();
-        while(iterator.hasNext() && result){
+        while (iterator.hasNext() && result) {
             int cardValue = iterator.next().getNumber();
-            if(cardValue != JOKER && cardValue != CLOSE_CARD){
+            if (cardValue != JOKER && cardValue != CLOSE_CARD) {
                 result = false;
             }
         }

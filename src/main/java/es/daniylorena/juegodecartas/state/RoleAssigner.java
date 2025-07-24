@@ -11,8 +11,8 @@ public class RoleAssigner {
     private List<Role> roles;
 
 
-    public void initializeRoles(int players){
-        if(players == GameDisplay.MIN_PLAYERS){
+    public void initializeRoles(int players) {
+        if (players == GameDisplay.MIN_PLAYERS) {
             this.roles = Arrays.asList(Role.PRESI, Role.NEUTRO, Role.CULO);
         } else {
             this.roles = new ArrayList<>(players);

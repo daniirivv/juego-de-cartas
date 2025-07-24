@@ -29,7 +29,7 @@ public class Game {
         return deck;
     }
 
-    public void shuffleDeck(){
+    public void shuffleDeck() {
         this.deck.shuffle();
     }
 
@@ -45,7 +45,7 @@ public class Game {
         return this.getRounds().getLast();
     }
 
-    public boolean checkEndGame(){
+    public boolean checkEndGame() {
         int totalPlayers = this.players.size();
         int playersWithoutCards = 0;
         for (Player player : this.players) {
@@ -53,6 +53,6 @@ public class Game {
                 playersWithoutCards++;
             }
         }
-        return playersWithoutCards < totalPlayers -1;
+        return playersWithoutCards < totalPlayers - 1;
     }
 }

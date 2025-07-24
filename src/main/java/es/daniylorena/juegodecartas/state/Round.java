@@ -65,7 +65,7 @@ public class Round {
         return this.actualRoundPlayers.getElements();
     }
 
-    public Iterator<Player> getCircularIterator(){
+    public Iterator<Player> getCircularIterator() {
         return this.actualRoundPlayers.iterator();
     }
 
