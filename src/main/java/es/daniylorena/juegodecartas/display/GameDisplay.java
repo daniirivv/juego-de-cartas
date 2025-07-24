@@ -10,7 +10,7 @@ import java.util.*;
 public class GameDisplay implements UI, GameDisplayInterface {
 
     public static final int MAX_PLAYERS = 10;
-    public static final int MIN_PLAYERS = 10;
+    public static final int MIN_PLAYERS = 3;
     public static final String DONE_COMMAND = "DONE";
     public static final String EXIT_COMMAND = "EXIT";
     public static final String POSITIVE_ANSWER = "Y";
