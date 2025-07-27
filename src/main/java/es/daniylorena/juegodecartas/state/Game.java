@@ -6,7 +6,7 @@ import java.util.List;
 public class Game {
 
     private final List<Player> players;
-    private final List<Round> rounds;
+    private final LinkedList<Round> rounds;
 
     private final Deck deck;
 

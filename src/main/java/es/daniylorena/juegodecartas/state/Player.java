@@ -1,12 +1,13 @@
 package es.daniylorena.juegodecartas.state;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Player {
 
     private final String name;
     private Role role;
-    private List<Card> hand;
+    private LinkedList<Card> hand;
 
     public Player(String name) {
         this.name = name;
@@ -20,7 +21,7 @@ public class Player {
         return hand;
     }
 
-    public void setHand(List<Card> hand) {
+    public void setHand(LinkedList<Card> hand) {
         this.hand = hand;
     }
 
