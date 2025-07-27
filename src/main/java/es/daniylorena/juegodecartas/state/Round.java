@@ -58,7 +58,7 @@ public class Round {
             } else { // Not first move
                 Move previous = this.moves.peek();
                 if (numberOfPlayedCards == 0) return true; // NO SE ALMACENA UN "PASO"
-                if(numberOfPlayedCards == this.expectedNumberOfCards && move.getMovePower() >= previous.getMovePower()){
+                if((numberOfPlayedCards == this.expectedNumberOfCards) && (move.compareTo(previous) >= 0)){
                     playable = true;
                 }
                 if(playable) this.moves.push(move);

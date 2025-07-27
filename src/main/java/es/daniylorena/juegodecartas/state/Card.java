@@ -4,10 +4,10 @@ public record Card(int number, Suit suit) {
 
     public int getPower() { // Para comprobar en la lógica si la carta echada es mayor que la anterior
         if (this.number == 1 && this.suit == Suit.OROS) return 16; // La carta más poderosa
-        if (number == 2) return 15; // Comodín - sustituye a todo menos al as de oros
-        if (number == 1) return 14;
-        if (number == 3) return 13; // 3 = 13
-        return number; // 4–12 normales
+        if (this.number == 2) return 15; // Comodín - sustituye a todo menos al as de oros
+        if (this.number == 1) return 14;
+        if (this.number == 3) return 13; // 3 = 13
+        return this.number; // 4–12 normales
     }
 
     @Override
@@ -15,11 +15,11 @@ public record Card(int number, Suit suit) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return number == card.number && suit == card.suit;
+        return this.number == card.number && this.suit == card.suit;
     }
 
     @Override
     public String toString() {
-        return number + " de " + suit.name().toLowerCase();
+        return this.number + " de " + this.suit.name().toLowerCase();
     }
 }

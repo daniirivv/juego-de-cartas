@@ -28,7 +28,7 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
 
     public int getMovePower() {
         if (!isValidStructure()) {
-            return 0;
+            return -1;
         }
         // Buscar la primera carta que no sea un 2
         for (Card card : this.playedCards) {
@@ -42,14 +42,11 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
 
     @Override
     public int compareTo(Move other) {
-        int thisSize = this.playedCards.size();
-        int otherSize = other.playedCards.size();
-        if (thisSize != otherSize) return Integer.compareUnsigned(thisSize, otherSize);
-        else {
+        if(this.playedCards.size() == other.playedCards.size()) {
             int thisPower = this.getMovePower();
             int otherPower = other.getMovePower();
             return Integer.compareUnsigned(thisPower, otherPower);
-        }
+        } else return -1;
     }
 
     public boolean isCloseMove() {
