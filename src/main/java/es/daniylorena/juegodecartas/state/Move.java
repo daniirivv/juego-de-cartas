@@ -3,7 +3,6 @@ package es.daniylorena.juegodecartas.state;
 import java.lang.Comparable;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.Stack;
 
 public class Move implements Comparable<Move> {
 
@@ -34,23 +33,25 @@ public class Move implements Comparable<Move> {
         this.moveOwner = moveOwner;
     }
 
-    public boolean isValid(Set<Card> playedCards) {
-        boolean valid = true;
-        int referenceNumber = -1;
-        for (Card card : playedCards) {
-            if (card.getNumber() != 2) {
-                if (referenceNumber == -1) {
-                    referenceNumber = card.getNumber();
-                } else if (card.getNumber() != referenceNumber) {
-                    valid = false;
-                }
-            }
+    // TODO: Agregar llamadas al display para notificar en cada caso
+    public boolean isValidStructure() {
+        int moveSize = this.playedCards.size();
+        if (moveSize == 0 || moveSize == 1) return true;
+        if (moveSize > 4) return false;
+        else{
+            boolean valid = true;
+            Iterator<Card> iterator = this.playedCards.iterator();
+            int firstNumber = iterator.next().getNumber();
+            do {
+                int number = iterator.next().getNumber();
+                if(firstNumber != number) valid = false;
+            } while (!valid && iterator.hasNext());
+            return valid;
         }
-        return valid;
     }
 
     public int getMovePower() {
-        if (!isValid(this.playedCards)) {
+        if (!isValidStructure()) {
             return 0;
         }
         // Buscar la primera carta que no sea un 2

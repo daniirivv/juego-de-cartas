@@ -5,7 +5,6 @@ import es.daniylorena.juegodecartas.utilities.CircularList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
-import java.util.Set;
 
 public class Round {
 
@@ -23,15 +22,15 @@ public class Round {
     }
 
     public Stack<Move> getMoves() {
-        return moves;
+        return this.moves;
     }
 
     public CircularList<Player> getActualRoundPlayers() {
-        return actualRoundPlayers;
+        return this.actualRoundPlayers;
     }
 
     public Player getWinner() {
-        return winner;
+        return this.winner;
     }
 
     public void setWinner(Player winner) {
@@ -39,7 +38,7 @@ public class Round {
     }
 
     public int getExpectedNumberOfCards() {
-        return expectedNumberOfCards;
+        return this.expectedNumberOfCards;
     }
 
     public void setExpectedNumberOfCards(int expectedNumberOfCards) {
@@ -47,18 +46,25 @@ public class Round {
     }
 
     public boolean playMove(Move move) {
-        Set<Card> playedCards = move.getPlayedCards();
-        if (moves.isEmpty()) {
-            expectedNumberOfCards = playedCards.size(); // Determina el número de cartas a jugar quien empieza la ronda
-            moves.push(move);
-            return true;
+        boolean playable = false;
+        int numberOfPlayedCards = move.getPlayedCards().size();
+        if (move.isValidStructure()){
+            // First-move scenario
+            if(this.moves.isEmpty()){
+                if (numberOfPlayedCards != 0){ // No vale pasar de primer turno
+                    this.expectedNumberOfCards = move.getPlayedCards().size();
+                    playable = true;
+                }
+            } else { // Not first move
+                Move previous = this.moves.peek();
+                if (numberOfPlayedCards == 0) return true; // NO SE ALMACENA UN "PASO"
+                if(numberOfPlayedCards == this.expectedNumberOfCards && move.getMovePower() >= previous.getMovePower()){
+                    playable = true;
+                }
+                if(playable) this.moves.push(move);
+            }
         }
-        if (playedCards.size() != expectedNumberOfCards && !playedCards.isEmpty()) return false; // Jugada inválida
-        if (!move.isValid(playedCards)) return false;
-        if (move.compareTo(moves.peek()) <= 0) return false;
-        if (playedCards.isEmpty()) return true; // Pasar = válido
-        moves.push(move);
-        return true;
+        return playable;
     }
 
     public List<Player> getSimpleListOfSubplayers() {
@@ -88,6 +94,7 @@ public class Round {
         Move lastPlayedMove = null;
         int lastPlayedIndex = -1;
 
+        // FIXME: Asumir que solo se guardan los movimientos donde se han jugado cartas
         // Encontrar el último movimiento con cartas
         for (int i = 0; i < moves.size(); i++) {
             Move move = moves.get(i);
