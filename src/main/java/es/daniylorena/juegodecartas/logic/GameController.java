@@ -118,12 +118,12 @@ public class GameController implements GameControllerInterface {
         this.gameDisplay.printTurn(player);
         Round round = this.currentGame.getCurrentRound();
         boolean invalidMove = true;
-        Move move = null;
+        Move move;
         do {
             String[] proposedMove = this.gameDisplay.askForAMove(player);
-            Move actualCloneMove = createCloneMove(proposedMove, player);
-            if(verifyCardsOwnership(actualCloneMove, player)){
-                if (round.playMove(actualCloneMove, player)) {
+            move = createCloneMove(proposedMove, player);
+            if(verifyCardsOwnership(move, player)){
+                if (round.playMove(move, player)) {
                     invalidMove = false;
                     if (round.isPlin()) {
                         Player skipped = round.getActualRoundPlayers().next();
@@ -131,7 +131,6 @@ public class GameController implements GameControllerInterface {
                     }
                 } else gameDisplay.notifyInvalidMove(move);
             }
-
         } while (invalidMove);
         return move;
     }
