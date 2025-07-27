@@ -67,8 +67,8 @@ public class GameDisplay implements UI, GameDisplayInterface {
                 if (individualCard.length == 2) {
                     try {
                         int cardNumber = Integer.parseInt(individualCard[0].trim());
-                        String suitInput = individualCard[1];
-                        if (isValidCardNumber(cardNumber) && isValidSuit(suitInput)) {
+                        String suitInput = individualCard[1].toUpperCase();
+                        if (isValidCardNumber(cardNumber) && isValidSuit(suitInput.toLowerCase())) {
                             Suit suit = Suit.valueOf(suitInput);
                             Card cardToPlay = new Card(cardNumber, suit);
                             setOfCards.add(cardToPlay);
