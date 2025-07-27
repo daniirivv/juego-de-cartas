@@ -7,7 +7,7 @@ import java.util.List;
 public class Deck {
 
     private static final int DEFAULT_CARDS_PER_SUIT = 12;
-    private List<Card> cards;
+    private LinkedList<Card> cards;
 
     public Deck(int oros, int copas, int espadas, int bastos) {
         this.cards = new LinkedList<>();
