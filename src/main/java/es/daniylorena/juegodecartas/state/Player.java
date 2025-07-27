@@ -1,5 +1,6 @@
 package es.daniylorena.juegodecartas.state;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class Player {
     }
 
     public List<Card> getHand() {
-        return hand;
+        return hand.stream().sorted(Comparator.comparingInt(Card::getPower)).toList();
     }
 
     public void setHand(LinkedList<Card> hand) {
