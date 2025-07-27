@@ -61,6 +61,7 @@ public class GameDisplay implements UI, GameDisplayInterface {
         return result;
     }
 
+    // FIXME: inputs de tamaño 3 no funcionan (12B)
     @Override
     public String[] askForAMove(Player turnOwner) {
         System.out.println("¿Qué cartas quieres echar?");
