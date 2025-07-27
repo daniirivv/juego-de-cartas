@@ -4,47 +4,23 @@ import java.lang.Comparable;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Move implements Comparable<Move> {
+public record Move(Set<Card> playedCards, Player moveOwner) implements Comparable<Move> {
 
     private static final int JOKER = 2;
     private static final int CLOSE_CARD = 1;
-
-    private Set<Card> playedCards;
-    private Player moveOwner;
-
-    public Move(Set<Card> playedCards, Player moveOwner) {
-        this.playedCards = playedCards;
-        this.moveOwner = moveOwner;
-    }
-
-    public Set<Card> getPlayedCards() {
-        return playedCards;
-    }
-
-    public void setPlayedCards(Set<Card> playedCards) {
-        this.playedCards = playedCards;
-    }
-
-    public Player getMoveOwner() {
-        return moveOwner;
-    }
-
-    public void setMoveOwner(Player moveOwner) {
-        this.moveOwner = moveOwner;
-    }
 
     // TODO: Agregar llamadas al display para notificar en cada caso
     public boolean isValidStructure() {
         int moveSize = this.playedCards.size();
         if (moveSize == 0 || moveSize == 1) return true;
         if (moveSize > 4) return false;
-        else{
+        else {
             boolean valid = true;
             Iterator<Card> iterator = this.playedCards.iterator();
             int firstNumber = iterator.next().number();
             do {
                 int number = iterator.next().number();
-                if(firstNumber != number) valid = false;
+                if (firstNumber != number) valid = false;
             } while (!valid && iterator.hasNext());
             return valid;
         }

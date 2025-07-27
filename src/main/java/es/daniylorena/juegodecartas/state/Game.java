@@ -3,18 +3,10 @@ package es.daniylorena.juegodecartas.state;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Game {
-
-    private final List<Player> players;
-    private final LinkedList<Round> rounds;
-
-    private final Deck deck;
+public record Game(List<Player> players, LinkedList<Round> rounds, Deck deck) {
 
     public Game(List<Player> players, Deck deck) {
-        this.players = players;
-        this.deck = deck;
-
-        this.rounds = new LinkedList<>();
+        this(players, new LinkedList<>(), deck);
     }
 
     public List<Player> getPlayers() {
@@ -33,8 +25,8 @@ public class Game {
         this.deck.shuffle();
     }
 
-    public boolean addRound(Round round) {
-        return this.rounds.add(round);
+    public void addRound(Round round) {
+        this.rounds.add(round);
     }
 
     public Round getCurrentRound() {

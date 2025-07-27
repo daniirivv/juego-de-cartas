@@ -47,12 +47,12 @@ public class Round {
 
     public boolean playMove(Move move) {
         boolean playable = false;
-        int numberOfPlayedCards = move.getPlayedCards().size();
+        int numberOfPlayedCards = move.playedCards().size();
         if (move.isValidStructure()){
             // First-move scenario
             if(this.moves.isEmpty()){
                 if (numberOfPlayedCards != 0){ // No vale pasar de primer turno
-                    this.expectedNumberOfCards = move.getPlayedCards().size();
+                    this.expectedNumberOfCards = move.playedCards().size();
                     playable = true;
                 }
             } else { // Not first move
@@ -98,7 +98,7 @@ public class Round {
         // Encontrar el último movimiento con cartas
         for (int i = 0; i < moves.size(); i++) {
             Move move = moves.get(i);
-            if (!move.getPlayedCards().isEmpty()) {
+            if (!move.playedCards().isEmpty()) {
                 lastPlayedMove = move;
                 lastPlayedIndex = i;
             }
@@ -110,12 +110,12 @@ public class Round {
         boolean allPassed = true;
         for (int i = lastPlayedIndex + 1; i < moves.size(); i++) {
             Move move = moves.get(i);
-            if (!move.getPlayedCards().isEmpty()) {
+            if (!move.playedCards().isEmpty()) {
                 allPassed = false;
             }
         }
 
-        boolean samePlayerTurn = closer.equals(lastPlayedMove.getMoveOwner());
+        boolean samePlayerTurn = closer.equals(lastPlayedMove.moveOwner());
 
         return allPassed && samePlayerTurn;
     }
