@@ -36,8 +36,8 @@ public class GameDisplay implements UI, GameDisplayInterface {
     private ArrayList<String> askForPlayerNames() {
         ArrayList<String> result = new ArrayList<>(MAX_PLAYERS);
         boolean done = false;
+        System.out.println("Introduce los nombres de los jugadores: (" + DONE_COMMAND + " para finalizar)");
         do {
-            System.out.println("Introduce los nombres de los jugadores:");
             String name = GameDisplay.keyboardInput.nextLine();
             if (!name.equalsIgnoreCase(DONE_COMMAND)) {
                 if (!name.isEmpty()) {
@@ -102,6 +102,24 @@ public class GameDisplay implements UI, GameDisplayInterface {
     @Override
     public boolean askForRematch() {
         return keyboardInput.nextLine().equalsIgnoreCase(POSITIVE_ANSWER);
+    }
+
+    @Override
+    public void notifyPlin(String skippedPlayer) {
+        System.out.println("¡" + skippedPlayer + "ha sido saltado!");
+    }
+
+    @Override
+    public void printTurn(Player player) {
+        System.out.println("Turno de " + player.getName());
+        printHand(player.getHand());
+    }
+
+    @Override
+    public void printHand(List<Card> hand) {
+        for (Card card : hand) {
+            System.out.println(card.toString());
+        }
     }
 
     @Override

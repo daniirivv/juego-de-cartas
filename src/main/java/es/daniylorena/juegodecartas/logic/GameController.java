@@ -114,6 +114,7 @@ public class GameController implements GameControllerInterface {
     }
 
     private Move executeTurn(Player player) {
+        this.gameDisplay.printTurn(player);
         Round round = this.currentGame.getCurrentRound();
         boolean invalidMove = true;
         Move move;

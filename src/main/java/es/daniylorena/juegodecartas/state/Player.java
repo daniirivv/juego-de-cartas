@@ -11,6 +11,8 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
+        this.role = null;
+        this.hand = new LinkedList<>();
     }
 
     public String getName() {

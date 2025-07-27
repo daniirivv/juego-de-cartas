@@ -1,7 +1,10 @@
 package es.daniylorena.juegodecartas.display;
 
+import es.daniylorena.juegodecartas.state.Card;
 import es.daniylorena.juegodecartas.state.Move;
 import es.daniylorena.juegodecartas.state.Player;
+
+import java.util.List;
 
 public interface GameDisplayInterface {
 
@@ -11,7 +14,9 @@ public interface GameDisplayInterface {
 
     boolean askForRematch();
 
-    default void notifyPlin(String skippedPlayer) {
-        System.out.println("¡PLIN! Se salta el turno de " + skippedPlayer);
-    }
+    void notifyPlin(String skippedPlayer);
+
+    void printTurn(Player player);
+
+    void printHand(List<Card> hand);
 }

@@ -3,6 +3,7 @@ package es.daniylorena.juegodecartas.state;
 import es.daniylorena.juegodecartas.utilities.CircularList;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Dealer {
 
@@ -22,11 +23,14 @@ public class Dealer {
         Player culo = null;
 
         for (Player p : players) {
-            switch (p.getRole()) {
-                case PRESI -> presi = p;
-                case VICEPRESI -> vicepresi = p;
-                case VICECULO -> viceculo = p;
-                case CULO -> culo = p;
+            Optional<Role> rol = Optional.ofNullable(p.getRole());
+            if(rol.isPresent()){
+                switch (rol.get()) {
+                    case PRESI -> presi = p;
+                    case VICEPRESI -> vicepresi = p;
+                    case VICECULO -> viceculo = p;
+                    case CULO -> culo = p;
+                }
             }
         }
 
