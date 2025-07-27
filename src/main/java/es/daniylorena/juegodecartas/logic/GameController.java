@@ -1,6 +1,5 @@
 package es.daniylorena.juegodecartas.logic;
 
-import es.daniylorena.juegodecartas.display.GameDisplay;
 import es.daniylorena.juegodecartas.display.GameDisplayInterface;
 import es.daniylorena.juegodecartas.state.*;
 import es.daniylorena.juegodecartas.utilities.CircularList;

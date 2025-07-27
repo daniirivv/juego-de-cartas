@@ -37,10 +37,6 @@ public class Game {
         return this.rounds.add(round);
     }
 
-    public Move getLastMove() {
-        return getCurrentRound().getMoves().getLast();
-    }
-
     public Round getCurrentRound() {
         return this.getRounds().getLast();
     }
