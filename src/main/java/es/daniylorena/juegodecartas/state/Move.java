@@ -41,9 +41,9 @@ public class Move implements Comparable<Move> {
         else{
             boolean valid = true;
             Iterator<Card> iterator = this.playedCards.iterator();
-            int firstNumber = iterator.next().getNumber();
+            int firstNumber = iterator.next().number();
             do {
-                int number = iterator.next().getNumber();
+                int number = iterator.next().number();
                 if(firstNumber != number) valid = false;
             } while (!valid && iterator.hasNext());
             return valid;
@@ -56,7 +56,7 @@ public class Move implements Comparable<Move> {
         }
         // Buscar la primera carta que no sea un 2
         for (Card card : this.playedCards) {
-            if (card.getNumber() != 2) {
+            if (card.number() != 2) {
                 return card.getPower();
             }
         }
@@ -80,7 +80,7 @@ public class Move implements Comparable<Move> {
         boolean result = true;
         Iterator<Card> iterator = this.playedCards.iterator();
         while (iterator.hasNext() && result) {
-            int cardValue = iterator.next().getNumber();
+            int cardValue = iterator.next().number();
             if (cardValue != JOKER && cardValue != CLOSE_CARD) {
                 result = false;
             }
