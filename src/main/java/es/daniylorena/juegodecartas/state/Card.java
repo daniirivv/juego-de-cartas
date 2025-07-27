@@ -43,9 +43,8 @@ public class Card {
         return Objects.hash(number, suit);
     }
 
-    // TODO: ToString
     @Override
     public String toString() {
-        return "";
+        return number + " de " + suit.name().toLowerCase();
     }
 }
