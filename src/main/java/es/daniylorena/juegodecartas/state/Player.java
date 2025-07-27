@@ -8,7 +8,7 @@ public class Player {
 
     private final String name;
     private Role role;
-    private LinkedList<Card> hand;
+    private final LinkedList<Card> hand;
 
     public Player(String name) {
         this.name = name;
@@ -22,10 +22,6 @@ public class Player {
 
     public List<Card> getHand() {
         return hand.stream().sorted(Comparator.comparingInt(Card::getPower)).toList();
-    }
-
-    public void setHand(LinkedList<Card> hand) {
-        this.hand = hand;
     }
 
     public Role getRole() {

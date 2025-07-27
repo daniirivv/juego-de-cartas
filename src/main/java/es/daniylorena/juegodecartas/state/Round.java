@@ -4,6 +4,7 @@ import es.daniylorena.juegodecartas.utilities.CircularList;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 public class Round {
@@ -45,23 +46,28 @@ public class Round {
         this.expectedNumberOfCards = expectedNumberOfCards;
     }
 
-    public boolean playMove(Move move) {
+    public boolean playMove(Move proposedMove, Player player) {
         boolean playable = false;
-        int numberOfPlayedCards = move.playedCards().size();
-        if (move.isValidStructure()){
-            // First-move scenario
+        int numberOfPlayedCards = proposedMove.playedCards().size();
+        if (proposedMove.isValidStructure()){ // First-move scenario
             if(this.moves.isEmpty()){
                 if (numberOfPlayedCards != 0){ // No vale pasar de primer turno
-                    this.expectedNumberOfCards = move.playedCards().size();
+                    this.expectedNumberOfCards = proposedMove.playedCards().size();
                     playable = true;
                 }
             } else { // Not first move
                 Move previous = this.moves.peek();
                 if (numberOfPlayedCards == 0) return true; // NO SE ALMACENA UN "PASO"
-                if((numberOfPlayedCards == this.expectedNumberOfCards) && (move.compareTo(previous) >= 0)){
+                if((numberOfPlayedCards == this.expectedNumberOfCards) && (proposedMove.compareTo(previous) >= 0)){
                     playable = true;
                 }
-                if(playable) this.moves.push(move);
+                if(playable) {
+                    // Elimina las cartas correspondientes al movimiento, y juega las cartas clonadas
+                    for(Card card : proposedMove.playedCards()){
+                        player.getHand().remove(card);
+                    }
+                    this.moves.add(proposedMove);
+                }
             }
         }
         return playable;

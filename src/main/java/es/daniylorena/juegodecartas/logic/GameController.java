@@ -1,5 +1,6 @@
 package es.daniylorena.juegodecartas.logic;
 
+import es.daniylorena.juegodecartas.display.GameDisplay;
 import es.daniylorena.juegodecartas.display.GameDisplayInterface;
 import es.daniylorena.juegodecartas.state.*;
 import es.daniylorena.juegodecartas.utilities.CircularList;
@@ -117,17 +118,38 @@ public class GameController implements GameControllerInterface {
         this.gameDisplay.printTurn(player);
         Round round = this.currentGame.getCurrentRound();
         boolean invalidMove = true;
-        Move move;
+        Move move = null;
         do {
-            move = this.gameDisplay.askForAMove(player);
-            if (round.playMove(move)) {
-                invalidMove = false;
-                if (round.isPlin()) {
-                    Player skipped = round.getActualRoundPlayers().next();
-                    this.gameDisplay.notifyPlin(skipped.getName());
-                }
-            } else gameDisplay.notifyInvalidMove(move);
+            String[] proposedMove = this.gameDisplay.askForAMove(player);
+            Move actualCloneMove = createCloneMove(proposedMove, player);
+            if(verifyCardsOwnership(actualCloneMove, player)){
+                if (round.playMove(actualCloneMove, player)) {
+                    invalidMove = false;
+                    if (round.isPlin()) {
+                        Player skipped = round.getActualRoundPlayers().next();
+                        this.gameDisplay.notifyPlin(skipped.getName());
+                    }
+                } else gameDisplay.notifyInvalidMove(move);
+            }
+
         } while (invalidMove);
         return move;
+    }
+
+    private boolean verifyCardsOwnership(Move proposedMove, Player player) {
+        for(Card clone : proposedMove.playedCards()){
+            if(!player.getHand().contains(clone)) return false;
+        }
+        return true;
+    }
+
+    private Move createCloneMove(String[] proposedMove, Player player) {
+        Set<Card> cards = new HashSet<>();
+        for (String inputCard : proposedMove){
+            int number = inputCard.charAt(0);
+            Suit suit = GameDisplay.SUIT_TO_CHAR_MAP.get(inputCard.charAt(1));
+            cards.add(new Card(number, suit));
+        }
+        return new Move(cards, player);
     }
 }

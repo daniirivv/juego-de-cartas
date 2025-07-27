@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface GameDisplayInterface {
 
-    Move askForAMove(Player turnOwner);
+    String[] askForAMove(Player turnOwner);
 
     void notifyInvalidMove(Move move);
 
