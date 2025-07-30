@@ -46,7 +46,6 @@ public class Player {
 
     public Card takeBestCard() {
         this.hand.sort((a, b) -> b.getPower() - a.getPower()); // Ordena la mano de mayor a menor peso
-        this.hand.remove(this.hand.getFirst());
         return hand.removeFirst();
     }
 
