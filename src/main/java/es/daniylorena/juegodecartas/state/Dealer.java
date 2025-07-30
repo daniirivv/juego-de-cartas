@@ -7,16 +7,15 @@ import java.util.Optional;
 
 public class Dealer {
 
-    public void divideCards(List<Player> playerList, Deck deck) {
+    public static void divideCards(List<Player> playerList, Deck deck) {
         CircularList<Player> players = new CircularList<>(playerList);
         do {
             Player player = players.next();
-            player.addCardToHand(deck.takeCard());
+            player.addCardToHand(deck.draw());
         } while (!deck.isEmpty());
     }
 
-    // OPTIMIZE: Revisar y agregar esta responsabilidad al Dealer
-    public void applyRolesIfDefined(List<Player> players) {
+    public static void applyRolesIfDefined(List<Player> players) {
         Player presi = null;
         Player vicepresi = null;
         Player viceculo = null;
@@ -43,7 +42,7 @@ public class Dealer {
         }
     }
 
-    private void cardExchange(Player winner, Player loser, int exchangedCards) {
+    private static void cardExchange(Player winner, Player loser, int exchangedCards) {
         for (int i = 1; i <= exchangedCards; i++) {
             Card best = loser.takeBestCard();
 

@@ -1,0 +1,4 @@
+package es.daniylorena.juegodecartas.state;
+
+public class RoleAssignerTest {
+}

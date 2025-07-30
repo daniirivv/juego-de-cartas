@@ -32,7 +32,7 @@ public class Player {
         this.role = role;
     }
 
-    public int numberOfCards() {
+    public int getHandSize() {
         return hand.size();
     }
 

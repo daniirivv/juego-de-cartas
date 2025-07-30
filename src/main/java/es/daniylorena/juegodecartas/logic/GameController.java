@@ -15,11 +15,9 @@ public class GameController implements GameControllerInterface {
     private GameDisplayInterface gameDisplay;
     private Game currentGame;
     private final RoleAssigner roleAssigner;
-    private final Dealer dealer;
 
     private GameController() {
         this.roleAssigner = new RoleAssigner();
-        this.dealer = new Dealer();
     }
 
     public static GameController getInstance() {
@@ -55,8 +53,8 @@ public class GameController implements GameControllerInterface {
             this.currentGame = new Game(players, deck);
             this.roleAssigner.initializeRoles(players.size());
             this.currentGame.shuffleDeck();
-            this.dealer.divideCards(players, deck);
-            this.dealer.applyRolesIfDefined(players);
+            Dealer.divideCards(players, deck);
+            Dealer.applyRolesIfDefined(players);
             singleGameLoop();
             rematch = this.gameDisplay.askForRematch();
         } while (rematch);
