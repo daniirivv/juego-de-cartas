@@ -14,14 +14,20 @@ import java.util.List;
 @ExtendWith(MockitoExtension.class)
 public class DealerTest {
 
-    @Mock
-    Player p1, p2, p3, p4;
-
     @Test
     public void divideAllDeckCardsRoundRobin(){
+        Player playerOne = new Player("Dani");
+        Player playerTwo = new Player("Lorena");
+        Player playerThree = new Player("Eva");
+        Player playerFour = new Player("Alex");
         Deck deck = new Deck();
         int deckSize = deck.getSize();
-        List<Player> playerList = List.of(p1,p2,p3,p4);
+        List<Player> playerList = List.of(
+                playerOne,
+                playerTwo,
+                playerThree,
+                playerFour
+        );
 
         Dealer.divideCards(playerList, deck);
 

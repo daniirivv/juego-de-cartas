@@ -49,7 +49,8 @@ public class Round {
     public boolean playMove(Move proposedMove, Player player) {
         boolean playable = false;
         int numberOfPlayedCards = proposedMove.playedCards().size();
-        if (proposedMove.isValidStructure()){ // First-move scenario
+        if (proposedMove.isValidStructure()){
+            // First-move scenario
             if(this.moves.isEmpty()){
                 if (numberOfPlayedCards != 0){ // No vale pasar de primer turno
                     this.expectedNumberOfCards = proposedMove.playedCards().size();
@@ -61,13 +62,13 @@ public class Round {
                 if((numberOfPlayedCards == this.expectedNumberOfCards) && (proposedMove.compareTo(previous) >= 0)){
                     playable = true;
                 }
-                if(playable) {
-                    // Elimina las cartas correspondientes al movimiento, y juega las cartas clonadas
-                    for(Card card : proposedMove.playedCards()){
-                        player.removeCardFromHand(card);
-                    }
-                    this.moves.add(proposedMove);
+            }
+            if(playable) {
+                // Elimina las cartas correspondientes al movimiento, y juega las cartas clonadas
+                for(Card card : proposedMove.playedCards()){
+                    player.removeCardFromHand(card);
                 }
+                this.moves.add(proposedMove);
             }
         }
         return playable;
@@ -84,7 +85,7 @@ public class Round {
     public boolean isPlin() {
         Stack<Move> moves = this.moves;
         if (moves.size() >= 2) {
-            Move lastMove = moves.get(moves.size() - 1);
+            Move lastMove = moves.getLast();
             Move previousMove = moves.get(moves.size() - 2);
 
             return lastMove.compareTo(previousMove) == 0;

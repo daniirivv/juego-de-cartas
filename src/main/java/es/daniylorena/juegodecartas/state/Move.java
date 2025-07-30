@@ -9,6 +9,10 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
     private static final int JOKER = 2;
     private static final int CLOSE_CARD = 1;
 
+    public int getMoveSize(){
+        return this.playedCards.size();
+    }
+
     // TODO: Agregar llamadas al display para notificar en cada caso
     public boolean isValidStructure() {
         int moveSize = this.playedCards.size();
