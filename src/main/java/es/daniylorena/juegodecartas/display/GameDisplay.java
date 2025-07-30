@@ -68,20 +68,26 @@ public class GameDisplay implements UI, GameDisplayInterface {
         System.out.println("Formato: <Numero><Palo> <N><P>... Ej. 4C 4B-> Cuatro de copas y cuatro de bastos");
         String inputCards = GameDisplay.keyboardInput.nextLine().toUpperCase();
         String[] cards = inputCards.split(" ");
-        for (String card : cards){
-            char[] splittedCard = card.toCharArray();
-            char number = splittedCard[0];
-            char suit = splittedCard[1];
+        for (String card : cards) {
+            if (card.length() < 2) throw new IllegalCardException("Formato incorrecto: " + card);
+            String numberPart = card.substring(0, card.length() - 1);
+            char suit = card.charAt(card.length() - 1);
+            int number;
+            try {
+                number = Integer.parseInt(numberPart);
+            } catch (NumberFormatException e) {
+                throw new IllegalCardException("Número inválido: " + numberPart);
+            }
             // Validaciones
-            if(number == 0 || number > 12) throw new IllegalCardException("Numero: " + number);
-            if(!SUIT_TO_CHAR_MAP.containsKey(suit)) throw new IllegalCardException("Palo: " + suit);
+            if (number == 0 || number > 12) throw new IllegalCardException("Número fuera de rango: " + number);
+            if (!SUIT_TO_CHAR_MAP.containsKey(suit)) throw new IllegalCardException("Palo inválido: " + suit);
         }
         return cards;
     }
 
     @Override
     public void notifyInvalidMove(Move move) {
-        System.out.println("No puedes jugar el movimiento " + move + "ahora mismo.");
+        System.out.println("No puedes jugar el movimiento " + move + "ahora mismo");
     }
 
     private boolean isValidCardNumber(int number) {
