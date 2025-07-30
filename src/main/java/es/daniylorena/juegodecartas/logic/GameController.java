@@ -145,7 +145,8 @@ public class GameController implements GameControllerInterface {
     private Move createCloneMove(String[] proposedMove, Player player) {
         Set<Card> cards = new HashSet<>();
         for (String inputCard : proposedMove){
-            int number = inputCard.charAt(0);
+            int number = Integer.parseInt(inputCard.substring(0, inputCard.length() -1));
+            // int number = inputCard.charAt(0);
             Suit suit = GameDisplay.SUIT_TO_CHAR_MAP.get(inputCard.charAt(1));
             cards.add(new Card(number, suit));
         }
