@@ -72,14 +72,15 @@ public class GameController implements GameControllerInterface {
     private void singleGameLoop() {
         boolean endGame;
         do {
-            Round round = new Round(generateRoundPlayers(this.currentGame.getRounds().size()));
+            Round round = new Round(generateRoundPlayers());
             this.currentGame.addRound(round);
             roundLoop();
             endGame = this.currentGame.checkEndGame();
         } while (!endGame);
     }
 
-    private CircularList<Player> generateRoundPlayers(int i) {
+    private CircularList<Player> generateRoundPlayers() {
+        int i = this.currentGame.getRounds().size();
         CircularList<Player> roundPlayers;
         if (i == 0) {
             roundPlayers = new CircularList<>(this.currentGame.getPlayers());
@@ -87,8 +88,8 @@ public class GameController implements GameControllerInterface {
             Player roundWinner = this.currentGame.getCurrentRound().getWinner();
             List<Player> previousRoundPlayers = this.currentGame.getCurrentRound().getSimpleListOfSubplayers();
             List<Player> actualRoundPlayers = new ArrayList<>(previousRoundPlayers);
-            actualRoundPlayers.remove(roundWinner);
-            roundPlayers = new CircularList<>(actualRoundPlayers);
+            int roundWinnerIndex = actualRoundPlayers.indexOf(roundWinner);
+            roundPlayers = new CircularList<>(actualRoundPlayers, roundWinner);
         }
         return roundPlayers;
     }
@@ -108,6 +109,7 @@ public class GameController implements GameControllerInterface {
             }
             if (player.getHand().isEmpty()) {
                 this.roleAssigner.assignRole(player);
+                round.removePlayerFromPlayerList(player);
             }
         } while (!endOfRound && !this.currentGame.checkEndGame());
     }

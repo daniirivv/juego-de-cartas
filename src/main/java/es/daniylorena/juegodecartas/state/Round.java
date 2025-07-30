@@ -4,7 +4,6 @@ import es.daniylorena.juegodecartas.utilities.CircularList;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.Stack;
 
 public class Round {
@@ -46,6 +45,14 @@ public class Round {
         this.expectedNumberOfCards = expectedNumberOfCards;
     }
 
+    public List<Player> getSimpleListOfSubplayers() {
+        return this.actualRoundPlayers.getPlayerList();
+    }
+
+    public Iterator<Player> getCircularIterator() {
+        return this.actualRoundPlayers.iterator();
+    }
+
     public boolean playMove(Move proposedMove, Player player) {
         boolean playable = false;
         int numberOfPlayedCards = proposedMove.playedCards().size();
@@ -74,12 +81,8 @@ public class Round {
         return playable;
     }
 
-    public List<Player> getSimpleListOfSubplayers() {
-        return this.actualRoundPlayers.getElements();
-    }
-
-    public Iterator<Player> getCircularIterator() {
-        return this.actualRoundPlayers.iterator();
+    public void removePlayerFromPlayerList(Player player) {
+        this.actualRoundPlayers.remove(player);
     }
 
     public boolean isPlin() {

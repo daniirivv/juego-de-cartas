@@ -1,28 +1,40 @@
 package es.daniylorena.juegodecartas.utilities;
 
+import es.daniylorena.juegodecartas.state.Player;
+
 import java.util.*;
 
 public class CircularList<T> implements Iterable<T> {
 
-    private final List<T> elements;
+    private final List<T> playerList;
     private int position;
 
-    public CircularList(Collection<T> elements) {
-        this.elements = new ArrayList<>(elements);
+    public CircularList(List<T> elements) {
+        this.playerList = new ArrayList<>(elements);
         this.position = 0;
     }
 
-    public List<T> getElements() {
-        return elements;
+    public CircularList(List<T> elements, T winner) {
+        this.playerList = new ArrayList<>(elements);
+
+        this.position = (this.playerList.contains(winner)) ? this.playerList.indexOf(winner) : 0;
+    }
+
+    public List<T> getPlayerList() {
+        return playerList;
     }
 
     public int getPosition() {
         return position;
     }
 
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
     public T next() {
-        T item = this.elements.get(this.position);
-        position = (position + 1) % this.elements.size();
+        T item = this.playerList.get(this.position);
+        position = (position + 1) % this.playerList.size();
         return item;
     }
 
@@ -31,11 +43,11 @@ public class CircularList<T> implements Iterable<T> {
     }
 
     public boolean add(T item) {
-        return this.elements.add(item);
+        return this.playerList.add(item);
     }
 
     public boolean remove(T item) {
-        return this.elements.remove(item);
+        return this.playerList.remove(item);
     }
 
     @Override
@@ -53,13 +65,13 @@ public class CircularList<T> implements Iterable<T> {
 
         @Override
         public boolean hasNext() {
-            return !elements.isEmpty();
+            return !playerList.isEmpty();
         }
 
         @Override
         public T next() {
-            T item = elements.get(cursor);
-            cursor = (cursor + 1) % elements.size();
+            T item = playerList.get(cursor);
+            cursor = (cursor + 1) % playerList.size();
             return item;
         }
     }
