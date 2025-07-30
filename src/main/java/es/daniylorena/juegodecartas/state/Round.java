@@ -64,7 +64,7 @@ public class Round {
                 if(playable) {
                     // Elimina las cartas correspondientes al movimiento, y juega las cartas clonadas
                     for(Card card : proposedMove.playedCards()){
-                        player.getHand().remove(card);
+                        player.removeCardFromHand(card);
                     }
                     this.moves.add(proposedMove);
                 }

@@ -130,6 +130,8 @@ public class GameController implements GameControllerInterface {
                         this.gameDisplay.notifyPlin(skipped.getName());
                     }
                 } else gameDisplay.notifyInvalidMove(move);
+            } else {
+                this.gameDisplay.notifyInvalidMove(move);
             }
         } while (invalidMove);
         return move;
