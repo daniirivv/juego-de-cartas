@@ -104,12 +104,12 @@ public class GameDisplay implements UI, GameDisplayInterface {
 
     @Override
     public void notifyPlin(String skippedPlayer) {
-        System.out.println("¡" + skippedPlayer + "ha sido saltado!");
+        System.out.println("¡¡PLIN!! " + skippedPlayer + " ha sido saltado/a");
     }
 
     @Override
     public void printTurn(Player player) {
-        System.out.println("Turno de " + player.getName());
+        System.out.println("-- Turno de " + player.getName() + " --");
         printHand(player.getHand());
     }
 
