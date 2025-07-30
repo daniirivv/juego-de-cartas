@@ -86,7 +86,7 @@ public class GameDisplay implements UI, GameDisplayInterface {
 
     @Override
     public void notifyInvalidMove(Move move) {
-        System.out.println("No puedes jugar el movimiento " + move + "ahora mismo");
+        System.out.println("No puedes jugar el movimiento " + move.toString() + "ahora mismo");
     }
 
     private boolean isValidCardNumber(int number) {
