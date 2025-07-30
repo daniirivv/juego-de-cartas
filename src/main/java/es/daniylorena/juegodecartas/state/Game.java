@@ -41,6 +41,6 @@ public record Game(List<Player> players, LinkedList<Round> rounds, Deck deck) {
                 playersWithoutCards++;
             }
         }
-        return playersWithoutCards < totalPlayers - 1;
+        return playersWithoutCards >= totalPlayers - 1;
     }
 }

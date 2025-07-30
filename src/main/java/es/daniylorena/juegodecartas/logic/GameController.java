@@ -109,7 +109,7 @@ public class GameController implements GameControllerInterface {
             if (player.getHand().isEmpty()) {
                 this.roleAssigner.assignRole(player);
             }
-        } while (!endOfRound && this.currentGame.checkEndGame());
+        } while (!endOfRound && !this.currentGame.checkEndGame());
     }
 
     private Move executeTurn(Player player) {
