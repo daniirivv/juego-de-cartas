@@ -1,9 +1,8 @@
 package es.daniylorena.juegodecartas.state;
 
 import java.util.LinkedList;
-import java.util.List;
 
-public record Deck (LinkedList<Card> cards){
+public record Deck(LinkedList<Card> cards) {
 
     private static final int DEFAULT_CARDS_PER_SUIT_SPANISH_DECK = 12;
 

@@ -1,6 +1,5 @@
 package es.daniylorena.juegodecartas.state;
 
-import java.lang.Comparable;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -9,7 +8,7 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
     private static final int JOKER = 2;
     private static final int CLOSE_CARD = 1;
 
-    public int getMoveSize(){
+    public int getMoveSize() {
         return this.playedCards.size();
     }
 
@@ -46,7 +45,7 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
 
     @Override
     public int compareTo(Move other) {
-        if(this.playedCards.size() == other.playedCards.size()) {
+        if (this.playedCards.size() == other.playedCards.size()) {
             int thisPower = this.getMovePower();
             int otherPower = other.getMovePower();
             return Integer.compareUnsigned(thisPower, otherPower);

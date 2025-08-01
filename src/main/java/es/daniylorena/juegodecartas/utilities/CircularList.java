@@ -1,8 +1,8 @@
 package es.daniylorena.juegodecartas.utilities;
 
-import es.daniylorena.juegodecartas.state.Player;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class CircularList<T> implements Iterable<T> {
 

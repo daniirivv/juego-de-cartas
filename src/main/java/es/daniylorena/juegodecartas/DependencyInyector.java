@@ -1,7 +1,7 @@
 package es.daniylorena.juegodecartas;
 
-import es.daniylorena.juegodecartas.display.*;
-import es.daniylorena.juegodecartas.logic.*;
+import es.daniylorena.juegodecartas.display.GameDisplay;
+import es.daniylorena.juegodecartas.logic.GameController;
 
 public class DependencyInyector {
 

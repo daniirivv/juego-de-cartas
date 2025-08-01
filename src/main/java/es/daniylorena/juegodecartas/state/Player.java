@@ -61,7 +61,7 @@ public class Player {
              - i == n (fin de lista)
              - elemento actual ≠ anterior
             */
-            if (i == n-1 || !this.hand.get(i).equals(hand.get(i + 1))) { // Lazy Evaluation
+            if (i == n - 1 || !this.hand.get(i).equals(hand.get(i + 1))) { // Lazy Evaluation
                 int frecuencia = i - inicio + 1;
                 if (frecuencia == 1) {
                     return this.hand.remove(inicio);  // Frecuencia 1 → devolver inmediatamente

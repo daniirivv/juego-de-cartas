@@ -56,23 +56,23 @@ public class Round {
     public boolean playMove(Move proposedMove, Player player) {
         boolean playable = false;
         int numberOfPlayedCards = proposedMove.playedCards().size();
-        if (proposedMove.isValidStructure()){
+        if (proposedMove.isValidStructure()) {
             // First-move scenario
-            if(this.moves.isEmpty()){
-                if (numberOfPlayedCards != 0){ // No vale pasar de primer turno
+            if (this.moves.isEmpty()) {
+                if (numberOfPlayedCards != 0) { // No vale pasar de primer turno
                     this.expectedNumberOfCards = proposedMove.playedCards().size();
                     playable = true;
                 }
             } else { // Not first move
                 Move previous = this.moves.peek();
                 if (numberOfPlayedCards == 0) return true; // NO SE ALMACENA UN "PASO"
-                if((numberOfPlayedCards == this.expectedNumberOfCards) && (proposedMove.compareTo(previous) >= 0)){
+                if ((numberOfPlayedCards == this.expectedNumberOfCards) && (proposedMove.compareTo(previous) >= 0)) {
                     playable = true;
                 }
             }
-            if(playable) {
+            if (playable) {
                 // Elimina las cartas correspondientes al movimiento, y juega las cartas clonadas
-                for(Card card : proposedMove.playedCards()){
+                for (Card card : proposedMove.playedCards()) {
                     player.removeCardFromHand(card);
                 }
                 this.moves.add(proposedMove);
@@ -122,6 +122,7 @@ public class Round {
             Move move = moves.get(i);
             if (!move.playedCards().isEmpty()) {
                 allPassed = false;
+                break;
             }
         }
 

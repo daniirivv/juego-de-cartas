@@ -5,7 +5,10 @@ import es.daniylorena.juegodecartas.display.GameDisplayInterface;
 import es.daniylorena.juegodecartas.state.*;
 import es.daniylorena.juegodecartas.utilities.CircularList;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 public class GameController implements GameControllerInterface {
@@ -122,7 +125,7 @@ public class GameController implements GameControllerInterface {
         do {
             String[] proposedMove = this.gameDisplay.askForAMove(player);
             move = createCloneMove(proposedMove, player);
-            if(verifyCardsOwnership(move, player)){
+            if (verifyCardsOwnership(move, player)) {
                 if (round.playMove(move, player)) {
                     invalidMove = false;
                     if (round.isPlin()) {
@@ -138,16 +141,16 @@ public class GameController implements GameControllerInterface {
     }
 
     private boolean verifyCardsOwnership(Move proposedMove, Player player) {
-        for(Card clone : proposedMove.playedCards()){
-            if(!player.getHand().contains(clone)) return false;
+        for (Card clone : proposedMove.playedCards()) {
+            if (!player.getHand().contains(clone)) return false;
         }
         return true;
     }
 
     private Move createCloneMove(String[] proposedMove, Player player) {
         Set<Card> cards = new HashSet<>();
-        for (String inputCard : proposedMove){
-            int number = Integer.parseInt(inputCard.substring(0, inputCard.length() -1));
+        for (String inputCard : proposedMove) {
+            int number = Integer.parseInt(inputCard.substring(0, inputCard.length() - 1));
             // int number = inputCard.charAt(0);
             Suit suit = GameDisplay.SUIT_TO_CHAR_MAP.get(inputCard.charAt(1));
             cards.add(new Card(number, suit));

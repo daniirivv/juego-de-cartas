@@ -4,9 +4,15 @@ import es.daniylorena.juegodecartas.logic.GameControllerInterface;
 import es.daniylorena.juegodecartas.logic.exceptions.IllegalCardException;
 import es.daniylorena.juegodecartas.logic.exceptions.IllegalPlayerNameException;
 import es.daniylorena.juegodecartas.logic.exceptions.InsufficientPlayersException;
-import es.daniylorena.juegodecartas.state.*;
+import es.daniylorena.juegodecartas.state.Card;
+import es.daniylorena.juegodecartas.state.Move;
+import es.daniylorena.juegodecartas.state.Player;
+import es.daniylorena.juegodecartas.state.Suit;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 public class GameDisplay implements UI, GameDisplayInterface {
 
@@ -17,10 +23,10 @@ public class GameDisplay implements UI, GameDisplayInterface {
     public static final String POSITIVE_ANSWER = "Y";
     public static final Map<Character, Suit> SUIT_TO_CHAR_MAP =
             Map.of(
-                'O', Suit.OROS,
-                'C', Suit.COPAS,
-                'E', Suit.ESPADAS,
-                'B', Suit.BASTOS
+                    'O', Suit.OROS,
+                    'C', Suit.COPAS,
+                    'E', Suit.ESPADAS,
+                    'B', Suit.BASTOS
             );
 
     private final static Scanner keyboardInput = new Scanner(System.in);

@@ -23,7 +23,7 @@ public class Dealer {
 
         for (Player p : players) {
             Optional<Role> rol = Optional.ofNullable(p.getRole());
-            if(rol.isPresent()){
+            if (rol.isPresent()) {
                 switch (rol.get()) {
                     case PRESI -> presi = p;
                     case VICEPRESI -> vicepresi = p;
