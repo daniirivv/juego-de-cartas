@@ -98,7 +98,6 @@ public class GameController implements GameControllerInterface {
 
     private void roundLoop() {
         Round round = this.currentGame.getCurrentRound();
-
         Player player;
         Move move;
         boolean endOfRound = false;
@@ -151,7 +150,7 @@ public class GameController implements GameControllerInterface {
         for (String inputCard : proposedMove) {
             int number = Integer.parseInt(inputCard.substring(0, inputCard.length() - 1));
             // int number = inputCard.charAt(0);
-            Suit suit = GameDisplay.SUIT_TO_CHAR_MAP.get(inputCard.charAt(1));
+            Suit suit = GameDisplay.SUIT_TO_CHAR_MAP.get(inputCard.charAt(inputCard.length() - 1));
             cards.add(new Card(number, suit));
         }
         return new Move(cards, player);

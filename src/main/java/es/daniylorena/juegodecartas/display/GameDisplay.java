@@ -40,7 +40,6 @@ public class GameDisplay implements UI, GameDisplayInterface {
     public void setGameController(GameControllerInterface gameController) {
         this.gameController = gameController;
     }
-
     @Override
     public void play() {
         ArrayList<String> playersNames = askForPlayerNames();
