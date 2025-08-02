@@ -1,15 +1,23 @@
 package es.daniylorena.juegodecartas.state;
 
+import java.util.Map;
+
 public record Card(int number, Suit suit) {
 
-    public static Card ORON = new Card(1, Suit.OROS);
+    private static final int MAX_POWER = 13;
+    private static final int BASE_POWER = 4;
 
-    public int getPower() { // Para comprobar en la lógica si la carta echada es mayor que la anterior
-        if (this.equals(ORON)) return 16; // La carta más poderosa
-        if (this.number == 2) return 15; // Comodín - sustituye a todo menos al as de oros
-        if (this.number == 1) return 14;
-        if (this.number == 3) return 13; // 3 = 13
-        return this.number; // 4–12 normales
+    private static final Card ORON = new Card(1, Suit.OROS);
+    private static final Map<Integer, Integer> specialCardsToPowerMap =
+            Map.of(
+                    3, 10,
+                    1, 11,
+                    2, 12
+            );
+
+    public int getPower() {
+        if (this.equals(ORON)) return MAX_POWER; // La carta más poderosa
+        else return specialCardsToPowerMap.getOrDefault(this.number, this.number - BASE_POWER + 1);
     }
 
     @Override
