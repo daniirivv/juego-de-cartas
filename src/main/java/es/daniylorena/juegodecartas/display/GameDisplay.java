@@ -73,7 +73,7 @@ public class GameDisplay implements UI, GameDisplayInterface {
         String inputCards = GameDisplay.keyboardInput.nextLine().toUpperCase();
         String[] cards = inputCards.split(" ");
         for (String card : cards) {
-            if (card.length() < 3) throw new IllegalCardException("Una carta no puede tener más de 3 caracteres");
+            if (card.length() < 2 || card.length() > 3) throw new IllegalCardException("Formato erróneo: " + card);
             String numberPart = card.substring(0, card.length() - 1);
             char suit = card.charAt(card.length() - 1);
             int number;
