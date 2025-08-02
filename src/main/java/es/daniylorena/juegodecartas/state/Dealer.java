@@ -7,6 +7,9 @@ import java.util.Optional;
 
 public class Dealer {
 
+    public static int PRESI_CULO_EXCHANGE = 2;
+    public static int VICEPRESI_VICECULO_EXCHANGE = 1;
+
     public static void divideCards(List<Player> playerList, Deck deck) {
         CircularList<Player> players = new CircularList<>(playerList);
         do {

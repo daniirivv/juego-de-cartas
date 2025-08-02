@@ -88,11 +88,10 @@ public class GameController implements GameControllerInterface {
         if (i == 0) {
             roundPlayers = new CircularList<>(this.currentGame.getPlayers());
         } else {
-            Player roundWinner = this.currentGame.getCurrentRound().getWinner();
-            List<Player> previousRoundPlayers = this.currentGame.getCurrentRound().getSimpleListOfSubplayers();
-            List<Player> actualRoundPlayers = new ArrayList<>(previousRoundPlayers);
-            int roundWinnerIndex = actualRoundPlayers.indexOf(roundWinner);
-            roundPlayers = new CircularList<>(actualRoundPlayers, roundWinner);
+            Round lastRound = this.currentGame.getCurrentRound();
+            Player winner = lastRound.getWinner();
+            List<Player> lastRoundPlayerList = lastRound.getSimpleListOfSubplayers();
+            roundPlayers = new CircularList<>(lastRoundPlayerList, winner);
         }
         return roundPlayers;
     }
