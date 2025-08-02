@@ -16,7 +16,6 @@ public class CircularList<T> implements Iterable<T> {
 
     public CircularList(List<T> elements, T winner) {
         this.playerList = new ArrayList<>(elements);
-
         this.position = (this.playerList.contains(winner)) ? this.playerList.indexOf(winner) : 0;
     }
 

@@ -1,6 +1,7 @@
 package es.daniylorena.juegodecartas.state;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 public record Deck(LinkedList<Card> cards) {
 
@@ -24,7 +25,9 @@ public record Deck(LinkedList<Card> cards) {
     }
 
     public void shuffle() {
-        java.util.Collections.shuffle(this.cards);
+        for(int i = 0; i < 2; i++){
+            java.util.Collections.shuffle(this.cards);
+        }
     }
 
     public boolean isEmpty() {
