@@ -70,11 +70,11 @@ public class GameDisplay implements UI, GameDisplayInterface {
     @Override
     public String[] askForAMove(Player turnOwner) {
         System.out.println("¿Qué cartas quieres echar?");
-        System.out.println("Formato: <Numero><Palo> <N><P>... Ej. 4C 4B-> Cuatro de copas y cuatro de bastos");
+        System.out.println("Formato: <Numero><Palo> <N><P>... Ej. 4C 12B -> Cuatro de copas y doce de bastos");
         String inputCards = GameDisplay.keyboardInput.nextLine().toUpperCase();
         String[] cards = inputCards.split(" ");
         for (String card : cards) {
-            if (card.length() < 2) throw new IllegalCardException("Formato incorrecto: " + card);
+            if (card.length() < 3) throw new IllegalCardException("Una carta no puede tener más de 3 caracteres");
             String numberPart = card.substring(0, card.length() - 1);
             char suit = card.charAt(card.length() - 1);
             int number;
@@ -84,7 +84,7 @@ public class GameDisplay implements UI, GameDisplayInterface {
                 throw new IllegalCardException("Número inválido: " + numberPart);
             }
             // Validaciones
-            if (number == 0 || number > 12) throw new IllegalCardException("Número fuera de rango: " + number);
+            if (number <= 0 || number > 12) throw new IllegalCardException("Número fuera de rango: " + number);
             if (!SUIT_TO_CHAR_MAP.containsKey(suit)) throw new IllegalCardException("Palo inválido: " + suit);
         }
         return cards;
