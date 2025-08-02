@@ -16,15 +16,20 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
     public boolean isValidStructure() {
         int moveSize = this.playedCards.size();
         if (moveSize == 0 || moveSize == 1) return true;
-        if (moveSize > 4) return false;
+        if (moveSize > 8) return false; // MAX: 4 del mismo palo + 4 comodines
         else {
             boolean valid = true;
             Iterator<Card> iterator = this.playedCards.iterator();
             int firstNumber = iterator.next().number();
-            do {
-                int number = iterator.next().number();
-                if (firstNumber != number) valid = false;
-            } while (!valid && iterator.hasNext());
+            while (firstNumber == 2 && iterator.hasNext()) {
+                firstNumber = iterator.next().number();
+            }
+            if (iterator.hasNext()) {
+                do {
+                    int number = iterator.next().number();
+                    if (firstNumber != number && number != 2) valid = false;
+                } while (!valid && iterator.hasNext());
+            }
             return valid;
         }
     }
