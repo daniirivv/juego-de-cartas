@@ -1,29 +1,28 @@
 package es.daniylorena.juegodecartas.state;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
-import static org.junit.jupiter.api.Assertions.*;
-
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class DealerTest {
+
+    static List<Player> playerList;
+
+    @BeforeAll
+    static void initializePlayerList() {
+        playerList = List.of(
+            new Player("Dani"),
+            new Player("Lorena"),
+            new Player("Eva"),
+            new Player("Alex")
+        );
+    }
 
     @Test
     public void divideAllDeckCardsRoundRobin(){
-        Player playerOne = new Player("Dani");
-        Player playerTwo = new Player("Lorena");
-        Player playerThree = new Player("Eva");
-        Player playerFour = new Player("Alex");
         Deck deck = new Deck();
-        int deckSize = deck.getSize();
-        List<Player> playerList = List.of(
-                playerOne,
-                playerTwo,
-                playerThree,
-                playerFour
-        );
-
         Dealer.divideCards(playerList, deck);
 
         // Comprueba que la baraja se ha vaciado
@@ -34,7 +33,12 @@ public class DealerTest {
         for(var player : playerList){
             numCartas += player.getHandSize();
         }
-        assertEquals(deckSize, numCartas);
+        assertEquals(deck.size(), numCartas);
+    }
+
+    @Test
+    public void roleApply(){
+
     }
 
 }

@@ -44,13 +44,24 @@ public class Player {
         this.hand.remove(card);
     }
 
-    public Card takeBestCard() {
+    private void sortHandWorstToBest() {
         this.hand.sort((a, b) -> b.getPower() - a.getPower()); // Ordena la mano de mayor a menor peso
-        return hand.removeFirst();
     }
 
-    public Card takeWorstNonRepeatedCard() {
-        int resultIndex = -1;
+    public Card getBestCard() {
+        sortHandWorstToBest();
+        return this.hand.getFirst();
+    }
+
+    public Card takeBestCard() {
+        Card best = getBestCard();
+        this.hand.remove(best);
+        return best;
+    }
+
+    public Card getWorstNonRepeatedCard() {
+        sortHandWorstToBest();
+        int resultIndex = 0;
         int n = this.hand.size();
         int minFrecuencia = n;
         int inicio = 0;
@@ -73,8 +84,14 @@ public class Player {
                 inicio = i;
             }
         }
-        return (resultIndex == -1) ? null : this.hand.remove(resultIndex);
+        return this.hand.get(resultIndex);
+    }
 
+    public Card takeWorstNonRepeatedCard() {
+        Card worst = getWorstNonRepeatedCard();
+        this.hand.remove(worst);
+        return worst;
+    }
         /* VERSION LORENA
         int minFrequency = Integer.MAX_VALUE;
         for (Card card : this.hand) {
@@ -97,6 +114,5 @@ public class Player {
         this.hand.remove(candidate);
         return result;
         */
-    }
 
 }
