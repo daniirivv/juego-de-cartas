@@ -17,11 +17,6 @@ public class GameController implements GameControllerInterface {
 
     private GameDisplayInterface gameDisplay;
     private Game currentGame;
-    private final RoleAssigner roleAssigner;
-
-    private GameController() {
-        this.roleAssigner = new RoleAssigner();
-    }
 
     public static GameController getInstance() {
         return instance;
@@ -43,10 +38,6 @@ public class GameController implements GameControllerInterface {
         this.currentGame = currentGame;
     }
 
-    public RoleAssigner getRoleAssigner() {
-        return roleAssigner;
-    }
-
     @Override
     public void launchGame(ArrayList<String> playersNames) {
         boolean rematch;
@@ -54,7 +45,7 @@ public class GameController implements GameControllerInterface {
             ArrayList<Player> players = initializePlayers(playersNames);
             Deck deck = new Deck();
             this.currentGame = new Game(players, deck);
-            this.roleAssigner.initializeRoles(players.size());
+            RoleAssigner.initializeRoles(players.size());
             this.currentGame.shuffleDeck();
             Dealer.divideCards(players, deck);
             Dealer.applyRolesIfDefined(players);
@@ -109,7 +100,7 @@ public class GameController implements GameControllerInterface {
                 endOfRound = true;
             }
             if (player.getHand().isEmpty()) {
-                this.roleAssigner.assignRole(player);
+                RoleAssigner.assignRole(player);
                 round.removePlayerFromPlayerList(player);
             }
         } while (!endOfRound && !this.currentGame.checkEndGame());

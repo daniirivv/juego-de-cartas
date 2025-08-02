@@ -8,24 +8,26 @@ import java.util.List;
 
 public class RoleAssigner {
 
-    private List<Role> roles;
+    private static List<Role> roles;
 
 
-    public void initializeRoles(int players) {
+    public static void initializeRoles(int players) {
         if (players == GameDisplay.MIN_PLAYERS) {
-            this.roles = Arrays.asList(Role.PRESI, Role.NEUTRO, Role.CULO);
+            roles = Arrays.asList(Role.PRESI, Role.NEUTRO, Role.CULO);
         } else {
-            this.roles = new ArrayList<>(players);
-            this.roles.add(Role.PRESI);
-            this.roles.add(Role.VICEPRESI);
-            for (int i = 2; i < players - 2; i++) this.roles.add(Role.NEUTRO);
-            this.roles.add(Role.VICECULO);
-            this.roles.add(Role.CULO);
+            roles = new ArrayList<>(players);
+            roles.add(Role.PRESI);
+            roles.add(Role.VICEPRESI);
+            for (int i = 2; i < players - 2; i++){
+                roles.add(Role.NEUTRO);
+            }
+            roles.add(Role.VICECULO);
+            roles.add(Role.CULO);
         }
     }
 
-    public void assignRole(Player player) {
-        Role role = this.roles.removeFirst();
+    public static void assignRole(Player player) {
+        Role role = roles.removeFirst();
         player.setRole(role);
     }
 }
