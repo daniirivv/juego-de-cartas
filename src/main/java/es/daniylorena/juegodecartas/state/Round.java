@@ -1,9 +1,12 @@
 package es.daniylorena.juegodecartas.state;
 
+import es.daniylorena.juegodecartas.display.GameDisplay;
+import es.daniylorena.juegodecartas.logic.GameController;
 import es.daniylorena.juegodecartas.utilities.CircularList;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 public class Round {
@@ -55,18 +58,24 @@ public class Round {
 
     public boolean playMove(Move proposedMove, Player player) {
         boolean playable = false;
-        int numberOfPlayedCards = proposedMove.playedCards().size();
+        Set<Card> move = proposedMove.playedCards();
+        int moveSize = move.size();
         if (proposedMove.isValidStructure()) {
+            if(move.contains(Card.ORON)){
+                if(moveSize != 1) GameController.getInstance().getGameDisplay().notifyOronWrongPlay();
+                playable = true;
+            }
             // First-move scenario
-            if (this.moves.isEmpty()) {
-                if (numberOfPlayedCards != 0) { // No vale pasar de primer turno
+            else if (this.moves.isEmpty()) {
+                if (moveSize != 0) { // No vale pasar de primer turno
                     this.expectedNumberOfCards = proposedMove.playedCards().size();
                     playable = true;
                 }
-            } else { // Not first move
+            }
+            else { // Not first move
                 Move previous = this.moves.peek();
-                if (numberOfPlayedCards == 0) return true; // NO SE ALMACENA UN "PASO"
-                if ((numberOfPlayedCards == this.expectedNumberOfCards) && (proposedMove.compareTo(previous) >= 0)) {
+                if (moveSize == 0) return true; // NO SE ALMACENA UN "PASO"
+                if ((moveSize == this.expectedNumberOfCards) && (proposedMove.compareTo(previous) >= 0)) {
                     playable = true;
                 }
             }

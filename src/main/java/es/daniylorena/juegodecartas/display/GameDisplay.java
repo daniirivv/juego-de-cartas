@@ -126,6 +126,17 @@ public class GameDisplay implements UI, GameDisplayInterface {
     }
 
     @Override
+    public void notifyOronWrongPlay() {
+        System.out.println(
+                """
+                El Orón (1 de Oros) es la carta más poderosa del juego, y ella sola se basta para cerrar jugadas de \
+                varias cartas. Por tanto, debe jugarse solo. Hemos eliminado el resto de cartas de tu jugada; \
+                guárdalas para más tarde y saca el máximo potencial del Orón.
+                """
+        );
+    }
+
+    @Override
     public boolean askForLeave() {
         return keyboardInput.nextLine().equalsIgnoreCase(EXIT_COMMAND);
     }

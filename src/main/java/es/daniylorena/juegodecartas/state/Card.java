@@ -4,10 +4,11 @@ import java.util.Map;
 
 public record Card(int number, Suit suit) {
 
+    public static final Card ORON = new Card(1, Suit.OROS);
+
     private static final int MAX_POWER = 13;
     private static final int BASE_POWER = 4;
 
-    private static final Card ORON = new Card(1, Suit.OROS);
     private static final Map<Integer, Integer> specialCardsToPowerMap =
             Map.of(
                     3, 10,

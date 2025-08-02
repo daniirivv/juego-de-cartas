@@ -19,4 +19,6 @@ public interface GameDisplayInterface {
     void printTurn(Player player);
 
     void printHand(List<Card> hand);
+
+    void notifyOronWrongPlay();
 }
