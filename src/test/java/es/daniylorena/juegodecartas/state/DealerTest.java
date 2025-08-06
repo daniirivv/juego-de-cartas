@@ -10,8 +10,8 @@ public class DealerTest {
 
     static List<Player> playerList;
 
-    @BeforeAll
-    static void initializePlayerList() {
+    @BeforeEach
+    void initializePlayerList() {
         playerList = List.of(
             new Player("Dani"),
             new Player("Lorena"),
@@ -51,8 +51,8 @@ public class DealerTest {
                 culoToExchange.add(culo.takeBestCard());
             }
             for (int i = 0; i < Dealer.PRESI_CULO_EXCHANGE; i++){
-                presi.addCardToHand(presiToExchange.get(i));
-                culo.addCardToHand(culoToExchange.get(i));
+                presi.addCardToHand(presiToExchange.removeFirst());
+                culo.addCardToHand(culoToExchange.removeFirst());
             }
 
             Dealer.applyRolesIfDefined(playerList);
@@ -65,7 +65,7 @@ public class DealerTest {
         Map<Role, Player> result = new HashMap<>();
         Role[] criticalRoles = {Role.PRESI, Role.CULO, Role.VICEPRESI, Role.VICECULO};
         Iterator<Player> iterator = playerList.iterator();
-        for (var role : Role.values()){
+        for (var role : criticalRoles){
             if(iterator.hasNext()){
                 var player = iterator.next();
                 player.setRole(role);
