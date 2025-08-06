@@ -59,11 +59,15 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
 
     public boolean isCloseMove() {
         boolean result = true;
-        Iterator<Card> iterator = this.playedCards.iterator();
-        while (iterator.hasNext() && result) {
-            int cardValue = iterator.next().number();
-            if (cardValue != JOKER && cardValue != CLOSE_CARD) {
-                result = false;
+        if (this.playedCards.isEmpty()) {
+            result = false;
+        } else {
+            Iterator<Card> iterator = this.playedCards.iterator();
+            while (iterator.hasNext() && result) {
+                int cardValue = iterator.next().number();
+                if (cardValue != JOKER && cardValue != CLOSE_CARD) {
+                    result = false;
+                }
             }
         }
         return result;
