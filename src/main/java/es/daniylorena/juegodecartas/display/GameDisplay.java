@@ -74,6 +74,7 @@ public class GameDisplay implements UI, GameDisplayInterface {
         System.out.println("Para pasar: PASS");
         String inputCards = GameDisplay.keyboardInput.nextLine().toUpperCase();
         if (inputCards.equals(PASS_COMMAND)) {
+            notifyPass(turnOwner);
             return new String[0];
         }
         String[] cards = inputCards.split(" ");
@@ -97,6 +98,10 @@ public class GameDisplay implements UI, GameDisplayInterface {
     @Override
     public void notifyInvalidMove(Move move) {
         System.out.println("No puedes jugar el movimiento " + move.toString() + "ahora mismo");
+    }
+
+    public void notifyPass(Player player) {
+        System.out.println(player.toString() + " ha pasado");
     }
 
     private boolean isValidCardNumber(int number) {
