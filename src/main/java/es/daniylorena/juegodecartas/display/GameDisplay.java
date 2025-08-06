@@ -21,6 +21,7 @@ public class GameDisplay implements UI, GameDisplayInterface {
     public static final String DONE_COMMAND = "DONE";
     public static final String EXIT_COMMAND = "EXIT";
     public static final String POSITIVE_ANSWER = "Y";
+    public static final String PASS_COMMAND = "PASS";
     public static final Map<Character, Suit> SUIT_TO_CHAR_MAP =
             Map.of(
                     'O', Suit.OROS,
@@ -70,7 +71,11 @@ public class GameDisplay implements UI, GameDisplayInterface {
     public String[] askForAMove(Player turnOwner) {
         System.out.println("¿Qué cartas quieres echar?");
         System.out.println("Formato: <Numero><Palo> <N><P>... Ej. 4C 12B -> Cuatro de copas y doce de bastos");
+        System.out.println("Para pasar: PASS");
         String inputCards = GameDisplay.keyboardInput.nextLine().toUpperCase();
+        if (inputCards.equals(PASS_COMMAND)) {
+            return new String[0];
+        }
         String[] cards = inputCards.split(" ");
         for (String card : cards) {
             if (card.length() < 2 || card.length() > 3) throw new IllegalCardException("Formato erróneo: " + card);
