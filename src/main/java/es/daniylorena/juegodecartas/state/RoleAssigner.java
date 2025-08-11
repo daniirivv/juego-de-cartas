@@ -32,17 +32,17 @@ public class RoleAssigner {
     }
 
     public static void assignRole(Player player) {
-        if(roles != null && !roles.isEmpty()){
+        if (roles != null && !roles.isEmpty()) {
             Role role = roles.removeFirst();
             player.setRole(role);
         } else throw new IllegalStateException("Roles no inicializados");
     }
 
-    public static List<Role> getRolesList(){
+    public static List<Role> getRolesList() {
         return roles;
     }
 
-    public static void deleteRoleList(){
+    public static void deleteRoleList() {
         roles = null;
     }
 }

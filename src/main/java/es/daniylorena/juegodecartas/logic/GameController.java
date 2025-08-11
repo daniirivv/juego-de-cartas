@@ -98,8 +98,7 @@ public class GameController implements GameControllerInterface {
                 round.setWinner(player);
                 endOfRound = true;
                 this.gameDisplay.notifyCloseByPassing();
-            }
-            else {
+            } else {
                 move = executeTurn(player);
                 if (move.isCloseMove()) {
                     round.setWinner(player);

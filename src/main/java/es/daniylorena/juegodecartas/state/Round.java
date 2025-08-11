@@ -61,8 +61,8 @@ public class Round {
         Set<Card> move = proposedMove.playedCards();
         int moveSize = move.size();
         if (proposedMove.isValidStructure()) {
-            if(move.contains(Card.ORON)){
-                if(moveSize != 1) GameController.getInstance().getGameDisplay().notifyOronWrongPlay();
+            if (move.contains(Card.ORON)) {
+                if (moveSize != 1) GameController.getInstance().getGameDisplay().notifyOronWrongPlay();
                 playable = true;
             }
             // First-move scenario
@@ -71,8 +71,7 @@ public class Round {
                     this.expectedNumberOfCards = proposedMove.playedCards().size();
                     playable = true;
                 }
-            }
-            else { // Not first move
+            } else { // Not first move
                 Move previous = this.moves.peek();
                 if (moveSize == 0) return true; // NO SE ALMACENA UN "PASO"
                 if ((moveSize == this.expectedNumberOfCards) && (proposedMove.compareTo(previous) >= 0)) {
