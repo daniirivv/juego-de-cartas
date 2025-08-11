@@ -12,6 +12,8 @@ public interface GameDisplayInterface {
 
     void notifyInvalidMove(Move move);
 
+    void notifyCloseByPassing();
+
     boolean askForRematch();
 
     void notifyPlin(String skippedPlayer);

@@ -105,6 +105,7 @@ public class GameDisplay implements UI, GameDisplayInterface {
         System.out.println(player.toString() + " ha pasado");
     }
 
+    @Override
     public void notifyCloseByPassing() {
         System.out.println("Habéis saltado todos... Nueva ronda!");
     }

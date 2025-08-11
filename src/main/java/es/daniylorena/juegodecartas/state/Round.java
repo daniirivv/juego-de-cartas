@@ -16,8 +16,6 @@ public class Round {
 
     private Player winner;
     private int expectedNumberOfCards;
-    private int consecutivePasses = 0;
-    private Player lastPlayerWhoPlayed = null;
 
     public Round(CircularList<Player> actualRoundPlayers) {
         this.actualRoundPlayers = actualRoundPlayers;
@@ -63,11 +61,6 @@ public class Round {
         Set<Card> move = proposedMove.playedCards();
         int moveSize = move.size();
         if (proposedMove.isValidStructure()) {
-            if (moveSize == 0) {
-                consecutivePasses++;
-            } else {
-                consecutivePasses = 0;
-            }
             if(move.contains(Card.ORON)){
                 if(moveSize != 1) GameController.getInstance().getGameDisplay().notifyOronWrongPlay();
                 playable = true;
@@ -92,7 +85,6 @@ public class Round {
                     player.removeCardFromHand(card);
                 }
                 this.moves.add(proposedMove);
-                lastPlayerWhoPlayed = player;
             }
         }
         return playable;
@@ -116,39 +108,7 @@ public class Round {
 
 
     public boolean isCloseByPassing(Player closer) {
-        int activePlayers = getSimpleListOfSubplayers().size();
-        return consecutivePasses == activePlayers -1 && closer.equals(lastPlayerWhoPlayed);
-        /*
-        Stack<Move> moves = this.moves;
-
-        Move lastPlayedMove = null;
-        int lastPlayedIndex = -1;
-
-        // FIXME: Asumir que solo se guardan los movimientos donde se han jugado cartas
-        // Encontrar el último movimiento con cartas
-        for (int i = 0; i < moves.size(); i++) {
-            Move move = moves.get(i);
-            if (!move.playedCards().isEmpty()) {
-                lastPlayedMove = move;
-                lastPlayedIndex = i;
-            }
-        }
-
-        if (lastPlayedMove == null) return false;
-
-        // Comprobar si todos los siguientes movimientos fueron pases
-        boolean allPassed = true;
-        for (int i = lastPlayedIndex + 1; i < moves.size(); i++) {
-            Move move = moves.get(i);
-            if (!move.playedCards().isEmpty()) {
-                allPassed = false;
-                break;
-            }
-        }
-
-        boolean samePlayerTurn = closer.equals(lastPlayedMove.moveOwner());
-
-        return allPassed && samePlayerTurn;
-         */
+        Move lastMove = this.moves.peek();
+        return lastMove.moveOwner().equals(closer);
     }
 }

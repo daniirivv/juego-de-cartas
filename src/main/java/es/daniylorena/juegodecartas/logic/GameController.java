@@ -97,19 +97,18 @@ public class GameController implements GameControllerInterface {
             if (round.isCloseByPassing(player)) {
                 round.setWinner(player);
                 endOfRound = true;
-                /* Aquí quiero poner:
-                gameDisplay.notifyCloseByPassing();
-                 */
-                break;
+                this.gameDisplay.notifyCloseByPassing();
             }
-            move = executeTurn(player);
-            if (move.isCloseMove()) {
-                round.setWinner(player);
-                endOfRound = true;
-            }
-            if (player.getHand().isEmpty()) {
-                RoleAssigner.assignRole(player);
-                round.removePlayerFromPlayerList(player);
+            else {
+                move = executeTurn(player);
+                if (move.isCloseMove()) {
+                    round.setWinner(player);
+                    endOfRound = true;
+                }
+                if (player.getHand().isEmpty()) {
+                    RoleAssigner.assignRole(player);
+                    round.removePlayerFromPlayerList(player);
+                }
             }
         } while (!endOfRound && !this.currentGame.checkEndGame());
     }
