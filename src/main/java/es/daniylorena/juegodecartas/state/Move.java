@@ -34,7 +34,7 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
         }
     }
 
-    public int getMovePower() {
+    private int getMovePower() {
         if (!isValidStructure()) {
             return -1;
         }

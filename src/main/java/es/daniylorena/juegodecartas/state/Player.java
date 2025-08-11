@@ -16,6 +16,12 @@ public class Player {
         this.hand = new LinkedList<>();
     }
 
+    public Player(String name, LinkedList<Card> hand) {
+        this.name = name;
+        this.role = null;
+        this.hand = hand;
+    }
+
     public String getName() {
         return name;
     }
