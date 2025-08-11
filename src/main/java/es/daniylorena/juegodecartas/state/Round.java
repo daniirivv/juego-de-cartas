@@ -108,7 +108,10 @@ public class Round {
 
 
     public boolean isCloseByPassing(Player closer) {
-        Move lastMove = this.moves.peek();
-        return lastMove.moveOwner().equals(closer);
+        if (!this.moves.isEmpty()) {
+            Move lastMove = this.moves.peek();
+            return lastMove.moveOwner().equals(closer);
+        }
+        return false;
     }
 }
