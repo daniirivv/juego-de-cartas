@@ -94,6 +94,14 @@ public class GameController implements GameControllerInterface {
         boolean endOfRound = false;
         do {
             player = round.getActualRoundPlayers().next();
+            if (round.isCloseByPassing(player)) {
+                round.setWinner(player);
+                endOfRound = true;
+                /* Aquí quiero poner:
+                gameDisplay.notifyCloseByPassing();
+                 */
+                break;
+            }
             move = executeTurn(player);
             if (move.isCloseMove()) {
                 round.setWinner(player);

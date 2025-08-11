@@ -105,6 +105,10 @@ public class GameDisplay implements UI, GameDisplayInterface {
         System.out.println(player.toString() + " ha pasado");
     }
 
+    public void notifyCloseByPassing() {
+        System.out.println("Habéis saltado todos... Nueva ronda!");
+    }
+
     private boolean isValidCardNumber(int number) {
         return number > 0 && number <= 12;
     }
