@@ -24,16 +24,18 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
         else {
             boolean valid = true;
             Iterator<Card> iterator = playedCards.iterator();
-            int firstNumber = iterator.next().number();
-            while (firstNumber == 2 && iterator.hasNext()) {
-                firstNumber = iterator.next().number();
-            }
-            if (iterator.hasNext()) {
-                do {
-                    int number = iterator.next().number();
-                    if (firstNumber != number && number != 2) valid = false;
-                } while (!valid && iterator.hasNext());
-            }
+            int firstNonWildcardNumber = JOKER;
+            do{
+                int actualNumber = iterator.next().number();
+                if(actualNumber != JOKER){
+                    if(firstNonWildcardNumber == JOKER){ // Only JOKERS found at the moment; still valid
+                        firstNonWildcardNumber = actualNumber;
+                    }
+                    else if(actualNumber != firstNonWildcardNumber){
+                        valid = false;
+                    }
+                }
+            }while(valid && iterator.hasNext());
             return valid;
         }
     }
