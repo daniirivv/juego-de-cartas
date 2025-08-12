@@ -25,7 +25,6 @@ public class RoundTest {
         Move actualMove = mock(Move.class);
 
         // Esqueleto de la clase Move
-
         Card playedCard = new Card (6, Suit.BASTOS);
         Set<Card> actualCards = Set.of(playedCard);
         when(actualMove.playedCards()).thenReturn(actualCards);
@@ -59,7 +58,6 @@ public class RoundTest {
         Move actualMove = mock(Move.class);
 
         // Esqueleto de la clase Move
-
         Card playedCard = new Card (4, Suit.BASTOS);
         Set<Card> actualCards = Set.of(playedCard);
         when(actualMove.playedCards()).thenReturn(actualCards);

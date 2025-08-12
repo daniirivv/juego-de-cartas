@@ -75,10 +75,10 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
 
     @Override
     public String toString() {
-        String mensaje = "";
+        StringBuilder mensaje = new StringBuilder();
         for (Card card : playedCards) {
-            mensaje += card.toString() + " ";
+            mensaje.append(card.toString()).append(" ");
         }
-        return mensaje;
+        return mensaje.toString();
     }
 }
