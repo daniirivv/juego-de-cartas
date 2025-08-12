@@ -33,6 +33,7 @@ public record Game(List<Player> players, LinkedList<Round> rounds, Deck deck) {
         return this.getRounds().getLast();
     }
 
+    // @OPTIMIZE: While-based loop instead of For loop
     public boolean checkEndGame() {
         int totalPlayers = this.players.size();
         int playersWithoutCards = 0;
