@@ -40,10 +40,14 @@ public class GameTest {
 
     @Test
     void notExpectedEndGame(){
-
         for(var player : this.players){
             when(player.getHand()).thenReturn(new ArrayList<>(List.of(new Card(4, Suit.BASTOS))));
         }
+
+        Player mock = mock(Player.class);
+        when(mock.getHand()).thenReturn(Collections.emptyList());
+        this.players.add(mock);
+
         this.game = new Game(players, null);
         boolean endGame = game.checkEndGame();
 
