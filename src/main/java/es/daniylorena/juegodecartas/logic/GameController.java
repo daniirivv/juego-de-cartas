@@ -41,8 +41,8 @@ public class GameController implements GameControllerInterface {
     @Override
     public void launchGame(ArrayList<String> playersNames) {
         boolean rematch;
+        ArrayList<Player> players = initializePlayers(playersNames);
         do {
-            ArrayList<Player> players = initializePlayers(playersNames);
             Deck deck = new Deck();
             this.currentGame = new Game(players, deck);
             RoleAssigner.initializeRoles(players.size());
@@ -107,6 +107,7 @@ public class GameController implements GameControllerInterface {
                 if (player.getHand().isEmpty()) {
                     RoleAssigner.assignRole(player);
                     round.removePlayerFromPlayerList(player);
+                    this.gameDisplay.notifyRole(player);
                 }
             }
         } while (!endOfRound && !this.currentGame.checkEndGame());
