@@ -44,4 +44,8 @@ public record Game(List<Player> players, LinkedList<Round> rounds, Deck deck) {
         }
         return playersWithoutCards >= totalPlayers - 1;
     }
+
+    public Player getLoser() {
+        return this.players.stream().filter(player -> player.getHand().isEmpty()).findAny().orElse(null);
+    }
 }

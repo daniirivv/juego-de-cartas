@@ -71,6 +71,12 @@ public class GameController implements GameControllerInterface {
             roundLoop();
             endGame = this.currentGame.checkEndGame();
         } while (!endGame);
+        Player culo = this.currentGame.getLoser();
+        if(culo == null) throw new IllegalStateException("No hay perdedor");
+        else{
+            RoleAssigner.assignRole(culo);
+            this.gameDisplay.notifyRole(culo);
+        }
     }
 
     private CircularList<Player> generateRoundPlayers() {
@@ -111,7 +117,7 @@ public class GameController implements GameControllerInterface {
                     endOfRound = true;
                 }
             }
-        } while (!endOfRound && !this.currentGame.checkEndGame());
+        } while (!endOfRound);
     }
 
     private Move executeTurn(Player player) {
