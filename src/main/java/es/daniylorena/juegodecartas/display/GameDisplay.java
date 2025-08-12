@@ -120,6 +120,7 @@ public class GameDisplay implements UI, GameDisplayInterface {
 
     @Override
     public boolean askForRematch() {
+        System.out.println("¿Quieres volver a jugar? (" + POSITIVE_ANSWER + '/' + "N)");
         return keyboardInput.nextLine().equalsIgnoreCase(POSITIVE_ANSWER);
     }
 

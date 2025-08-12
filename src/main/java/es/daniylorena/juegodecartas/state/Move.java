@@ -14,12 +14,16 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
 
     // TODO: Agregar llamadas al display para notificar en cada caso
     public boolean isValidStructure() {
-        int moveSize = this.playedCards.size();
+        return isValidStructure(this.playedCards);
+    }
+
+    public static boolean isValidStructure(Set<Card> playedCards){
+        int moveSize = playedCards.size();
         if (moveSize == 0 || moveSize == 1) return true;
         if (moveSize > 8) return false; // MAX: 4 del mismo palo + 4 comodines
         else {
             boolean valid = true;
-            Iterator<Card> iterator = this.playedCards.iterator();
+            Iterator<Card> iterator = playedCards.iterator();
             int firstNumber = iterator.next().number();
             while (firstNumber == 2 && iterator.hasNext()) {
                 firstNumber = iterator.next().number();
