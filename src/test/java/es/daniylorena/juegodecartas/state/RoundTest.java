@@ -1,7 +1,7 @@
 package es.daniylorena.juegodecartas.state;
 
 import es.daniylorena.juegodecartas.utilities.CircularList;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -13,74 +13,68 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class RoundTest {
+class RoundTest {
 
     @Mock
     CircularList<Player> players;
 
-    @Test
-    void playBetterMove(){
-        // Creación de mocks
-        Move previousMove = mock(Move.class);
-        Move actualMove = mock(Move.class);
+    @Mock
+    Move previousMove;
 
-        // Esqueleto de la clase Move
-        Card playedCard = new Card (6, Suit.BASTOS);
-        Set<Card> actualCards = Set.of(playedCard);
+    @Mock
+    Move actualMove;
+
+    private Round round;
+    private Player player;
+    private Set<Card> actualCards;
+    private int initialMovesCount;
+
+    @BeforeEach
+    void setUp() {
+        // 1. Definir la carta y el conjunto de cartas de la jugada
+        Card playedCard = new Card(6, Suit.BASTOS);
+        actualCards = Set.of(playedCard);
+
+        // 2. Configurar el mock de actualMove con comportamiento genérico
         when(actualMove.playedCards()).thenReturn(actualCards);
         when(actualMove.isValidStructure()).thenReturn(true);
 
+        // 3. Crear la ronda y forzar el estado “no primer movimiento”
+        round = new Round(players);
+        round.getMoves().push(previousMove);
+        round.setExpectedNumberOfCards(actualCards.size());
+
+        // 4. Crear el jugador con la mano inicial (copia del conjunto)
+        player = new Player("Player", new LinkedList<>(actualCards));
+
+        // 5. Capturar el número de movimientos antes de la jugada bajo prueba
+        initialMovesCount = round.getMoves().size();
+    }
+
+    @Test
+    void playBetterValidMove() {
+        // Solo modifico lo que cambia en este escenario
         when(actualMove.compareTo(previousMove)).thenReturn(1);
 
-        // Creación de un objeto Round preparado con una jugada previa
-        Round round = new Round(players);
-        round.getMoves().push(previousMove);
-        round.setExpectedNumberOfCards(1);
-
-        // Preparación del contexto
-        Player player = new Player("Player", new LinkedList<>(actualMove.playedCards()));
-        int previousMovesInRound = round.getMoves().size();
-
-        // Lanzamiento del comportamiento
         boolean result = round.playMove(actualMove, player);
 
-        // Comprobaciones
+        // Assertions específicas
         assertTrue(result);
-        assertEquals(previousMovesInRound + 1, round.getMoves().size());
-        assertEquals(round.getMoves().peek().playedCards(), actualCards);
-        assertFalse(player.getHand().contains(playedCard));
+        assertEquals(initialMovesCount + 1, round.getMoves().size());
+        assertSame(actualMove, round.getMoves().peek());
+        assertFalse(player.getHand().contains(new Card(6, Suit.BASTOS)));
     }
 
     @Test
-    void playWorseMove(){
-        // Creación de mocks
-        Move previousMove = mock(Move.class);
-        Move actualMove = mock(Move.class);
-
-        // Esqueleto de la clase Move
-        Card playedCard = new Card (4, Suit.BASTOS);
-        Set<Card> actualCards = Set.of(playedCard);
-        when(actualMove.playedCards()).thenReturn(actualCards);
-        when(actualMove.isValidStructure()).thenReturn(true);
-
+    void playWorseNonValidMove() {
+        // Escenario opuesto: la nueva jugada pierde
         when(actualMove.compareTo(previousMove)).thenReturn(-1);
 
-        // Creación de un objeto Round preparado con una jugada previa
-        Round round = new Round(players);
-        round.getMoves().push(previousMove);
-        round.setExpectedNumberOfCards(1);
-
-        // Preparación del contexto
-        Player player = new Player("Player", new LinkedList<>(actualMove.playedCards()));
-        int previousMovesInRound = round.getMoves().size();
-
-        // Lanzamiento del comportamiento
         boolean result = round.playMove(actualMove, player);
 
-        // Comprobaciones
+        // Assertions específicas
         assertFalse(result);
-        assertEquals(previousMovesInRound, round.getMoves().size());
-        assertTrue(player.getHand().contains(playedCard));
+        assertEquals(initialMovesCount, round.getMoves().size());
+        assertTrue(player.getHand().contains(new Card(6, Suit.BASTOS)));
     }
-
 }

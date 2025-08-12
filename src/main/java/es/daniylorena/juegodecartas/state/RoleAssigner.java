@@ -14,9 +14,21 @@ public class RoleAssigner {
         throw new UnsupportedOperationException("Utility Class");
     }
 
+    public static List<Role> getRolesList() {
+        return roles;
+    }
+
+    public static void setRoles(List<Role> roles) {
+        RoleAssigner.roles = roles;
+    }
+
+    public static void deleteRoleList() {
+        roles = null;
+    }
+
     public static void initializeRoles(int players) {
         if (players == GameDisplay.MIN_PLAYERS) {
-            roles = Arrays.asList(Role.PRESI, Role.NEUTRO, Role.CULO);
+            roles = new ArrayList<>(List.of(Role.PRESI, Role.NEUTRO, Role.CULO));
         } else {
             roles = new ArrayList<>(players);
             roles.add(Role.PRESI);
@@ -38,11 +50,4 @@ public class RoleAssigner {
         } else throw new IllegalStateException("Roles no inicializados");
     }
 
-    public static List<Role> getRolesList() {
-        return roles;
-    }
-
-    public static void deleteRoleList() {
-        roles = null;
-    }
 }

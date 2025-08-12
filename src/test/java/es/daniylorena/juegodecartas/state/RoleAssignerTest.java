@@ -3,6 +3,7 @@ package es.daniylorena.juegodecartas.state;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,6 +35,18 @@ public class RoleAssignerTest {
         assertFalse(roleList.contains(Role.NEUTRO));
     }
 
+    @Test
+    void assignRoles(){
+        Role roleToAssign = Role.PRESI;
+        List<Role> roleList = new ArrayList<>(List.of(roleToAssign));
+        RoleAssigner.setRoles(roleList);
+        int roles = RoleAssigner.getRolesList().size();
+        Player player = new Player("Player 1");
 
+        RoleAssigner.assignRole(player);
+
+        assertEquals(roleToAssign, player.getRole());
+        assertEquals(roles-1, RoleAssigner.getRolesList().size());
+    }
 
 }
