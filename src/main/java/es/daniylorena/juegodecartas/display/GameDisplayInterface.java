@@ -18,6 +18,8 @@ public interface GameDisplayInterface {
 
     void notifyPlin(String skippedPlayer);
 
+    void notifyRole(Player player);
+
     void printTurn(Player player);
 
     void printHand(List<Card> hand);

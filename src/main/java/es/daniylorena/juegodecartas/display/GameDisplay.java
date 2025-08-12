@@ -130,6 +130,11 @@ public class GameDisplay implements UI, GameDisplayInterface {
     }
 
     @Override
+    public void notifyRole(Player player) {
+        System.out.println(player.toString() + " es " + player.getRole().toString());
+    }
+
+    @Override
     public void printTurn(Player player) {
         System.out.println("-- Turno de " + player.getName() + " --");
         printHand(player.getHand());
