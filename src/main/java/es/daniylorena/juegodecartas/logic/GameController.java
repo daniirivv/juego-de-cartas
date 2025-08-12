@@ -108,6 +108,7 @@ public class GameController implements GameControllerInterface {
                     RoleAssigner.assignRole(player);
                     round.removePlayerFromPlayerList(player);
                     this.gameDisplay.notifyRole(player);
+                    endOfRound = true;
                 }
             }
         } while (!endOfRound && !this.currentGame.checkEndGame());
