@@ -88,7 +88,7 @@ public class Round {
 
     private boolean manageFirstMoveScenario(Move proposedMove) {
         boolean result = false;
-        if (proposedMove.isPassing()) { // No vale pasar de primer turno
+        if (!proposedMove.isPassing()) { // No vale pasar de primer turno
             this.expectedNumberOfCards = proposedMove.playedCards().size();
             result = true;
         }
