@@ -59,34 +59,54 @@ public class Round {
     public boolean playMove(Move proposedMove, Player player) {
         boolean playable = false;
         Set<Card> move = proposedMove.playedCards();
-        int moveSize = move.size();
         if (proposedMove.isValidStructure()) {
             if (move.contains(Card.ORON)) {
-                if (moveSize != 1) GameController.getInstance().getGameDisplay().notifyOronWrongPlay();
-                playable = true;
+                playable = manageOronPlay(proposedMove);
             }
             // First-move scenario
             else if (this.moves.isEmpty()) {
-                if (moveSize != 0) { // No vale pasar de primer turno
-                    this.expectedNumberOfCards = proposedMove.playedCards().size();
-                    playable = true;
-                }
+                playable = manageFirstMoveScenario(proposedMove);
             } else { // Not first move
-                Move previous = this.moves.peek();
-                if (moveSize == 0) return true; // NO SE ALMACENA UN "PASO"
-                if ((moveSize == this.expectedNumberOfCards) && (proposedMove.compareTo(previous) >= 0)) {
-                    playable = true;
-                }
+                if (proposedMove.isPassing()) return true; // NO SE ALMACENA UN "PASO"
+                playable = manageBasicMoveScenario(proposedMove);
             }
             if (playable) {
                 // Elimina las cartas correspondientes al movimiento, y juega las cartas clonadas
-                for (Card card : proposedMove.playedCards()) {
-                    player.removeCardFromHand(card);
-                }
+                deleteCardsFromPlayerHand(proposedMove, player);
                 this.moves.add(proposedMove);
             }
         }
         return playable;
+    }
+
+    private boolean manageBasicMoveScenario(Move proposedMove) {
+        boolean correctCardsNumber = proposedMove.getMoveSize() == this.expectedNumberOfCards;
+        Move previous = this.moves.peek();
+        boolean isBetterMove = proposedMove.compareTo(previous) >= 0;
+        return correctCardsNumber && isBetterMove;
+    }
+
+    private boolean manageFirstMoveScenario(Move proposedMove) {
+        boolean result = false;
+        if (proposedMove.isPassing()) { // No vale pasar de primer turno
+            this.expectedNumberOfCards = proposedMove.playedCards().size();
+            result = true;
+        }
+        return result;
+    }
+
+    private static boolean manageOronPlay(Move move) {
+        if (move.getMoveSize() > 1) {
+            GameController.getInstance().getGameDisplay().notifyOronWrongPlay();
+            move.playedCards().removeIf(card -> card != Card.ORON);
+        }
+        return true;
+    }
+
+    private static void deleteCardsFromPlayerHand(Move proposedMove, Player player) {
+        for (Card card : proposedMove.playedCards()) {
+            player.removeCardFromHand(card);
+        }
     }
 
     public void removePlayerFromPlayerList(Player player) {
@@ -94,15 +114,14 @@ public class Round {
     }
 
     public boolean isPlin() {
-        Stack<Move> moves = this.moves;
-        if (moves.size() >= 2) {
-            Move lastMove = moves.getLast();
-            Move previousMove = moves.get(moves.size() - 2);
-
-            return lastMove.compareTo(previousMove) == 0;
+        boolean result = false;
+        if (this.moves.size() > 1) {
+            Move lastMove = this.moves.getLast();
+            Move previousMove = this.moves.get(moves.size() - 2);
+            result = lastMove.compareTo(previousMove) == 0;
         }
 
-        return false;
+        return result;
     }
 
 

@@ -71,6 +71,7 @@ public class GameController implements GameControllerInterface {
             roundLoop();
             endGame = this.currentGame.checkEndGame();
         } while (!endGame);
+
         Player culo = this.currentGame.getLoser();
         if(culo == null) throw new IllegalStateException("No hay perdedor");
         else{
@@ -106,7 +107,7 @@ public class GameController implements GameControllerInterface {
                 this.gameDisplay.notifyCloseByPassing();
             } else {
                 move = executeTurn(player);
-                if (move.isCloseMove()) {
+                if (move.isClosing()) {
                     round.setWinner(player);
                     endOfRound = true;
                 }

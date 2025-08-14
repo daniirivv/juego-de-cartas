@@ -63,7 +63,11 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
         } else return -1;
     }
 
-    public boolean isCloseMove() {
+    public boolean isPassing(){
+        return this.playedCards.isEmpty();
+    }
+
+    public boolean isClosing() {
         boolean result = true;
         if (this.playedCards.isEmpty()) {
             result = false;

@@ -3,7 +3,6 @@ package es.daniylorena.juegodecartas.state;
 import es.daniylorena.juegodecartas.display.GameDisplay;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RoleAssigner {
