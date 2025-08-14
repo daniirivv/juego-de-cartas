@@ -28,5 +28,6 @@ public class App {
             app.run();
             exit = app.getUI().askForLeave();
         } while (!exit);
+        System.out.println("¡Gracias por jugar!");
     }
 }

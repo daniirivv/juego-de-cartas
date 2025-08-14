@@ -166,6 +166,7 @@ public class GameDisplay implements UI, GameDisplayInterface {
 
     @Override
     public boolean askForLeave() {
+        System.out.println("¿Quieres salir del juego?");
         return keyboardInput.nextLine().equalsIgnoreCase(EXIT_COMMAND);
     }
 

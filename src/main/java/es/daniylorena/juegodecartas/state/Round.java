@@ -75,6 +75,7 @@ public class Round {
                 this.moves.add(proposedMove);
             }
         }
+
         return playable;
     }
 
@@ -83,6 +84,7 @@ public class Round {
             GameController.getInstance().getGameDisplay().notifyOronWrongPlay();
             move.playedCards().removeIf(card -> card != Card.ORON);
         }
+
         return true;
     }
 
@@ -90,9 +92,11 @@ public class Round {
         if (proposedMove.isPassing()) {
             String detail = "No se puede pasar en el primer turno.";
             GameController.getInstance().getGameDisplay().notifyInvalidMove(proposedMove, detail);
+
             return false;
         } else {
             this.expectedNumberOfCards = proposedMove.playedCards().size();
+
             return true;
         }
     }
@@ -109,6 +113,7 @@ public class Round {
             String detail = "Debes jugar un movimiento de igual o mayor poder al último movimiento jugado.";
             GameController.getInstance().getGameDisplay().notifyInvalidMove(move, detail);
         }
+
         return correctCardsNumber && isBetterMove;
     }
 
@@ -138,6 +143,7 @@ public class Round {
             Move lastMove = this.moves.peek();
             return lastMove.moveOwner().equals(closer);
         }
+
         return false;
     }
 }
