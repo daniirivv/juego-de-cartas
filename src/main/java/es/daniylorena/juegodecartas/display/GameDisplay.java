@@ -75,7 +75,6 @@ public class GameDisplay implements UI, GameDisplayInterface {
         System.out.println("Para pasar: PASS");
         String inputCards = GameDisplay.keyboardInput.nextLine().toUpperCase();
         if (inputCards.equals(PASS_COMMAND)) {
-            notifyPass(turnOwner);
             return new String[0];
         }
         String[] cards = inputCards.split(" ");

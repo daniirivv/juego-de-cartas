@@ -20,6 +20,8 @@ public interface GameDisplayInterface {
 
     void notifyRole(Player player);
 
+    void notifyPass(Player player);
+
     void printTurn(Player player);
 
     void printHand(List<Card> hand);
