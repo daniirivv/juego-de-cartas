@@ -100,13 +100,15 @@ public class GameDisplay implements UI, GameDisplayInterface {
         System.out.println("No puedes jugar el movimiento " + move.toString() + "ahora mismo. " + detail + '.');
     }
 
+    @Override
     public void notifyPass(Player player) {
         System.out.println(player.toString() + " ha pasado");
     }
 
+
     @Override
     public void notifyCloseByPassing() {
-        System.out.println("Habéis saltado todos... Nueva ronda!");
+        System.out.println("Habéis pasado todos");
     }
 
     private boolean isValidCardNumber(int number) {
@@ -131,6 +133,11 @@ public class GameDisplay implements UI, GameDisplayInterface {
     @Override
     public void notifyRole(Player player) {
         System.out.println(player.toString() + " es " + player.getRole().toString());
+    }
+
+    @Override
+    public void notifyNewRound() {
+        System.out.println("★ Nueva ronda ★");
     }
 
     @Override

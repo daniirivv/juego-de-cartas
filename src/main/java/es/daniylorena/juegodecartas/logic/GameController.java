@@ -105,17 +105,20 @@ public class GameController implements GameControllerInterface {
                 round.setWinner(player);
                 endOfRound = true;
                 this.gameDisplay.notifyCloseByPassing();
+                this.gameDisplay.notifyNewRound();
             } else {
                 move = executeTurn(player);
                 if (move.isClosing()) {
                     round.setWinner(player);
                     endOfRound = true;
+                    this.gameDisplay.notifyNewRound();
                 }
                 if (player.getHand().isEmpty()) {
                     RoleAssigner.assignRole(player);
                     round.removePlayerFromPlayerList(player);
                     this.gameDisplay.notifyRole(player);
                     endOfRound = true;
+                    this.gameDisplay.notifyNewRound();
                 }
             }
         } while (!endOfRound);
