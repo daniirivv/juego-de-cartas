@@ -132,9 +132,13 @@ public class GameController implements GameControllerInterface {
             if (verifyCardsOwnership(move, player)) {
                 if (round.playMove(move, player)) {
                     invalidMove = false;
-                    if (round.isPlin() && player.getHandSize() > 0 && !move.isPassing()) {
-                        Player skipped = round.getActualRoundPlayers().next();
-                        this.gameDisplay.notifyPlin(skipped.getName());
+                    if (move.isPassing()) {
+                        gameDisplay.notifyPass(player);
+                    } else {
+                        if (round.isPlin() && player.getHandSize() > 0) {
+                            Player skipped = round.getActualRoundPlayers().next();
+                            this.gameDisplay.notifyPlin(skipped.getName());
+                        }
                     }
                 }
             } else {
