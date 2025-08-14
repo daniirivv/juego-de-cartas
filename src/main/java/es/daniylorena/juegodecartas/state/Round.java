@@ -79,28 +79,38 @@ public class Round {
         return playable;
     }
 
-    private boolean manageBasicMoveScenario(Move proposedMove) {
-        boolean correctCardsNumber = proposedMove.getMoveSize() == this.expectedNumberOfCards;
-        Move previous = this.moves.peek();
-        boolean isBetterMove = proposedMove.compareTo(previous) >= 0;
-        return correctCardsNumber && isBetterMove;
-    }
-
-    private boolean manageFirstMoveScenario(Move proposedMove) {
-        boolean result = false;
-        if (!proposedMove.isPassing()) { // No vale pasar de primer turno
-            this.expectedNumberOfCards = proposedMove.playedCards().size();
-            result = true;
-        }
-        return result;
-    }
-
     private static boolean manageOronPlay(Move move) {
         if (move.getMoveSize() > 1) {
             GameController.getInstance().getGameDisplay().notifyOronWrongPlay();
             move.playedCards().removeIf(card -> card != Card.ORON);
         }
         return true;
+    }
+
+    private boolean manageFirstMoveScenario(Move proposedMove) {
+        if (proposedMove.isPassing()) {
+            String detail = "No se puede pasar en el primer turno.";
+            GameController.getInstance().getGameDisplay().notifyInvalidMove(proposedMove, detail);
+            return false;
+        } else {
+            this.expectedNumberOfCards = proposedMove.playedCards().size();
+            return true;
+        }
+    }
+
+    private boolean manageBasicMoveScenario(Move move) {
+        boolean correctCardsNumber = move.getMoveSize() == this.expectedNumberOfCards;
+        Move previous = this.moves.peek();
+        boolean isBetterMove = move.compareTo(previous) >= 0;
+        if(!correctCardsNumber){
+            String detail = "Deben jugarse exactamente el mismo nº de cartas que en el movimiento inicial.";
+            GameController.getInstance().getGameDisplay().notifyInvalidMove(move, detail);
+        }
+        if(!isBetterMove){
+            String detail = "Debes jugar un movimiento de igual o mayor poder al último movimiento jugado.";
+            GameController.getInstance().getGameDisplay().notifyInvalidMove(move, detail);
+        }
+        return correctCardsNumber && isBetterMove;
     }
 
     private static void deleteCardsFromPlayerHand(Move proposedMove, Player player) {
