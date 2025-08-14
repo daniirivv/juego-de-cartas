@@ -10,7 +10,7 @@ public interface GameDisplayInterface {
 
     String[] askForAMove(Player turnOwner);
 
-    void notifyInvalidMove(Move move);
+    void notifyInvalidMove(Move move, String detail);
 
     void notifyCloseByPassing();
 

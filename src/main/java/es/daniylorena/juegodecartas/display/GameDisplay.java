@@ -97,8 +97,8 @@ public class GameDisplay implements UI, GameDisplayInterface {
     }
 
     @Override
-    public void notifyInvalidMove(Move move) {
-        System.out.println("No puedes jugar el movimiento " + move.toString() + "ahora mismo");
+    public void notifyInvalidMove(Move move, String detail) {
+        System.out.println("No puedes jugar el movimiento " + move.toString() + "ahora mismo. " + detail +'.');
     }
 
     public void notifyPass(Player player) {

@@ -136,9 +136,9 @@ public class GameController implements GameControllerInterface {
                         Player skipped = round.getActualRoundPlayers().next();
                         this.gameDisplay.notifyPlin(skipped.getName());
                     }
-                } else gameDisplay.notifyInvalidMove(move);
+                }
             } else {
-                this.gameDisplay.notifyInvalidMove(move);
+                this.gameDisplay.notifyInvalidMove(move, "No puedes jugar cartas que no tienes.");
             }
         } while (invalidMove);
         return move;
