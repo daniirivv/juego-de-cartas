@@ -1,6 +1,5 @@
 package es.daniylorena.juegodecartas.state;
 
-import es.daniylorena.juegodecartas.display.GameDisplay;
 import es.daniylorena.juegodecartas.logic.GameController;
 import es.daniylorena.juegodecartas.utilities.CircularList;
 
@@ -102,11 +101,11 @@ public class Round {
         boolean correctCardsNumber = move.getMoveSize() == this.expectedNumberOfCards;
         Move previous = this.moves.peek();
         boolean isBetterMove = move.compareTo(previous) >= 0;
-        if(!correctCardsNumber){
+        if (!correctCardsNumber) {
             String detail = "Deben jugarse exactamente el mismo nº de cartas que en el movimiento inicial.";
             GameController.getInstance().getGameDisplay().notifyInvalidMove(move, detail);
         }
-        if(!isBetterMove){
+        if (!isBetterMove) {
             String detail = "Debes jugar un movimiento de igual o mayor poder al último movimiento jugado.";
             GameController.getInstance().getGameDisplay().notifyInvalidMove(move, detail);
         }
@@ -133,7 +132,6 @@ public class Round {
 
         return result;
     }
-
 
     public boolean isCloseByPassing(Player closer) {
         if (!this.moves.isEmpty()) {

@@ -17,7 +17,7 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
         return isValidStructure(this.playedCards);
     }
 
-    public static boolean isValidStructure(Set<Card> playedCards){
+    public static boolean isValidStructure(Set<Card> playedCards) {
         int moveSize = playedCards.size();
         if (moveSize == 0 || moveSize == 1) return true;
         if (moveSize > 8) return false; // MAX: 4 del mismo palo + 4 comodines
@@ -25,17 +25,16 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
             boolean valid = true;
             Iterator<Card> iterator = playedCards.iterator();
             int firstNonWildcardNumber = JOKER;
-            do{
+            do {
                 int actualNumber = iterator.next().number();
-                if(actualNumber != JOKER){
-                    if(firstNonWildcardNumber == JOKER){ // Only JOKERS found at the moment; still valid
+                if (actualNumber != JOKER) {
+                    if (firstNonWildcardNumber == JOKER) { // Only JOKERS found at the moment; still valid
                         firstNonWildcardNumber = actualNumber;
-                    }
-                    else if(actualNumber != firstNonWildcardNumber){
+                    } else if (actualNumber != firstNonWildcardNumber) {
                         valid = false;
                     }
                 }
-            }while(valid && iterator.hasNext());
+            } while (valid && iterator.hasNext());
             return valid;
         }
     }
@@ -63,7 +62,7 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
         } else return -1;
     }
 
-    public boolean isPassing(){
+    public boolean isPassing() {
         return this.playedCards.isEmpty();
     }
 

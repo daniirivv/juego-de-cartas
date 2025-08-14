@@ -73,8 +73,8 @@ public class GameController implements GameControllerInterface {
         } while (!endGame);
 
         Player culo = this.currentGame.getLoser();
-        if(culo == null) throw new IllegalStateException("No hay perdedor");
-        else{
+        if (culo == null) throw new IllegalStateException("No hay perdedor");
+        else {
             RoleAssigner.assignRole(culo);
             this.gameDisplay.notifyRole(culo);
         }

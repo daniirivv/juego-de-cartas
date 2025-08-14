@@ -1,7 +1,6 @@
 package es.daniylorena.juegodecartas.state;
 
 import java.util.LinkedList;
-import java.util.Random;
 
 public record Deck(LinkedList<Card> cards) {
 
