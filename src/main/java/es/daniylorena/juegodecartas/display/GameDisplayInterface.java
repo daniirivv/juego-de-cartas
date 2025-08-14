@@ -18,6 +18,8 @@ public interface GameDisplayInterface {
 
     void notifyPlin(String skippedPlayer);
 
+    void notifyNewRound();
+
     void notifyRole(Player player);
 
     void notifyPass(Player player);
