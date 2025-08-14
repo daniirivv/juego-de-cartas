@@ -5,6 +5,12 @@ import es.daniylorena.juegodecartas.logic.GameController;
 
 public class DependencyInyector {
 
+    private DependencyInyector() {
+    }
+    public static GameController getInstance() {
+        return new GameController();
+    }
+
     public static void inyect(App app) {
         GameDisplay gameDisplay = new GameDisplay();
         GameController gameController = GameController.getInstance();
