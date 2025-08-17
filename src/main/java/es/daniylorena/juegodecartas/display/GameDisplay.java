@@ -21,7 +21,6 @@ public class GameDisplay implements UI, GameDisplayInterface {
     public static final String DONE_COMMAND = "DONE";
     public static final String EXIT_COMMAND = "EXIT";
     public static final String POSITIVE_ANSWER = "Y";
-    public static final String PASS_COMMAND = "PASS";
     public static final Map<Character, Suit> SUIT_TO_CHAR_MAP =
             Map.of(
                     'O', Suit.OROS,
@@ -30,7 +29,7 @@ public class GameDisplay implements UI, GameDisplayInterface {
                     'B', Suit.BASTOS
             );
 
-    private final static Scanner keyboardInput = new Scanner(System.in);
+    private static final Scanner keyboardInput = new Scanner(System.in);
 
     private GameControllerInterface gameController;
 
@@ -70,29 +69,49 @@ public class GameDisplay implements UI, GameDisplayInterface {
 
     @Override
     public String[] askForAMove(Player turnOwner) {
-        System.out.println("¿Qué cartas quieres echar?");
-        System.out.println("Formato: <Numero><Palo> <N><P>... Ej. 4C 12B -> Cuatro de copas y doce de bastos");
-        System.out.println("Para pasar: PASS");
-        String inputCards = GameDisplay.keyboardInput.nextLine().toUpperCase();
-        if (inputCards.equals(PASS_COMMAND)) {
-            return new String[0];
-        }
-        String[] cards = inputCards.split(" ");
-        for (String card : cards) {
-            if (card.length() < 2 || card.length() > 3) throw new IllegalCardException("Formato erróneo: " + card);
-            String numberPart = card.substring(0, card.length() - 1);
-            char suit = card.charAt(card.length() - 1);
-            int number;
-            try {
-                number = Integer.parseInt(numberPart);
-            } catch (NumberFormatException e) {
-                throw new IllegalCardException("Número inválido: " + numberPart);
+        boolean validCards;
+        String[] cards;
+        do {
+            System.out.println("¿Qué cartas quieres echar?");
+            System.out.println("Formato: <Numero><Palo> <N><P>... Ej. 4C 12B -> Cuatro de copas y doce de bastos");
+            System.out.println("Para pasar: PASS");
+            String inputCards = GameDisplay.keyboardInput.nextLine().toUpperCase();
+            if (inputCards.isBlank()) return new String[0];
+            cards = inputCards.split(" ");
+            validCards = checkCards(cards);
+        } while (validCards);
+
+        return cards;
+    }
+
+    private static boolean checkCards(String[] cards) {
+        boolean result;
+        int i = 0;
+        do{
+            result = isValidCard(cards[i]);
+            i++;
+        } while(result && i < cards.length);
+
+        return result;
+    }
+
+    private static boolean isValidCard(String card) {
+        boolean result = true;
+        try{
+            String detail;
+            if (card.length() < 2 || card.length() > 3) {
+                detail = "La carta debe estar formada por hasta dos dígitos y una letra que indique el palo";
+                throw new IllegalCardException(detail);
             }
-            // Validaciones
+            int number = Integer.parseInt(card.substring(0, card.length() - 1));
+            char suit = card.charAt(card.length() - 1);
             if (number <= 0 || number > 12) throw new IllegalCardException("Número fuera de rango: " + number);
             if (!SUIT_TO_CHAR_MAP.containsKey(suit)) throw new IllegalCardException("Palo inválido: " + suit);
+        }catch(IllegalCardException | NumberFormatException e){
+            System.out.println(e.getMessage());
+            result = false;
         }
-        return cards;
+        return result;
     }
 
     @Override
@@ -166,7 +185,7 @@ public class GameDisplay implements UI, GameDisplayInterface {
 
     @Override
     public boolean askForLeave() {
-        System.out.println("¿Quieres salir del juego?");
+        System.out.println("¿Quieres salir del juego? (EXIT)");
         return keyboardInput.nextLine().equalsIgnoreCase(EXIT_COMMAND);
     }
 
