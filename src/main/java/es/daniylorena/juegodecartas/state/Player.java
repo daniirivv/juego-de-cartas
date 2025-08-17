@@ -1,8 +1,6 @@
 package es.daniylorena.juegodecartas.state;
 
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Player {
 
@@ -16,10 +14,10 @@ public class Player {
         this.hand = new LinkedList<>();
     }
 
-    public Player(String name, LinkedList<Card> hand) {
+    public Player(String name, List<Card> hand) {
         this.name = name;
         this.role = null;
-        this.hand = hand;
+        this.hand = new LinkedList<>(hand);
     }
 
     public String getName() {
@@ -42,6 +40,11 @@ public class Player {
         return hand.size();
     }
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
     public void addCardToHand(Card card) {
         this.hand.add(card);
     }
@@ -51,12 +54,7 @@ public class Player {
     }
 
     private void sortHandWorstToBest() {
-        this.hand.sort((a, b) -> b.getPower() - a.getPower()); // Ordena la mano de mayor a menor peso
-    }
-
-    public Card getBestCard() {
-        sortHandWorstToBest();
-        return this.hand.getFirst();
+        this.hand.sort(Comparator.comparingInt(Card::getPower)); // Ordena la mano de menor a mayor
     }
 
     public Card takeBestCard() {
@@ -65,32 +63,9 @@ public class Player {
         return best;
     }
 
-    public Card getWorstNonRepeatedCard() {
+    private Card getBestCard() {
         sortHandWorstToBest();
-        int resultIndex = 0;
-        int n = this.hand.size();
-        int minFrecuencia = n;
-        int inicio = 0;
-
-        for (int i = 0; i < n; i++) {
-            /*
-             Cortamos la cadena cuando:
-             - i == n (fin de lista)
-             - elemento actual ≠ anterior
-            */
-            if (i == n - 1 || !this.hand.get(i).equals(hand.get(i + 1))) { // Lazy Evaluation
-                int frecuencia = i - inicio + 1;
-                if (frecuencia == 1) {
-                    return this.hand.remove(inicio);  // Frecuencia 1 → devolver inmediatamente
-                } else if (frecuencia < minFrecuencia) {
-                    minFrecuencia = frecuencia;
-                    resultIndex = inicio; // Guardamos como posible mejor opción
-                }
-                // Preparamos inicio para siguiente cadena
-                inicio = i;
-            }
-        }
-        return this.hand.get(resultIndex);
+        return this.hand.getLast();
     }
 
     public Card takeWorstNonRepeatedCard() {
@@ -100,8 +75,49 @@ public class Player {
         return worst;
     }
 
-    @Override
-    public String toString() {
-        return this.name;
+    private Card getWorstNonRepeatedCard() {
+        sortHandWorstToBest();
+        // Inicializamos el primer bloque
+        Card firstInBlock = hand.getFirst();
+        int currentPower = firstInBlock.getPower();
+        int count = 1;
+
+        // Variables para el mejor candidato no único
+        Card bestCard = firstInBlock;
+        int bestCount = Integer.MAX_VALUE;
+
+        // Recorremos desde el segundo elemento
+        for (int i = 1; i < hand.size(); i++) {
+            Card card = hand.get(i);
+            int power = card.getPower();
+
+            if (power == currentPower) {
+                count++;
+            } else {
+                // Fin del bloque anterior
+                if (count == 1) {
+                    return firstInBlock;
+                }
+                if (count < bestCount) {
+                    bestCount = count;
+                    bestCard = firstInBlock;
+                }
+                // Nuevo bloque
+                firstInBlock = card;
+                currentPower = power;
+                count = 1;
+            }
+        }
+
+        // Procesar el último bloque
+        if (count == 1) {
+            return firstInBlock;
+        }
+        if (count < bestCount) {
+            bestCard = firstInBlock;
+        }
+
+        return bestCard;
+
     }
 }
