@@ -124,6 +124,7 @@ public class GameDisplay implements UI, GameDisplayInterface {
     public void notifyCardExchange(Player winner, Player loser, List<Card> bestCards, List<Card> worstCards) {
         StringBuilder message = new StringBuilder("♔(" + winner.getName() + ") ");
         for (Card card : worstCards) {
+            // TODO: Impresión como 1E 12C en vez de 1 de espadas 12 de copas
             message.append(card.toString() + " ");
         }
         message.append("<---> ☹(" + loser.getName() + ") ");
