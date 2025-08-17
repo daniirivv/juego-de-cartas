@@ -1,5 +1,6 @@
 package es.daniylorena.juegodecartas.state;
 
+import es.daniylorena.juegodecartas.logic.GameController;
 import es.daniylorena.juegodecartas.utilities.CircularList;
 
 import java.util.List;
@@ -54,5 +55,6 @@ public class Dealer {
             loser.addCardToHand(worst);
             winner.addCardToHand(best);
         }
+        GameController.getInstance().getGameDisplay().notifyCardExchange(winner, loser);
     }
 }

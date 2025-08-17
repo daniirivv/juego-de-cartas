@@ -4,10 +4,7 @@ import es.daniylorena.juegodecartas.logic.GameControllerInterface;
 import es.daniylorena.juegodecartas.logic.exceptions.IllegalCardException;
 import es.daniylorena.juegodecartas.logic.exceptions.IllegalPlayerNameException;
 import es.daniylorena.juegodecartas.logic.exceptions.InsufficientPlayersException;
-import es.daniylorena.juegodecartas.state.Card;
-import es.daniylorena.juegodecartas.state.Move;
-import es.daniylorena.juegodecartas.state.Player;
-import es.daniylorena.juegodecartas.state.Suit;
+import es.daniylorena.juegodecartas.state.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,6 +121,24 @@ public class GameDisplay implements UI, GameDisplayInterface {
         System.out.println(player.toString() + " ha pasado");
     }
 
+    @Override
+    public void notifyCardExchange(Player winner, Player loser) {
+        if (winner.getRole() == Role.PRESI) {
+            System.out.println(
+                    "(" + winner.getName() + ") " +
+                    winner.getWorstNonRepeatedCard() + " " + winner.getWorstNonRepeatedCard() +
+                    " <---> (" + loser.getName() + ") " +
+                    loser.getBestCard() + " " + loser.getBestCard()
+                    );
+        } else if (winner.getRole() == Role.VICEPRESI) {
+            System.out.println(
+                    "(" + winner.getName() + ") " +
+                            winner.getWorstNonRepeatedCard() +
+                            " <---> (" + loser.getName() + ") " +
+                            loser.getBestCard()
+            );
+        }
+    }
 
     @Override
     public void notifyCloseByPassing() {
