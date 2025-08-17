@@ -32,6 +32,7 @@ public class Dealer {
                     case VICEPRESI -> vicepresi = p;
                     case VICECULO -> viceculo = p;
                     case CULO -> culo = p;
+                    case NEUTRO -> {continue;}
                 }
             }
         }
@@ -50,7 +51,6 @@ public class Dealer {
             Card best = loser.takeBestCard();
 
             Card worst = winner.takeWorstNonRepeatedCard();
-            winner.removeCardFromHand(worst);
 
             loser.addCardToHand(worst);
             winner.addCardToHand(best);

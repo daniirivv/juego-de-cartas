@@ -96,30 +96,9 @@ public class Player {
     public Card takeWorstNonRepeatedCard() {
         Card worst = getWorstNonRepeatedCard();
         this.hand.remove(worst);
+
         return worst;
     }
-        /* VERSION LORENA
-        int minFrequency = Integer.MAX_VALUE;
-        for (Card card : this.hand) {
-            int count = 0;
-            for (Card c : this.hand) {
-                if (c.getNumber() == card.getNumber()) {
-                    count++;
-                }
-            }
-            if (count == 1) {
-                this.hand.remove(card);
-                return card;
-            } else if (count < minFrequency) {
-                // Guardamos la carta con la menor frecuencia (aunque repetida)
-                minFrequency = count;
-                candidate = card;
-            }
-        }
-        // Si no hay cartas no repetidas, devolvemos la carta con menor frecuencia
-        this.hand.remove(candidate);
-        return result;
-        */
 
     @Override
     public String toString() {
