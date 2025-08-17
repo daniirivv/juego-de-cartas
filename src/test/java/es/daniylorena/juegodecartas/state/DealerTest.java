@@ -1,11 +1,8 @@
 package es.daniylorena.juegodecartas.state;
 
-import org.junit.jupiter.api.*;
-import org.mockito.Mockito;
-
 import java.util.*;
+import org.junit.jupiter.api.*;
 
-import static es.daniylorena.juegodecartas.state.Suit.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DealerTest {
@@ -41,6 +38,6 @@ class DealerTest {
 
     @Test
     void roleApply(){
-
+        // @TODO: Probar RoleApply mockeando el comportamiento de player.takeBestCard y player.takeWorstNonRepeatedCard
     }
 }
