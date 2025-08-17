@@ -71,12 +71,11 @@ public class GameDisplay implements UI, GameDisplayInterface {
         do {
             System.out.println("¿Qué cartas quieres echar?");
             System.out.println("Formato: <Numero><Palo> <N><P>... Ej. 4C 12B -> Cuatro de copas y doce de bastos");
-            System.out.println("Para pasar: PASS");
             String inputCards = GameDisplay.keyboardInput.nextLine().toUpperCase();
             if (inputCards.isBlank()) return new String[0];
             cards = inputCards.split(" ");
             validCards = checkCards(cards);
-        } while (validCards);
+        } while (!validCards);
 
         return cards;
     }
@@ -122,22 +121,16 @@ public class GameDisplay implements UI, GameDisplayInterface {
     }
 
     @Override
-    public void notifyCardExchange(Player winner, Player loser) {
-        if (winner.getRole() == Role.PRESI) {
-            System.out.println(
-                    "(" + winner.getName() + ") " +
-                    winner.getWorstNonRepeatedCard() + " " + winner.getWorstNonRepeatedCard() +
-                    " <---> (" + loser.getName() + ") " +
-                    loser.getBestCard() + " " + loser.getBestCard()
-                    );
-        } else if (winner.getRole() == Role.VICEPRESI) {
-            System.out.println(
-                    "(" + winner.getName() + ") " +
-                            winner.getWorstNonRepeatedCard() +
-                            " <---> (" + loser.getName() + ") " +
-                            loser.getBestCard()
-            );
+    public void notifyCardExchange(Player winner, Player loser, List<Card> bestCards, List<Card> worstCards) {
+        StringBuilder message = new StringBuilder("♔(" + winner.getName() + ") ");
+        for (Card card : worstCards) {
+            message.append(card.toString() + " ");
         }
+        message.append("<---> ☹(" + loser.getName() + ") ");
+        for (Card card : bestCards) {
+            message.append(card.toString() + " ");
+        }
+        System.out.println(message);
     }
 
     @Override

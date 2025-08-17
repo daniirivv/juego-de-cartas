@@ -12,7 +12,7 @@ public interface GameDisplayInterface {
 
     void notifyInvalidMove(Move move, String detail);
 
-    void notifyCardExchange(Player winner, Player loser);
+    void notifyCardExchange(Player winner, Player loser, List<Card> bestCards, List<Card> worstCards);
 
     void notifyCloseByPassing();
 

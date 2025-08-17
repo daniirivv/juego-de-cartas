@@ -3,6 +3,7 @@ package es.daniylorena.juegodecartas.state;
 import es.daniylorena.juegodecartas.logic.GameController;
 import es.daniylorena.juegodecartas.utilities.CircularList;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,13 +49,18 @@ public class Dealer {
     }
 
     private static void cardExchange(Player winner, Player loser, int exchangedCards) {
+        List<Card> bestCards = new ArrayList<>();
+        List<Card> worstCards = new ArrayList<>();
         for (int i = 1; i <= exchangedCards; i++) {
             Card best = loser.takeBestCard();
             Card worst = winner.takeWorstNonRepeatedCard();
 
             loser.addCardToHand(worst);
             winner.addCardToHand(best);
+
+            bestCards.add(best);
+            worstCards.add(worst);
         }
-        GameController.getInstance().getGameDisplay().notifyCardExchange(winner, loser);
+        GameController.getInstance().getGameDisplay().notifyCardExchange(winner, loser, bestCards, worstCards);
     }
 }
