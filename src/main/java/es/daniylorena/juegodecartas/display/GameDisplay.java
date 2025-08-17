@@ -49,17 +49,22 @@ public class GameDisplay implements UI, GameDisplayInterface {
         boolean done = false;
         System.out.println("Introduce los nombres de los jugadores: (" + DONE_COMMAND + " para finalizar)");
         do {
-            String name = GameDisplay.keyboardInput.nextLine();
-            if (!name.equalsIgnoreCase(DONE_COMMAND)) {
-                if (!name.isEmpty()) {
-                    if (!result.contains(name)) {
-                        result.add(name);
-                    } else throw new IllegalPlayerNameException("Dos jugadores no pueden llamarse igual.");
-                } else throw new IllegalPlayerNameException(
-                        "El nombre tiene que estar compuesto por, como mínimo, un caracter.");
-            } else if (result.size() < MIN_PLAYERS) {
-                throw new InsufficientPlayersException("Falta/n " + (MIN_PLAYERS - result.size()) + " jugadores.");
-            } else done = true;
+            try{
+                String name = GameDisplay.keyboardInput.nextLine();
+                if (!name.equalsIgnoreCase(DONE_COMMAND)) {
+                    if (!name.isEmpty()) {
+                        if (!result.contains(name)) {
+                            result.add(name);
+                        } else throw new IllegalPlayerNameException("Dos jugadores no pueden llamarse igual.");
+                    } else throw new IllegalPlayerNameException(
+                            "El nombre tiene que estar compuesto por, como mínimo, un caracter.");
+                } else if (result.size() < MIN_PLAYERS) {
+                    throw new InsufficientPlayersException("Falta/n " + (MIN_PLAYERS - result.size()) + " jugadores.");
+                } else done = true;
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+
         } while (!done);
         return result;
     }
@@ -125,11 +130,11 @@ public class GameDisplay implements UI, GameDisplayInterface {
         StringBuilder message = new StringBuilder("♔(" + winner.getName() + ") ");
         for (Card card : worstCards) {
             // TODO: Impresión como 1E 12C en vez de 1 de espadas 12 de copas
-            message.append(card.toString() + " ");
+            message.append(card.toString()).append(" ");
         }
-        message.append("<---> ☹(" + loser.getName() + ") ");
+        message.append("<---> ☹(").append(loser.getName()).append(") ");
         for (Card card : bestCards) {
-            message.append(card.toString() + " ");
+            message.append(card.toString()).append(" ");
         }
         System.out.println(message);
     }
