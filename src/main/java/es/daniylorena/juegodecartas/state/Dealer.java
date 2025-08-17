@@ -37,20 +37,18 @@ public class Dealer {
         }
 
         if (presi != null && culo != null) {
-            cardExchange(presi, culo, 2);
+            cardExchange(presi, culo, PRESI_CULO_EXCHANGE);
         }
 
         if (vicepresi != null && viceculo != null) {
-            cardExchange(vicepresi, viceculo, 1);
+            cardExchange(vicepresi, viceculo, VICEPRESI_VICECULO_EXCHANGE);
         }
     }
 
     private static void cardExchange(Player winner, Player loser, int exchangedCards) {
         for (int i = 1; i <= exchangedCards; i++) {
             Card best = loser.takeBestCard();
-
             Card worst = winner.takeWorstNonRepeatedCard();
-            winner.removeCardFromHand(worst);
 
             loser.addCardToHand(worst);
             winner.addCardToHand(best);
