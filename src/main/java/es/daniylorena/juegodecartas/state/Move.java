@@ -21,22 +21,21 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
         int moveSize = playedCards.size();
         if (moveSize == 0 || moveSize == 1) return true;
         if (moveSize > 8) return false; // MAX: 4 del mismo palo + 4 comodines
-        else {
-            boolean valid = true;
-            Iterator<Card> iterator = playedCards.iterator();
-            int firstNonWildcardNumber = JOKER;
-            do {
-                int actualNumber = iterator.next().number();
-                if (actualNumber != JOKER) {
-                    if (firstNonWildcardNumber == JOKER) { // Only JOKERS found at the moment; still valid
-                        firstNonWildcardNumber = actualNumber;
-                    } else if (actualNumber != firstNonWildcardNumber) {
-                        valid = false;
-                    }
+
+        boolean valid = true;
+        Iterator<Card> iterator = playedCards.iterator();
+        int firstNonWildcardNumber = JOKER;
+        do {
+            int actualNumber = iterator.next().number();
+            if (actualNumber != JOKER) {
+                if (firstNonWildcardNumber == JOKER) { // Only JOKERS found at the moment; still valid
+                    firstNonWildcardNumber = actualNumber;
+                } else if (actualNumber != firstNonWildcardNumber) {
+                    valid = false;
                 }
-            } while (valid && iterator.hasNext());
-            return valid;
-        }
+            }
+        } while (valid && iterator.hasNext());
+        return valid;
     }
 
     private int getMovePower() {
@@ -67,18 +66,16 @@ public record Move(Set<Card> playedCards, Player moveOwner) implements Comparabl
     }
 
     public boolean isClosing() {
+        if (this.playedCards.isEmpty()) return false;
+
         boolean result = true;
-        if (this.playedCards.isEmpty()) {
-            result = false;
-        } else {
-            Iterator<Card> iterator = this.playedCards.iterator();
+        Iterator<Card> iterator = this.playedCards.iterator();
             while (iterator.hasNext() && result) {
                 int cardValue = iterator.next().number();
                 if (cardValue != JOKER && cardValue != CLOSE_CARD) {
                     result = false;
                 }
             }
-        }
         return result;
     }
 

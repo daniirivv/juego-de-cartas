@@ -5,10 +5,7 @@ import es.daniylorena.juegodecartas.display.GameDisplayInterface;
 import es.daniylorena.juegodecartas.state.*;
 import es.daniylorena.juegodecartas.utilities.CircularList;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public class GameController implements GameControllerInterface {
@@ -83,14 +80,12 @@ public class GameController implements GameControllerInterface {
     private CircularList<Player> generateRoundPlayers() {
         int i = this.currentGame.getRounds().size();
         CircularList<Player> roundPlayers;
-        if (i == 0) {
-            roundPlayers = new CircularList<>(this.currentGame.getPlayers());
-        } else {
-            Round lastRound = this.currentGame.getCurrentRound();
-            Player winner = lastRound.getWinner();
-            List<Player> lastRoundPlayerList = lastRound.getSimpleListOfSubplayers();
-            roundPlayers = new CircularList<>(lastRoundPlayerList, winner);
-        }
+        if (i == 0) return new CircularList<>(this.currentGame.getPlayers());
+
+        Round lastRound = this.currentGame.getCurrentRound();
+        Player winner = lastRound.getWinner();
+        List<Player> lastRoundPlayerList = lastRound.getSimpleListOfSubplayers();
+        roundPlayers = new CircularList<>(lastRoundPlayerList, winner);
         return roundPlayers;
     }
 
@@ -128,27 +123,32 @@ public class GameController implements GameControllerInterface {
         this.gameDisplay.printTurn(player);
         Round round = this.currentGame.getCurrentRound();
         boolean invalidMove = true;
-        Move move;
+        Move move = null;
         do {
-            String[] proposedMove = this.gameDisplay.askForAMove(player);
-            move = createCloneMove(proposedMove, player);
-            if (verifyCardsOwnership(move, player)) {
-                if (round.playMove(move, player)) {
-                    invalidMove = false;
-                    if (move.isPassing()) {
-                        gameDisplay.notifyPass(player);
-                    } else {
-                        if (round.isPlin() && player.getHandSize() > 0) {
-                            Player skipped = round.getActualRoundPlayers().next();
-                            this.gameDisplay.notifyPlin(skipped.getName());
-                        }
+            Optional<Move> attemptedMove = obtainMoveIfOwnCards(player);
+            if (!attemptedMove.isEmpty()) {
+                move = attemptedMove.get();
+                invalidMove = round.playMove(move, player);
+                if (move.isPassing()) gameDisplay.notifyPass(player);
+                else {
+                    if (round.isPlin() && !player.getHand().isEmpty()) {
+                        Player skipped = round.getActualRoundPlayers().next();
+                        this.gameDisplay.notifyPlin(skipped.getName());
                     }
                 }
-            } else {
-                this.gameDisplay.notifyInvalidMove(move, "No puedes jugar cartas que no tienes.");
             }
         } while (invalidMove);
         return move;
+    }
+
+    private Optional<Move> obtainMoveIfOwnCards(Player player){
+        String[] proposedMove = this.gameDisplay.askForAMove(player);
+        Move move = createCloneMove(proposedMove, player);
+        if(!verifyCardsOwnership(move, player)){
+            this.gameDisplay.notifyInvalidMove(move, "No puedes jugar cartas que no tienes.");
+            return Optional.empty();
+        }
+        else return Optional.of(move);
     }
 
     private boolean verifyCardsOwnership(Move proposedMove, Player player) {
